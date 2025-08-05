@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #F0FCF2;
+  --color-primary: #0A400C;
+  --color-secondary: #FED16A;
+  --color-cblack: #191C1F;
+}
+
+.bricolage {
+  font-family: var(--font-bricolage-grotesque);
+}
+
+.inter {
+  font-family: var(--font-inter);
+}
+
+/* texts styles */
+.x7l {
+  @apply text-7xl max-lg:text-6xl max-md:text-5xl max-sm:text-3xl;
+}
+
+.x5l {
+  @apply text-5xl max-lg:text-4xl max-md:text-3xl max-sm:text-xl;
+}
+
+.x2l {
+  @apply text-2xl max-lg:text-xl max-md:text-lg max-sm:text-base;
+}
+
+.base {
+  @apply text-base max-lg:text-sm max-md:text-xs max-sm:text-[11px];
+}
+
+.sm {
+  @apply text-sm max-lg:text-xs max-md:text-[11px] max-sm:text-[10px];
+}
+
+.xl {
+  @apply text-xl max-lg:text-lg max-md:text-base max-sm:text-sm;
+}
+
+.effect {
+  z-index: 1;
+  transition: .5s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.effect::after {
+  content: "";
+  color: white;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 100%;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-secondary);
+  height: 150px;
+  width: 150px;
+  border-radius: 500px;
+  transition: .5s ease;
+}
+
+.text {
+  position: relative;
+  z-index: 3;
+}
+
+.effect:hover::after {
+  top: -30%;
+  height: 300px;
+  width: 300px;
+}
+
+.effect:hover {
+  background: var(--color-secondary);
+  color: black;
+  transition: background 1.5s ease;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

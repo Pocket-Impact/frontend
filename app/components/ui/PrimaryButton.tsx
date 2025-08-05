@@ -1,9 +1,9 @@
 import React from 'react'
 
-const PrimaryButton: React.FC<{ text: string, styles: string }> = ({ text, styles }) => {
+const PrimaryButton: React.FC<{ text?: string, styles?: string, icon?: any }> = ({ text, styles, icon }) => {
     return (
         <div className={`bg-primary effect cursor-pointer h-max text-white rounded-full inter ${styles}`}>
-            <span className='text'>{text}</span>
+            <span className='text'>{text}{icon}</span>
         </div>
     )
 }

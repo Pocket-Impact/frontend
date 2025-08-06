@@ -1,12 +1,9 @@
 import SignupForm from '@/app/components/auth/SignupForm'
-import React from 'react'
+// app/signup/page.tsx (server component)
+import { getCountries, type Country } from '@/app/lib/countries'
 
-const Signup = () => {
-  return (
-    <div className='flex items-center justify-center h-screen'>
-      <SignupForm />
-    </div>
-  )
+export default async function SignupPage() {
+  const countries: Country[] = await getCountries() // server-side fetch
+
+  return <SignupForm countries={countries} />
 }
-
-export default Signup

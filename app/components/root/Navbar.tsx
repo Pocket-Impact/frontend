@@ -12,7 +12,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div className='px-4 md:flex hidden bg-background rounded-b-2xl fixed w-full max-w-[1440px] justify-between inter h-16 items-center p-2 left-1/2 top-0 -translate-x-[50%] z-10'>
+            <div className='px-4 md:flex hidden z-50 bg-background rounded-b-2xl fixed w-full max-w-[1440px] justify-between inter h-16 items-center p-2 left-1/2 top-0 -translate-x-[50%]'>
                 <div className='flex items-center gap-2'>
                     <Image src={logo} alt="Pocket Impact Logo" width={logo.width} height={logo.height} className='w-8 h-8' />
                     <span className='bricolage xl'>
@@ -21,13 +21,15 @@ const Navbar = () => {
                 </div>
                 <div className='flex gap-10 bricolage'>
                     {links.map((link) => (
-                        <Link href={link.href} key={link.name} className=''>
+                        <a href={`/#${link.href}`} key={link.name} className=''>
                             {link.name}
-                        </Link>
+                        </a>
                     ))}
                 </div>
                 <div>
-                    <PrimaryButton text="Get Started" styles="text-sm py-3 px-6" />
+                    <Link href="/auth/signup">
+                        <PrimaryButton text="Get Started" styles="text-sm py-3 px-6" />
+                    </Link>
                 </div>
             </div>
             <div className={`max-md:flex flex-col hidden px-4 bg-background z-20 rounded-b-2xl pb-5 outline-black/30 fixed w-full max-w-[1440px] justify-between inter transition-all duration-300 overflow-hidden ${!open ? "h-16" : "h-56 outline"} items-center p-2 left-1/2 top-0 -translate-x-[50%] z-10`}>

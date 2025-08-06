@@ -1,10 +1,9 @@
 import React from 'react'
-import PrimaryButton from '../ui/PrimaryButton'
 import SecondaryButton from '../ui/SecondaryButton'
 
 const HeroSection = () => {
     return (
-        <div className='h-screen max-lg:h-max max-md:pt-16 max-lg:pt-32 mt-16 relative border bg-cblack border-black/20 overflow-hidden rounded-2xl'>
+        <div className='h-screen max-lg:h-max max-md:pt-16 max-lg:pt-32 mt-16 relative bg-cblack overflow-hidden rounded-2xl'>
             <div className="absolute inset-0">
                 <div className="absolute inset-0 z-10 h-full w-full [background:radial-gradient(125%_125%_at_50%_10%,transparent_40%,#386641_100%)]"></div>
             </div>
@@ -18,7 +17,7 @@ const HeroSection = () => {
                         Crafted for mission-first teams — perfect for dashboards, reports, and real-world results.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
-                        <SecondaryButton text="Get Started" styles="rounded-xl py-4 max-md:py-2 px-8 max-md:px-4" />
+                        <SecondaryButton text="Get Started" styles="rounded-xl font-semibold py-4 max-md:py-2 px-8 max-md:px-4" />
                     </div>
                 </div>
                 <div className='w-full max-w-7xl mt-8 px-3 pt-3 border-x border-t bg-white/20 backdrop-blur-2xl border-white h-64 rounded-t-3xl'>

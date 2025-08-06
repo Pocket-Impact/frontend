@@ -85,3 +85,7 @@
 ::-webkit-scrollbar {
   display: none;
 }
+
+.input {
+  @apply bg-white border border-gray-300 rounded-lg p-2 w-full focus:outline-none outline-0
+}

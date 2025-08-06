@@ -1,14 +1,14 @@
 export const links = [
     {
         name: "Features",
-        href: "/features",
+        href: "features",
     },
     {
         name: "Impact",
-        href: "/impact",
+        href: "impact",
     },
     {
         name: "Pricing",
-        href: "/pricing",
+        href: "pricing",
     },
 ]

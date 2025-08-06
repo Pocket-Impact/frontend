@@ -58,7 +58,7 @@ const SignupForm: React.FC<{ countries: Country[] }> = ({ countries }) => {
             </div>
             <div className='flex flex-col gap-2'>
               <label htmlFor="organisationName" className='w-max min-w-28 base'>Name</label>
-              <input className='input' type="text" id="organisationName" name="organisationName" placeholder='e.g. John Doe' required />
+              <input className='input' type="text" id="organisationName" name="organisationName" placeholder='e.g. Org XYZ' required />
             </div>
             <div className='flex relative flex-col gap-2'>
               <label htmlFor="organisationCountry" className='w-max min-w-28'>Country</label>

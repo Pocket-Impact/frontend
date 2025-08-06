@@ -117,5 +117,5 @@
 }
 
 .input {
-  @apply bg-white border border-gray-300 rounded-lg p-2 w-full focus:outline-none outline-0
+  @apply bg-white pl-3 border focus:border-primary text-base border-gray-300 rounded-lg p-2 w-full outline-4 max-md:outline-background outline-white focus:outline-primary/20;
 }

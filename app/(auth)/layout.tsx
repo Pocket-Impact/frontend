@@ -16,6 +16,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Pocket Impact",
   description: "A platform for social impact",
+  icons: {
+    icon: "/img/black.svg", // Relative to /public
+  },
 };
 
 export default function RootLayout({

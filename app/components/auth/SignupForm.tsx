@@ -10,47 +10,21 @@ import { FiUser } from 'react-icons/fi'
 import { GoOrganization } from 'react-icons/go'
 import { RxCaretDown } from 'react-icons/rx'
 import { Country, getCountries } from '@/app/lib/countries'
+import FormSidebar from './FormSidebar'
+import { sizes } from '@/app/lib/sizes'
 
 const SignupForm: React.FC<{ countries: Country[] }> = ({ countries }) => {
   const [step, setStep] = useState(1)
-
-  console.log("Countries:", countries[0])
+  console.log(countries[0])
   const handleNext = () => setStep(2)
   const handleBack = () => setStep(1)
   const [open, setOpen] = useState(false)
+  const [size, setSize] = useState<string>("")
 
   return (
     <div className='flex items-center justify-center h-screen'>
       <div className='w-full lg:rounded-3xl max-lg:h-full inter overflow-hidden max-w-5xl lg:grid lg:grid-cols-7 max-lg:grid-cols-1 lg:border border-black/20 bg-white justify-center items-center'>
-        <div className='bg-primary lg:col-span-3 p-5 max-lg:p-3 max-lg:flex justify-between items-center lg:h-full'>
-          <div className='flex items-center gap-4'>
-            <Image src={logo.src} alt="Pocket Impact Logo" width={logo.width} height={logo.height} className='w-8 h-8' />
-            <span className='bricolage lg max-sm:hidden text-white'>
-              Pocket Impact
-            </span>
-          </div>
-          <div className='lg:mt-20 lg:ml-4 max-lg:flex'>
-            <div className='flex items-center gap-4'>
-              <div className='bg-white rounded-lg w-max p-2'>
-                <FiUser className={`text-primary w-6 h-6`} />
-              </div>
-              <div className='max-sm:hidden'>
-                <p className='text-white sm'>Your personal details</p>
-                <p className='text-white/50 sm'>Personal details of user</p>
-              </div>
-            </div>
-            <div className='h-14 w-5 max-lg:w-14 max-lg:ml-3 max-lg:h-5 max-lg:border-b-2 lg:border-r-2 border-dashed border-white'></div>
-            <div className='flex items-center gap-4'>
-              <div className={`${step != 1 ? "bg-white" : "bg-white/30"} transition-all duration-500 rounded-lg w-max p-2`}>
-                <GoOrganization className={`${step != 1 ? "text-primary" : "text-white"} transition-all duration-500 w-6 h-6`} />
-              </div>
-              <div className='max-sm:hidden'>
-                <p className='text-white sm'>Your organisation's details</p>
-                <p className='text-white/50 sm'>Details of the organisation</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <FormSidebar step={step} />
         <form className="inter flex-col w-full lg:col-span-4 p-10 max-lg:p-8 max-md:p-6">
           <h6 className='text-black/50'>Step {step}/2</h6>
           <section className={`${step === 1 ? 'flex' : 'hidden'} flex-col gap-4`}>
@@ -88,7 +62,7 @@ const SignupForm: React.FC<{ countries: Country[] }> = ({ countries }) => {
             </div>
             <div className='flex relative flex-col gap-2'>
               <label htmlFor="organisationCountry" className='w-max min-w-28'>Country</label>
-              <div className='input text-black/60 p-1 flex items-center justify-between'>
+              <div className='input text-black/60 p-1 flex items-center justify-between' onClick={() => setOpen(!open)}>
                 <span>Select country</span>
                 <div className='rounded-sm hover:bg-gray-200 cursor-pointer' onClick={() => setOpen(!open)}>
                   <RxCaretDown className={`${open ? "rotate-180" : ""} transition-all duration-300 w-6 text-black/80 h-6`} />
@@ -107,7 +81,17 @@ const SignupForm: React.FC<{ countries: Country[] }> = ({ countries }) => {
             </div>
             <div className='flex flex-col w-full gap-2'>
               <label htmlFor="email" className='w-max min-w-28'>Size</label>
-              <input type="email" className='input' id="email" name="email" placeholder='e.g. john@example.com' required />
+              <div className='grid grid-cols-3 gap-4'>
+                {sizes.map((organisationSize) => (
+                  <div
+                    key={organisationSize.name}
+                    onClick={() => setSize(organisationSize.name)}
+                    className={`p-2 pl-3 rounded-lg text-center border-gray-300 border cursor-pointer ${size === organisationSize.name ? 'bg-primary/20 border-primary' : 'bg-white'}`}
+                  >
+                    {organisationSize.name}
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
           <div className='flex items-center mt-4 w-max gap-2'>

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import logo from '@/public/img/icon.svg'
 import Image from 'next/image'
 import { CiMenuFries } from "react-icons/ci";
+import { IoCloseOutline } from 'react-icons/io5'
 
 const Navbar = () => {
     const [open, setOpen] = React.useState(false);
@@ -41,7 +42,7 @@ const Navbar = () => {
                         </span>
                     </div>
                     <div>
-                        <PrimaryButton onClick={() => setOpen(!open)} icon={<CiMenuFries />} styles="text-sm p-3" />
+                            <PrimaryButton onClick={() => setOpen(!open)} icon={open ? <IoCloseOutline /> : <CiMenuFries />} styles="text-sm p-3" />
                     </div>
                 </div>
                 <div className='flex flex-col mt-4 gap-3 bricolage w-full'>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
-import Navbar from "../components/root/Navbar";
+import Navbar from "@/app/components/root/Navbar"; // make sure path is correct
 
 const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -16,16 +16,21 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Pocket Impact",
   description: "A platform for social impact",
+  icons: {
+    icon: "/img/icon.svg", // Relative to /public
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body className={`${bricolageGrotesque.variable} bg-background ${inter.variable} antialiased`}>
+    <html lang="en" className="scroll-smooth">
+      <body
+        className={`${bricolageGrotesque.variable} ${inter.variable} bg-background antialiased`}
+      >
         <Navbar />
         {children}
       </body>

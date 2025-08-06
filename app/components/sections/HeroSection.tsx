@@ -17,7 +17,7 @@ const HeroSection = () => {
                         Crafted for mission-first teams — perfect for dashboards, reports, and real-world results.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
-                        <SecondaryButton text="Get Started" styles="rounded-xl font-semibold py-4 max-md:py-2 px-8 max-md:px-4" />
+                        <SecondaryButton text="Get Started" styles="rounded-xl effect font-semibold py-4 max-md:py-2 px-8 max-md:px-4" />
                     </div>
                 </div>
                 <div className='w-full max-w-7xl mt-8 px-3 pt-3 border-x border-t bg-white/20 backdrop-blur-2xl border-white h-64 rounded-t-3xl'>

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: "Pocket Impact",
   description: "A platform for social impact",
   icons: {
-    icon: "/img/icon.svg", // Relative to /public
+    icon: "/img/black.svg", // Relative to /public
   },
 };
 

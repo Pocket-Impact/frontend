@@ -16,7 +16,7 @@ export const plans: PricingPlan[] = [
       "Just the basic feature",
       "The best feature",
       "The worst feature",
-      "The worst feature",
+      "The better feature",
     ],
   },
   {

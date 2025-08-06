@@ -14,7 +14,6 @@ const Navbar = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            console.log("Scroll position:", window.scrollY); // 👈 Logs on every scroll
             setScrolled(window.scrollY > 300);
         };
 
@@ -26,7 +25,7 @@ const Navbar = () => {
     }, []);
 
 
-    const borderClass = scrolled ? "border-b border-primary border-x" : "border-b border-background border-x";
+    const borderClass = scrolled ? "outline outline-primary" : "outline outline-background";
 
     return (
         <>
@@ -46,11 +45,11 @@ const Navbar = () => {
                 </div>
                 <div>
                     <Link href="/auth/signup">
-                        <PrimaryButton text="Get Started" styles="text-sm py-3 px-6" />
+                        <PrimaryButton text="Get Started" styles="text-sm effect py-3 px-6" />
                     </Link>
                 </div>
             </div>
-            <div className={`max-md:flex flex-col hidden px-4 bg-background z-20 rounded-b-2xl pb-5 outline-black/30 fixed w-full max-w-[1440px] justify-between inter transition-all duration-300 overflow-hidden ${!open ? "h-16" : "h-56 outline"} items-center p-2 left-1/2 top-0 -translate-x-[50%] z-10 ${borderClass}`}>
+             <div className={`max-md:flex flex-col ${borderClass} hidden px-4 bg-background z-20 rounded-b-2xl pb-5 fixed w-full max-w-[1440px] justify-between inter transition-all duration-300 overflow-hidden ${!open ? "h-16" : "h-56 outline"} items-center p-2 left-1/2 top-0 -translate-x-[50%] z-10`}>
                 <div className='flex items-center justify-between w-full'>
                     <div className='flex items-center gap-2'>
                         <Image src={logo} alt="Pocket Impact Logo" width={logo.width} height={logo.height} className='w-8 h-8' />
@@ -59,7 +58,7 @@ const Navbar = () => {
                         </span>
                     </div>
                     <div>
-                        <PrimaryButton onClick={() => setOpen(!open)} icon={open ? <IoCloseOutline /> : <CiMenuFries />} styles="text-sm p-3" />
+                        <PrimaryButton onClick={() => setOpen(!open)} icon={<CiMenuFries />} styles="text-sm p-3" />
                     </div>
                 </div>
                 <div className='flex flex-col mt-4 gap-3 bricolage w-full'>

@@ -138,6 +138,10 @@
   @apply bg-white pl-3 border focus:border-primary text-base border-gray-300 rounded-lg p-2 w-full outline-4;
 }
 
+.input-2 {
+  @apply bg-white pl-3 border focus:border-primary text-base border-gray-300 rounded-lg p-2 w-full outline-0;
+}
+
 .rounded-x2l {
   @apply rounded-2xl max-lg:rounded-xl max-md:rounded-lg
 }

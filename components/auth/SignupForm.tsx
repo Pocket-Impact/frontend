@@ -5,7 +5,7 @@ import PrimaryButton from '../ui/PrimaryButton'
 import Link from 'next/link'
 import { MdOutlineKeyboardBackspace } from 'react-icons/md'
 import { Country } from '@/lib/countries'
-import FormSidebar from './FormSidebar'
+import FormSidebar from './SignupSide'
 
 import { SignupFormErrors } from '@/lib/errors'
 import SectionOne from './sections/SectionOne'
@@ -21,19 +21,19 @@ const SignupForm: React.FC<{ countries: Country[] }> = ({ countries }) => {
   const handleNext = () => {
     if (step == 1) {
       if (formData.fullName.length == 0) {
-        setErrors({ ...errors, fullName: "required" })
+        setErrors({ ...errors, fullName: "Required" })
       } else if (!formData.fullName.includes(" ")) {
-        setErrors({ ...errors, fullName: "Full names required" })
+        setErrors({ ...errors, fullName: "Full names Required" })
       } else if (formData.phoneNumber.length == 0) {
-        setErrors({ ...errors, phoneNumber: "required" })
+        setErrors({ ...errors, phoneNumber: "Required" })
       } else if ((!/^\+\d{10,15}$/.test(formData.phoneNumber.trim()))) {
         setErrors({ ...errors, phoneNumber: "e.g +1234567890" })
       } else if (formData.email.length == 0) {
-        setErrors({ ...errors, email: "required" })
+        setErrors({ ...errors, email: "Required" })
       } else if (!formData.email.includes("@") && !formData.email.includes(".")) {
         setErrors({ ...errors, email: "Email must include '@' and '.'" })
       } else if (formData.password.length == 0) {
-        setErrors({ ...errors, password: "required" })
+        setErrors({ ...errors, password: "Required" })
       } else if (formData.password.length < 6) {
         setErrors({ ...errors, password: "Minimum 6 characters" })
       }
@@ -67,13 +67,13 @@ const SignupForm: React.FC<{ countries: Country[] }> = ({ countries }) => {
     e.preventDefault()
 
     if (formData.organisationName.length == 0) {
-      setErrors({ ...errors, organisationName: "required" })
+      setErrors({ ...errors, organisationName: "Required" })
     } else if (formData.organisationName.length < 5) {
       setErrors({ ...errors, organisationName: "Should be atleast 5 characters" })
     } else if (!formData.organisationCountry) {
-      setErrors({ ...errors, organisationCountry: "required" })
+      setErrors({ ...errors, organisationCountry: "Required" })
     } else if (!formData.organisationSize) {
-      setErrors({ ...errors, organisationSize: "required" })
+      setErrors({ ...errors, organisationSize: "Required" })
     } else {
       await signUp(formData)
       // console.log("Sent!", sign)
@@ -94,10 +94,10 @@ const SignupForm: React.FC<{ countries: Country[] }> = ({ countries }) => {
             <PrimaryButton onClick={handleNext} type="submit" text="Signup" styles={`${step == 1 ? "hidden" : ""} text-sm w-max h-full op font-medium rounded-lg py-3 px-10`} />
           </div>
           <div className='mt-2'>
-            <span>Already have an account?</span> <Link href="/auth/signin" className='font-bold text-primary hover:underline underline-offset-2'><span>Log in</span></Link>
+            <span>Already have an account?</span> <Link href="/auth/signin" className='font-bold text-primary hover:underline underline-offset-2'><span>Sign in</span></Link>
           </div>
         </form>
-      </div >
+      </div>
     </div>
   )
 }

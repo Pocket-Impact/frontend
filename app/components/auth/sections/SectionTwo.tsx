@@ -25,8 +25,8 @@ const SectionTwo: React.FC<{ step: number, errors: SignupFormErrors, setErrors: 
                     <label htmlFor="organisationCountry" className='base w-max min-w-28'>Country</label>
                     <span className='text-orange-400 sm'>{errors.organisationCountry}</span>
                 </div>
-                <div className={`input text-black/60 flex items-center justify-between ${errors.organisationCountry ? "outline-error focus:outline-error" : "outline-white focus:outline-primary/20"}`} onClick={() => setOpen(!open)}>
-                    <span>{formData.organisationCountry || 'Select country'}</span>
+                <div className={`input flex items-center justify-between ${errors.organisationCountry ? "outline-error focus:outline-error" : "outline-white focus:outline-primary/20"}`} onClick={() => setOpen(!open)}>
+                    <span className={`${formData.organisationCountry ? "text-black" : "text-black/60"}`}>{formData.organisationCountry || 'Select country'}</span>
                     <div className='rounded-sm hover:bg-gray-200 cursor-pointer' onClick={(e) => { e.stopPropagation(); setOpen(!open) }}>
                         <RxCaretDown className={`${open ? "rotate-180" : ""} transition-all duration-300 w-6 text-black/80 h-6`} />
                     </div>

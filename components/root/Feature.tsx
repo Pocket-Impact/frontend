@@ -1,4 +1,4 @@
-import type { Feature } from '@/app/lib/tools';
+import type { Feature } from '@/lib/tools';
 import React from 'react'
 
 const Feature: React.FC<{ feature: Feature; index: number }> = ({ feature, index }) => {

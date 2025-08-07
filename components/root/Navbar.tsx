@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import PrimaryButton from '../ui/PrimaryButton'
-import { links } from '../../lib/links'
+import { links } from '@/lib/links'
 import Link from 'next/link'
 import logo from '@/public/img/icon.svg'
 import Image from 'next/image'

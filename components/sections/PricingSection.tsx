@@ -1,9 +1,6 @@
 import React from 'react'
-import { IoMdCheckmark } from 'react-icons/io'
-import { plans } from '@/app/lib/plans'
-import PrimaryButton from '../ui/PrimaryButton'
-import SecondaryButton from '../ui/SecondaryButton'
-import Pricing from '../root/Pricing'
+import { plans } from '@/lib/plans'
+import Pricing from '@/components/root/Pricing'
 
 const PricingSection = () => {
     return (

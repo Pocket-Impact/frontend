@@ -1,5 +1,5 @@
 import React from 'react'
-import SecondaryButton from '../ui/SecondaryButton'
+import SecondaryButton from '@/components/ui/SecondaryButton'
 
 const HeroSection = () => {
     return (

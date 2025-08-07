@@ -1,4 +1,4 @@
-import { SignupFormErrors } from '@/app/lib/errors';
+import { SignupFormErrors } from '@/lib/errors';
 import React, { useState } from 'react'
 
 const SectionOne: React.FC<{ step: number, setStep: Function, errors: SignupFormErrors, setErrors: Function, setFormData: Function, formData: any }> = ({ step, setStep, formData, setFormData, errors, setErrors }) => {

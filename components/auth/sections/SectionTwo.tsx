@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Country } from '@/app/lib/countries'
-import { SignupFormErrors } from '@/app/lib/errors';
+import { Country } from '@/lib/countries'
+import { SignupFormErrors } from '@/lib/errors';
 import { RxCaretDown } from 'react-icons/rx';
-import { sizes } from '@/app/lib/sizes'
+import { sizes } from '@/lib/sizes'
 
 const SectionTwo: React.FC<{ step: number, errors: SignupFormErrors, setErrors: Function, setFormData: Function, formData: any, countries: Country[] }> = ({ countries, step, formData, setFormData, errors, setErrors }) => {
     const [open, setOpen] = useState(false)

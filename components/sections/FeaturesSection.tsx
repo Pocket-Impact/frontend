@@ -1,7 +1,7 @@
 import React from 'react'
-import { features, tools } from '@/app/lib/tools'
+import { features, tools } from '@/lib/tools'
 import { CiCircleCheck } from "react-icons/ci";
-import Feature from '../root/Feature';
+import Feature from '@/components/root/Feature';
 
 const FeaturesSection = () => {
     return (

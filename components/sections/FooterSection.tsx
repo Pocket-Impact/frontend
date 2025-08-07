@@ -1,12 +1,10 @@
 import React from 'react'
 import logo from '@/public/img/white.svg'
 import Image from 'next/image'
-import { links } from '../../lib/links'
+import { links } from '@/lib/links'
 import { link } from 'fs'
 import Link from 'next/link'
-import { FaXTwitter } from 'react-icons/fa6'
-import { FaLinkedin } from 'react-icons/fa'
-import { socialIcons } from '@/app/lib/icons'
+import { socialIcons } from '@/lib/icons'
 
 const FooterSection = () => {
     return (

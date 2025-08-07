@@ -1,6 +1,5 @@
 import React from 'react'
-import PrimaryButton from '../ui/PrimaryButton'
-import SecondaryButton from '../ui/SecondaryButton'
+import SecondaryButton from '@/components/ui/SecondaryButton'
 
 const CTASection = () => {
     return (

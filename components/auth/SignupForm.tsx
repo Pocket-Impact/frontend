@@ -4,13 +4,13 @@ import React, { useState } from 'react'
 import PrimaryButton from '../ui/PrimaryButton'
 import Link from 'next/link'
 import { MdOutlineKeyboardBackspace } from 'react-icons/md'
-import { Country } from '@/app/lib/countries'
+import { Country } from '@/lib/countries'
 import FormSidebar from './FormSidebar'
 
-import { SignupFormErrors } from '@/app/lib/errors'
+import { SignupFormErrors } from '@/lib/errors'
 import SectionOne from './sections/SectionOne'
 import SectionTwo from './sections/SectionTwo'
-import { signUp } from '@/app/utils/signUp'
+import { signUp } from '@/utils/signUp'
 
 const SignupForm: React.FC<{ countries: Country[] }> = ({ countries }) => {
   const [step, setStep] = useState(1)

@@ -1,9 +1,9 @@
 import React from 'react'
 import { IoMdCheckmark } from 'react-icons/io'
-import SecondaryButton from '../ui/SecondaryButton'
-import { PricingPlan } from '@/app/lib/plans'
+import SecondaryButton from '@/components/ui/SecondaryButton'
+import { PricingPlan } from '@/lib/plans'
 
-const Pricing :React.FC<{ plan: PricingPlan }> = ({ plan }) => {
+const Pricing: React.FC<{ plan: PricingPlan }> = ({ plan }) => {
     return (
         <div key={plan.name} className='text-white bg-cblack inter border max-lg:rounded-2xl border-white/20 rounded-t-2xl'>
             <div className='border-b border-white/20 p-5'>

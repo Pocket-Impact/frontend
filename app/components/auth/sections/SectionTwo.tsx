@@ -15,7 +15,7 @@ const SectionTwo: React.FC<{ step: number, errors: SignupFormErrors, setErrors: 
             </div>
             <div className='flex flex-col gap-2'>
                 <div className='flex items-end justify-between w-full'>
-                    <label htmlFor="organisationName" className='base w-max min-w-28'>Name {formData.organisationName}</label>
+                    <label htmlFor="organisationName" className='base w-max min-w-28'>Name</label>
                     <span className='text-orange-400 sm'>{errors.organisationName}</span>
                 </div>
                 <input className={`input ${errors.organisationName ? "outline-error focus:outline-error" : "outline-white focus:outline-primary/20"}`} onChange={(e) => { setErrors({ ...errors, organisationName: "" }); setFormData({ ...formData, organisationName: e.target.value }) }} type="text" id="organisationName" name="organisationName" placeholder='e.g. Org XYZ' />
@@ -32,7 +32,7 @@ const SectionTwo: React.FC<{ step: number, errors: SignupFormErrors, setErrors: 
                     </div>
                     <div className={`${!open ? "hidden" : ""} absolute top-full mt-2 rounded-lg z-50 border border-gray-300 bg-white overflow-y-scroll clean max-h-52 w-full left-0`}>
                         {countries.map((country) => (
-                            <div key={country.code} onClick={() => { setErrors({ ...errors, organisationCountry: "" }); setFormData({ ...formData, organisationCountry: country.name }); setOpen(false); }} className='hover:bg-gray-200 cursor-pointer h-10 flex items-center border-gray-300 border-b'>
+                            <div key={country.code} onClick={() => { setErrors({ ...errors, organisationCountry: "" }); setFormData({ ...formData, organisationCountry: country.code }); setOpen(false); }} className='hover:bg-gray-200 cursor-pointer h-10 flex items-center border-gray-300 border-b'>
                                 <div className='h-full justify-center flex px-2 items-center border-gray-300'>
                                     <img src={country.pic} alt={country.name} className='w-6 h-4 rounded-[3px]' />
                                 </div>

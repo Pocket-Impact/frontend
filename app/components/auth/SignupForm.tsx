@@ -10,6 +10,7 @@ import FormSidebar from './FormSidebar'
 import { SignupFormErrors } from '@/app/lib/errors'
 import SectionOne from './sections/SectionOne'
 import SectionTwo from './sections/SectionTwo'
+import { signUp } from '@/app/utils/signUp'
 
 const SignupForm: React.FC<{ countries: Country[] }> = ({ countries }) => {
   const [step, setStep] = useState(1)
@@ -62,7 +63,7 @@ const SignupForm: React.FC<{ countries: Country[] }> = ({ countries }) => {
     organisationSize: ("").trim(),
   })
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (formData.organisationName.length == 0) {
@@ -73,9 +74,9 @@ const SignupForm: React.FC<{ countries: Country[] }> = ({ countries }) => {
       setErrors({ ...errors, organisationCountry: "required" })
     } else if (!formData.organisationSize) {
       setErrors({ ...errors, organisationSize: "required" })
-    }
-    else {
-      console.log(formData)
+    } else {
+      await signUp(formData)
+      // console.log("Sent!", sign)
     }
   }
 

@@ -5,6 +5,7 @@
   --color-primary: #0A400C;
   --color-secondary: #FED16A;
   --color-cblack: #191C1F;
+  --color-error: #FFEDD4;
 }
 
 .bricolage {
@@ -130,5 +131,5 @@
 }
 
 .input {
-  @apply bg-white pl-3 border focus:border-primary text-base border-gray-300 rounded-lg p-2 w-full outline-4 max-md:outline-background outline-white focus:outline-primary/20;
+  @apply bg-white pl-3 border focus:border-primary text-base border-gray-300 rounded-lg p-2 w-full outline-4;
 }

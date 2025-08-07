@@ -22,6 +22,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -32,6 +33,7 @@
   from {
     opacity: 0
   }
+
   to {
     opacity: 1;
   }
@@ -50,6 +52,7 @@
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -133,4 +136,12 @@
 
 .input {
   @apply bg-white pl-3 border focus:border-primary text-base border-gray-300 rounded-lg p-2 w-full outline-4;
+}
+
+.rounded-x2l {
+  @apply rounded-2xl max-lg:rounded-xl max-md:rounded-lg
+}
+
+.rounded-gl {
+  @apply rounded-lg max-lg:rounded-md max-md:rounded-sm
 }

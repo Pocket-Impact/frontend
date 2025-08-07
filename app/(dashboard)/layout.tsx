@@ -28,9 +28,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${bricolageGrotesque.variable} p-2.5 gap-2.5 bg-background h-screen ${inter.variable} antialiased flex`}>
+            <body className={`${bricolageGrotesque.variable} p-2.5 max-lg:p-2 max-md:p-1.5 gap-2.5 max-lg:gap-2 max-md:gap-1.5 bg-background h-screen ${inter.variable} antialiased flex`}>
                 <Sidebar />
-                <div className="bg-white rounded-2xl inter p-6 w-full border-stroke border">
+                <div className="bg-white rounded-x2l inter p-6 max-lg:p-5 max-md:p-4 w-full border-stroke border">
                     {children}
                 </div>
             </body>

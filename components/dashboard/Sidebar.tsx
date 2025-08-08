@@ -11,17 +11,17 @@ import { IoIosMore } from 'react-icons/io'
 const links = [
     {
         name: "Dashboard",
-        href: "/features",
+        href: "/dashboard",
         icon: FaCompass
     },
     {
         name: "Feedback",
-        href: "/impact",
+        href: "/feedback",
         icon: VscFeedback
     },
     {
         name: "Analytics",
-        href: "pricing",
+        href: "/analytics",
         icon: VscGraph
     },
 ]
@@ -71,8 +71,8 @@ const Sidebar = () => {
                     </div>
                 </div>
             </div>
-            <div className='flex items-center gap-2 w-[300px] max-md:w-max bg-white border border-[#DDDDDD] rounded-x2l max-lg:p-2 max-md:p-1.5 p-2.5'>
-                <div className='max-lg:w-10 max-md:w-8 bg-red-400 rounded-gl max-lg:h-10 max-md:h-8' />
+            <div className='flex items-center gap-2.5 max-lg:gap-2 max-md:gap-1.5 w-[300px] max-md:w-max bg-white border border-[#DDDDDD] rounded-x2l max-lg:p-2 max-md:p-1.5 p-2.5'>
+                <div className='max-lg:w-10 w-12 h-12 max-md:w-8 bg-red-400 rounded-gl max-lg:h-10 max-md:h-8' />
                 <div className='flex flex-col max-md:hidden'>
                     <span className='inter base font-semibold'>Organisation Name</span>
                     <span className='inter sm text-black/70'>Profile</span>

@@ -1,11 +1,6 @@
 import React from 'react'
-import PrimaryButton from '@/components/ui/PrimaryButton'
-import { links } from '@/lib/links'
-import Link from 'next/link'
 import logo from '@/public/img/icon.svg'
 import Image from 'next/image'
-import { CiMenuFries } from "react-icons/ci";
-import { IoCloseOutline } from 'react-icons/io5'
 import OtpForm from '@/components/auth/OtpForm'
 
 const page = () => {

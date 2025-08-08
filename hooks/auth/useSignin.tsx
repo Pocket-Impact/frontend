@@ -1,3 +1,5 @@
+import { useAuthStore } from '@/stores/authStores';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
 type FormData = {
@@ -8,6 +10,8 @@ type FormData = {
 const useSignin = () => {
     const [errors, setErrors] = useState<FormData>({ email: "", password: "" });
     const [formData, setFormData] = useState<FormData>({ email: "", password: "" });
+    const router = useRouter();
+    const { setUser } = useAuthStore();
 
     const validate = (data: FormData) => {
         let newErrors: FormData = { email: "", password: "" };
@@ -30,15 +34,23 @@ const useSignin = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
+                credentials: 'include'
             });
 
             const json = await response.json();
+
             if (!response.ok) {
-                setErrors({email: "Invalid Email or Password", password: "Invalid Email or Password"});
+                setErrors({ email: "Invalid Email or Password", password: "Invalid Email or Password" });
             } else {
-                console.log("Signin successful", json);
-                setFormData({ email: "", password: "" });
-                setErrors({ email: "", password: "" });
+                setUser(json.data.user);
+
+                if (json.data.user.isVerified) {
+                    router.push('/dashboard');
+                    setFormData({ email: "", password: "" });
+                    setErrors({ email: "", password: "" });
+                } else {
+                    router.push('/auth/verify-otp');
+                }
             }
         } catch (error) {
             setErrors({ email: "Network error", password: "" });

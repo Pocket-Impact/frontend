@@ -43,6 +43,10 @@
   animation: op 0.5s ease-in-out;
 }
 
+.op-2 {
+  animation: op .3s ease-in-out;
+}
+
 .fade-down {
   animation: fadeDown 0.5s ease-in-out forwards;
 }

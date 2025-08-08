@@ -1,14 +1,20 @@
+import { useAuthStore } from '@/stores/authStores';
+import { useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react'
 
 const useOTP = () => {
     const [otp, setOtp] = useState(Array(6).fill(''));
     const inputsRef = useRef<(HTMLInputElement | undefined)[]>([]);
+    const [error, setError] = useState<string | null>(null);
+    const { email } = useAuthStore((state) => state);
+    const router = useRouter();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
         const value = e.target.value.replace(/[^0-9]/g, '');
+        setError(null);
+
         let newOtp = [...otp];
         if (value.length > 1) {
-            // Handle paste or fast typing
             value.split('').forEach((char, i) => {
                 if (idx + i < 6) newOtp[idx + i] = char;
             });
@@ -50,11 +56,56 @@ const useOTP = () => {
         inputsRef.current[nextIdx]?.focus();
     };
 
+    const verify = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/api/auth/verify-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, otp: otp.join('') }),
+                credentials: 'include'
+            });
+
+            const json = await response.json();
+            if (!response.ok) {
+                console.log(json)
+                setError(json.message);
+            } else {
+                router.push('/dashboard')
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const onSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (otp.some((digit) => digit === '')) {
+            setError('Please enter all digits');
+            return;
+        }
+
+        verify();
+        inputsRef.current[0]?.focus();
+        setOtp(Array(6).fill(''));
+    };
+
+    const resendOTP = async () => {
+        const response = await fetch('http://localhost:5000/api/auth/resend-otp', {
+            credentials: 'include'
+        })
+
+        return null;
+    }
+
     return {
         handleChange,
         handleKeyDown,
         handlePaste,
         inputsRef,
+        resendOTP,
+        error,
+        onSubmit,
         otp
     };
 }

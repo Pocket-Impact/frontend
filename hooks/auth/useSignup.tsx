@@ -1,5 +1,5 @@
 import { SignupFormErrors } from '@/lib/errors'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 const useSignup = () => {
@@ -108,15 +108,28 @@ const useSignup = () => {
     }
 
     const signUp = async (data: typeof formData) => {
+        const body = {
+            fullname: data.fullName,
+            email: data.email,
+            phonenumber: data.phoneNumber,
+            organisationName: data.organisationName,
+            organisationCountry: data.organisationCountry,
+            organisationSize: (`${data.organisationSize}`).toLowerCase(),
+            password: data.password
+        }
+
         const response = await fetch('http://localhost:5000/api/auth/signup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
+            body: JSON.stringify(body),
         });
 
         const json = await response.json();
         if (!response.ok) {
-            console.log(json.message);
+            console.log(json);
+            if (json.message.includes("organisation")) {
+                setErrors({ ...errors, organisationName: json.message });
+            }
         } else {
             router.push('/auth/signin');
             setFormData({

@@ -50,10 +50,21 @@ export default function PreviewPane({ title, description, active, questions }: P
                         {q.type === "rating" && (
                             <div className="flex gap-2">
                                 {[1, 2, 3, 4, 5].map(num => (
-                                    <label key={num} className="flex flex-col items-center">
-                                        <input type="radio" name={`q${q.id}`} value={num} />
-                                        <span>{num}</span>
-                                    </label>
+                                    <div key={num} className="items-center">
+                                        <input
+                                            type="radio"
+                                            id={`q${q.id}_rating_${num}`}
+                                            name={`q${q.id}`}
+                                            value={num}
+                                            className="hidden peer"
+                                        />
+                                        <label
+                                            htmlFor={`q${q.id}_rating_${num}`}
+                                            className="cursor-pointer w-12 h-12 flex items-center justify-center rounded-lg border border-gray-300 bg-white transition-colors peer-checked:bg-primary/50 peer-checked:text-white peer-checked:border-primary"
+                                        >
+                                            {num}
+                                        </label>
+                                    </div>
                                 ))}
                             </div>
                         )}

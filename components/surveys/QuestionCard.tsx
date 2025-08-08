@@ -22,7 +22,7 @@ type Props = {
 const typeOptions = [
     { value: "text", label: "Text Input" },
     { value: "multiple", label: "Multiple Choice" },
-    // { value: "rating", label: "Rating Scale (1-5)" },
+    { value: "rating", label: "Rating Scale (1-5)" },
 ];
 
 export default function QuestionCard({ question, onUpdate, onRemove, dragHandleProps, index }: Props) {
@@ -37,7 +37,7 @@ export default function QuestionCard({ question, onUpdate, onRemove, dragHandleP
                 >
                     <IoMdRemove />
                 </button>
-                <div className="cursor-move" {...dragHandleProps}><MdDragIndicator /></div>
+                <div className="bg-primary p-2 text-lg rounded-lg text-white" {...dragHandleProps}><MdDragIndicator className="cursor-move" /></div>
             </div>
             <input
                 type="text"

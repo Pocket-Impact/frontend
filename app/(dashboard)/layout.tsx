@@ -3,6 +3,8 @@ import { Bricolage_Grotesque } from "next/font/google";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import Sidebar from "@/components/dashboard/Sidebar";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const bricolageGrotesque = Bricolage_Grotesque({
     subsets: ["latin"],
@@ -17,15 +19,18 @@ export const metadata: Metadata = {
     title: "Pocket Impact",
     description: "A platform for social impact",
     icons: {
-        icon: "/img/black.svg", // Relative to /public
+        icon: "/img/black.svg",
     },
 };
 
-export default function RootLayout({
-    children,
-}: Readonly<{
-    children: React.ReactNode;
-}>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('accessToken')?.value
+
+    if (!token) {
+        redirect("/auth/signin");
+    }
+
     return (
         <html lang="en">
             <body className={`${bricolageGrotesque.variable} p-2.5 max-lg:p-2 max-md:p-1.5 gap-2.5 max-lg:gap-2 max-md:gap-1.5 bg-background h-screen ${inter.variable} antialiased flex`}>

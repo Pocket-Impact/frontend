@@ -45,7 +45,7 @@ const useSignin = () => {
                 setUser(json.data.user);
 
                 if (json.data.user.isVerified) {
-                    router.push('/dashboard');
+                    router.push('/feedback/dashboard');
                     setFormData({ email: "", password: "" });
                     setErrors({ email: "", password: "" });
                 } else {

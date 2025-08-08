@@ -47,7 +47,7 @@ const tools = [
 
 const Sidebar = () => {
     const currentLink = usePathname()
-
+    
     return (
         <div className='h-full flex flex-col justify-between inter'>
             <div className='flex flex-col gap-2'>

@@ -7,21 +7,22 @@ import SideLink from './SideLink'
 import { VscFeedback, VscGraph } from 'react-icons/vsc'
 import { usePathname } from 'next/navigation'
 import { IoIosMore } from 'react-icons/io'
+import OrgTab from './OrgTab'
 
 const links = [
     {
         name: "Dashboard",
-        href: "/dashboard",
+        href: "/feedback/dashboard",
         icon: FaCompass
     },
     {
         name: "Surveys",
-        href: "/surveys",
+        href: "/feedback/surveys",
         icon: VscFeedback
     },
     {
         name: "Analytics",
-        href: "/analytics",
+        href: "/feedback/analytics",
         icon: VscGraph
     },
 ]
@@ -71,13 +72,7 @@ const Sidebar = () => {
                     </div>
                 </div>
             </div>
-            <div className='flex items-center gap-2.5 max-lg:gap-2 max-md:gap-1.5 w-[300px] max-md:w-max bg-white border border-[#DDDDDD] rounded-x2l max-lg:p-2 max-md:p-1.5 p-2.5'>
-                <div className='max-lg:w-10 w-12 h-12 max-md:w-8 bg-red-400 rounded-gl max-lg:h-10 max-md:h-8' />
-                <div className='flex flex-col max-md:hidden'>
-                    <span className='inter base font-semibold'>Organisation Name</span>
-                    <span className='inter sm text-black/70'>Profile</span>
-                </div>
-            </div>
+            <OrgTab />
         </div>
     )
 }

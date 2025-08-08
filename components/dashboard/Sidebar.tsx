@@ -15,8 +15,8 @@ const links = [
         icon: FaCompass
     },
     {
-        name: "Feedback",
-        href: "/feedback",
+        name: "Surveys",
+        href: "/surveys",
         icon: VscFeedback
     },
     {

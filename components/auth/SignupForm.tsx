@@ -1,23 +1,21 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import PrimaryButton from '../ui/PrimaryButton'
 import Link from 'next/link'
 import { MdOutlineKeyboardBackspace } from 'react-icons/md'
 import { Country } from '@/lib/countries'
 import FormSidebar from './SignupSide'
 
-import { SignupFormErrors } from '@/lib/errors'
 import SectionOne from './sections/SectionOne'
 import SectionTwo from './sections/SectionTwo'
-import { signUp } from '@/utils/signUp'
 import useSignup from '@/hooks/auth/useSignup'
 
 const SignupForm: React.FC<{ countries: Country[] }> = ({ countries }) => {
   const { step, setStep, handleBack, handleNext, open, setOpen, size, setSize, errors, formData, setErrors, onSubmit, setFormData } = useSignup();
 
   return (
-    <div className='flex items-center justify-center h-screen'>
+    <div className='flex items-center justify-center h-full'>
       <div className='w-full lg:rounded-3xl max-lg:h-full inter overflow-hidden max-w-5xl lg:grid lg:grid-cols-7 max-lg:grid-cols-1 lg:border border-black/20 bg-white justify-center items-center'>
         <FormSidebar step={step} />
         <form onSubmit={(e) => onSubmit(e)} className="inter flex-col w-full lg:col-span-4 p-10 max-lg:p-8 max-md:p-6">

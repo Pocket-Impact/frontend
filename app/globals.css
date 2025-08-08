@@ -76,6 +76,14 @@
   @apply text-2xl max-lg:text-xl max-md:text-lg max-sm:text-base;
 }
 
+.x3l {
+  @apply text-3xl max-lg:text-2xl max-md:text-xl max-sm:text-lg;
+}
+
+.x4l {
+  @apply text-4xl max-lg:text-3xl max-md:text-2xl max-sm:text-lg;
+}
+
 .base {
   @apply text-base max-lg:text-sm max-md:text-xs max-sm:text-[11px];
 }

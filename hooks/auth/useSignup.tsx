@@ -1,5 +1,5 @@
 import { SignupFormErrors } from '@/lib/errors'
-import { signUp } from '@/utils/signUp'
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 
 const useSignup = () => {
@@ -7,6 +7,7 @@ const useSignup = () => {
     const handleBack = () => setStep(1)
     const [open, setOpen] = useState(false)
     const [size, setSize] = useState<string>("")
+    const router = useRouter()
 
     const handleNext = () => {
         if (step == 1) {
@@ -105,6 +106,41 @@ const useSignup = () => {
             await signUp(formData);
         }
     }
+
+    const signUp = async (data: typeof formData) => {
+        const response = await fetch('http://localhost:5000/api/auth/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+
+        const json = await response.json();
+        if (!response.ok) {
+            console.log(json.message);
+        } else {
+            router.push('/auth/signin');
+            setFormData({
+                fullName: "",
+                phoneNumber: "",
+                email: "",
+                password: "",
+                organisationName: "",
+                organisationCountry: "",
+                organisationSize: "",
+            });
+            setErrors({
+                fullName: "",
+                phoneNumber: "",
+                email: "",
+                password: "",
+                organisationName: "",
+                organisationCountry: "",
+                organisationSize: "",
+            });
+        }
+    }
+
+
     return {
         step,
         setStep,

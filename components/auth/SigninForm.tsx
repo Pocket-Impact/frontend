@@ -4,34 +4,10 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import PrimaryButton from '../ui/PrimaryButton'
 import SigninSide from './SigninSide'
+import useSignin from '@/hooks/useSignin'
 
 const SigninForm = () => {
-    const [errors, setErrors] = useState({
-        email: "",
-        password: "",
-    })
-
-    const [formData, setFormData] = useState({
-        email: "",
-        password: "",
-    })
-
-    const onSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-
-        if (formData.email.length == 0) {
-            setErrors({ ...errors, email: "Required" })
-        } else if (!formData.email.includes("@") && !formData.email.includes(".")) {
-            setErrors({ ...errors, email: "Email must include '@' and '.'" })
-        } else if (formData.password.length == 0) {
-            setErrors({ ...errors, password: "Required" })
-        } else if (formData.password.length < 6) {
-            setErrors({ ...errors, password: "Minimum 6 characters" })
-        } else {
-            console.log(formData)
-            setFormData({ email: "", password: "" })
-        }
-    }
+    const { errors, formData, setErrors, setFormData, onSubmit } = useSignin();
 
     return (
         <div className='flex items-center justify-center h-screen'>

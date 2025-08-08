@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import PrimaryButton from '../ui/PrimaryButton'
 import SigninSide from './SigninSide'
-import useSignin from '@/hooks/useSignin'
+import useSignin from '@/hooks/auth/useSignin'
 
 const SigninForm = () => {
     const { errors, formData, setErrors, setFormData, onSubmit } = useSignin();

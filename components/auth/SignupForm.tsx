@@ -11,74 +11,10 @@ import { SignupFormErrors } from '@/lib/errors'
 import SectionOne from './sections/SectionOne'
 import SectionTwo from './sections/SectionTwo'
 import { signUp } from '@/utils/signUp'
+import useSignup from '@/hooks/auth/useSignup'
 
 const SignupForm: React.FC<{ countries: Country[] }> = ({ countries }) => {
-  const [step, setStep] = useState(1)
-  const handleBack = () => setStep(1)
-  const [open, setOpen] = useState(false)
-  const [size, setSize] = useState<string>("")
-
-  const handleNext = () => {
-    if (step == 1) {
-      if (formData.fullName.length == 0) {
-        setErrors({ ...errors, fullName: "Required" })
-      } else if (!formData.fullName.includes(" ")) {
-        setErrors({ ...errors, fullName: "Full names Required" })
-      } else if (formData.phoneNumber.length == 0) {
-        setErrors({ ...errors, phoneNumber: "Required" })
-      } else if ((!/^\+\d{10,15}$/.test(formData.phoneNumber.trim()))) {
-        setErrors({ ...errors, phoneNumber: "e.g +1234567890" })
-      } else if (formData.email.length == 0) {
-        setErrors({ ...errors, email: "Required" })
-      } else if (!formData.email.includes("@") && !formData.email.includes(".")) {
-        setErrors({ ...errors, email: "Email must include '@' and '.'" })
-      } else if (formData.password.length == 0) {
-        setErrors({ ...errors, password: "Required" })
-      } else if (formData.password.length < 6) {
-        setErrors({ ...errors, password: "Minimum 6 characters" })
-      }
-      else {
-        setStep(2)
-      }
-    }
-  }
-
-  const [errors, setErrors] = useState<SignupFormErrors>({
-    fullName: "",
-    phoneNumber: "",
-    email: "",
-    password: "",
-    organisationName: "",
-    organisationCountry: "",
-    organisationSize: "",
-  })
-
-  const [formData, setFormData] = useState({
-    fullName: ("").trim(),
-    phoneNumber: ("").trim(),
-    email: ("").trim(),
-    password: ("").trim(),
-    organisationName: ("").trim(),
-    organisationCountry: ("").trim(),
-    organisationSize: ("").trim(),
-  })
-
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (formData.organisationName.length == 0) {
-      setErrors({ ...errors, organisationName: "Required" })
-    } else if (formData.organisationName.length < 5) {
-      setErrors({ ...errors, organisationName: "Should be atleast 5 characters" })
-    } else if (!formData.organisationCountry) {
-      setErrors({ ...errors, organisationCountry: "Required" })
-    } else if (!formData.organisationSize) {
-      setErrors({ ...errors, organisationSize: "Required" })
-    } else {
-      await signUp(formData)
-      // console.log("Sent!", sign)
-    }
-  }
+  const { step, setStep, handleBack, handleNext, open, setOpen, size, setSize, errors, formData, setErrors, onSubmit, setFormData } = useSignup();
 
   return (
     <div className='flex items-center justify-center h-screen'>

@@ -49,7 +49,6 @@ const useSignin = () => {
 
                 if (json.data.user.isVerified) {
                     router.push('/feedback/dashboard');
-                    setFormData({ email: "", password: "" });
                     setErrors({ email: "", password: "" });
                 } else {
                     router.push('/auth/verify-otp');

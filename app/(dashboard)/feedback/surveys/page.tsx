@@ -1,3 +1,4 @@
+import SurveyCard from '@/components/feedback/surveys/SurveyCard'
 import FormBuilder from '@/components/surveys/FormBuilder'
 import PrimaryButton from '@/components/ui/PrimaryButton'
 import Link from 'next/link'
@@ -16,6 +17,9 @@ const page = () => {
         <Link href="/feedback/surveys/new">
           <PrimaryButton text='Create a new survey' styles='py-3 max-lg:py-2.5 max-md:py-2 rounded-gl' icon={<IoAddOutline className='w-5 h-5' />} />
         </Link>
+      </div>
+      <div>
+        <SurveyCard />
       </div>
     </div >
   )

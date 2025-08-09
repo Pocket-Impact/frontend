@@ -4,6 +4,7 @@ import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea
 import QuestionCard, { Question, QuestionType } from "@/components/surveys/QuestionCard";
 import PreviewPane from "@/components/surveys/PreviewPane";
 import PrimaryButton from "../ui/PrimaryButton";
+import { apiFetch } from "@/utils/apiFetch";
 import { FaRegSave } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
@@ -65,11 +66,8 @@ export default function FormBuilder() {
         try {
             const payload = prepareSurveyPayload();
 
-            const response = await fetch("/api/surveys", {
+            const response = await apiFetch("/api/surveys", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
                 body: JSON.stringify(payload),
             });
 

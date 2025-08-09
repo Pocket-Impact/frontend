@@ -1,4 +1,5 @@
 import { useAuthStore } from '@/stores/authStores';
+import { apiFetch } from '@/utils/apiFetch';
 import { useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react'
 
@@ -59,7 +60,7 @@ const useOTP = () => {
 
     const verify = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/auth/verify-otp', {
+            const response = await apiFetch('http://localhost:5000/api/auth/verify-otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp: otp.join('') }),

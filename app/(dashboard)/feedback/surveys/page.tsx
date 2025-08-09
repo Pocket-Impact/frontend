@@ -1,12 +1,25 @@
 import SurveyCard from '@/components/feedback/surveys/SurveyCard'
-import FormBuilder from '@/components/surveys/FormBuilder'
 import PrimaryButton from '@/components/ui/PrimaryButton'
+import { apiFetch } from '@/utils/apiFetch'
+import { cookies } from 'next/headers'
 import Link from 'next/link'
 import React from 'react'
 import { IoAddOutline } from 'react-icons/io5'
-import { RxCaretLeft } from 'react-icons/rx'
 
-const page = () => {
+const page = async () => {
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore.getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+
+  const response = await fetch('http://localhost:5000/api/surveys', {
+    headers: {
+      'Cookie': cookieHeader,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const json = await response.json();
+  const surveys = json.data.surveys;
+
   return (
     <div>
       <div className='flex justify-between'>
@@ -19,9 +32,9 @@ const page = () => {
         </Link>
       </div>
       <div className='grid grid-cols-3 gap-3 mt-6'>
-        <SurveyCard />
-        <SurveyCard />
-        <SurveyCard />
+        {surveys.map((survey: any) => (
+          <SurveyCard key={survey._id} survey={survey} />
+        ))}
       </div>
     </div >
   )

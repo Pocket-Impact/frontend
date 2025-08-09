@@ -1,6 +1,14 @@
 export const apiFetch = async (url: string, options: RequestInit = {}) => {
+    const isServer = typeof window === 'undefined';
+    const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+
+    if (isServer && url.startsWith('/')) {
+        url = baseUrl + url; // prepend base url on server
+    }
+    
     let response = await fetch(url, {
         ...options,
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             ...options.headers,
@@ -9,12 +17,13 @@ export const apiFetch = async (url: string, options: RequestInit = {}) => {
 
 
     if (response.status === 401) {
-        await fetch('/api/auth/refresh-token', {
+        await fetch(baseUrl + '/api/auth/refresh-token', {
             method: 'POST'
         })
 
         response = await fetch(url, {
             ...options,
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 ...options.headers,

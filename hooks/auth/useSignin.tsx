@@ -10,6 +10,7 @@ type FormData = {
 const useSignin = () => {
     const [errors, setErrors] = useState<FormData>({ email: "", password: "" });
     const [formData, setFormData] = useState<FormData>({ email: "", password: "" });
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const router = useRouter();
     const { setUser } = useAuthStore();
 
@@ -40,8 +41,10 @@ const useSignin = () => {
             const json = await response.json();
 
             if (!response.ok) {
+                setIsLoading(false);
                 setErrors({ email: "Invalid Email or Password", password: "Invalid Email or Password" });
             } else {
+                setIsLoading(false);
                 setUser(json.data.user);
 
                 if (json.data.user.isVerified) {
@@ -58,6 +61,7 @@ const useSignin = () => {
     };
 
     const onSubmit = (e: React.FormEvent) => {
+        setIsLoading(true);
         e.preventDefault();
         const validationErrors = validate(formData);
         setErrors(validationErrors);
@@ -72,6 +76,7 @@ const useSignin = () => {
         formData,
         setErrors,
         onSubmit,
+        isLoading,
         setFormData
     }
 }

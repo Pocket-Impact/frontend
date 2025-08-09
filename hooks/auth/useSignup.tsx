@@ -8,6 +8,7 @@ const useSignup = () => {
     const [open, setOpen] = useState(false)
     const [size, setSize] = useState<string>("")
     const router = useRouter()
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleNext = () => {
         if (step == 1) {
@@ -75,6 +76,7 @@ const useSignup = () => {
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsLoading(true);
 
         let newErrors: SignupFormErrors = {
             fullName: "",
@@ -126,11 +128,13 @@ const useSignup = () => {
 
         const json = await response.json();
         if (!response.ok) {
+            setIsLoading(false);
             console.log(json);
             if (json.message.includes("organisation")) {
-                setErrors({ ...errors, organisationName: json.message });
+                setErrors({ ...errors, organisationName: "Org already exists. Ask admin to add you." });
             }
         } else {
+            setIsLoading(false);
             router.push('/auth/signin');
             setFormData({
                 fullName: "",
@@ -159,10 +163,7 @@ const useSignup = () => {
         setStep,
         handleBack,
         handleNext,
-        open,
-        setOpen,
-        size,
-        setSize,
+        isLoading,
         errors,
         formData,
         setErrors,

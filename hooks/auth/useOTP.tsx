@@ -5,6 +5,7 @@ import React, { useRef, useState } from 'react'
 const useOTP = () => {
     const [otp, setOtp] = useState(Array(6).fill(''));
     const inputsRef = useRef<(HTMLInputElement | undefined)[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const { email } = useAuthStore((state) => state);
     const router = useRouter();
@@ -67,18 +68,21 @@ const useOTP = () => {
 
             const json = await response.json();
             if (!response.ok) {
+                setIsLoading(false);
                 console.log(json)
                 setError(json.message);
             } else {
-                router.push('/dashboard')
+                setIsLoading(false);
+                router.push('/feedback/dashboard')
             }
         } catch (error) {
             console.error(error);
         }
     }
-
+    
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        setIsLoading(true);
 
         if (otp.some((digit) => digit === '')) {
             setError('Please enter all digits');
@@ -91,9 +95,11 @@ const useOTP = () => {
     };
 
     const resendOTP = async () => {
+        setIsLoading(true);
         const response = await fetch('http://localhost:5000/api/auth/resend-otp', {
             credentials: 'include'
         })
+        setIsLoading(false);
 
         return null;
     }
@@ -106,6 +112,7 @@ const useOTP = () => {
         resendOTP,
         error,
         onSubmit,
+        isLoading,
         otp
     };
 }

@@ -8,7 +8,7 @@ import { useAuthStore } from '@/stores/authStores'
 import { useRouter } from 'next/navigation'
 
 const OtpForm = () => {
-  const { handleChange, otp, handleKeyDown, handlePaste, resendOTP, inputsRef, error, onSubmit } = useOTP();
+  const { handleChange, otp, handleKeyDown, isLoading, handlePaste, resendOTP, inputsRef, error, onSubmit } = useOTP();
   const { email, hasHydrated } = useAuthStore((state) => (state));
   const router = useRouter()
 
@@ -49,7 +49,7 @@ const OtpForm = () => {
               />
             ))}
           </div>
-          <PrimaryButton type="submit" text='Verify' styles='w-full p-3 rounded-lg mt-4' />
+          <PrimaryButton isLoading={isLoading} type="submit" text='Verify' styles='w-full p-3 rounded-lg mt-4' />
           <button onClick={resendOTP} className='font-semibold text-primary/80 mt-3 cursor-pointer'>Resend OTP</button>
         </form>
       </div>

@@ -1,7 +1,5 @@
 import React from 'react'
-import { FcSurvey } from 'react-icons/fc'
 import { RiSurveyLine } from 'react-icons/ri'
-import { SiReacthookform } from 'react-icons/si'
 import { VscFeedback } from 'react-icons/vsc';
 
 

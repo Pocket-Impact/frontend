@@ -18,7 +18,9 @@ const page = () => {
           <PrimaryButton text='Create a new survey' styles='py-3 max-lg:py-2.5 max-md:py-2 rounded-gl' icon={<IoAddOutline className='w-5 h-5' />} />
         </Link>
       </div>
-      <div>
+      <div className='grid grid-cols-3 gap-3 mt-6'>
+        <SurveyCard />
+        <SurveyCard />
         <SurveyCard />
       </div>
     </div >

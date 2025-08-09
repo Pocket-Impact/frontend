@@ -45,7 +45,7 @@ const Navbar = () => {
                 </div>
                 <div>
                     <Link href="/auth/signup">
-                        <PrimaryButton text="Get Started" styles="text-sm effect py-3 px-6" />
+                        <PrimaryButton text="Get Started" styles="text-sm effect py-3 px-4" />
                     </Link>
                 </div>
             </div>

@@ -4,6 +4,8 @@ import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea
 import QuestionCard, { Question, QuestionType } from "@/components/surveys/QuestionCard";
 import PreviewPane from "@/components/surveys/PreviewPane";
 import PrimaryButton from "../ui/PrimaryButton";
+import { FaRegSave } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 export default function FormBuilder() {
     const [title, setTitle] = useState("");
@@ -11,6 +13,7 @@ export default function FormBuilder() {
     const [active, setActive] = useState(false);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [nextId, setNextId] = useState(1);
+    const router = useRouter()
 
     const addQuestion = () => {
         setQuestions([
@@ -41,13 +44,51 @@ export default function FormBuilder() {
         setQuestions(reordered);
     };
 
+    const prepareSurveyPayload = () => ({
+        title,
+        description,
+        questions: questions.map(q => ({
+            questionText: q.label,
+            type: q.type === "multiple" ? "choice" : q.type,
+            ...(q.type === "multiple" ? { options: q.options?.filter(opt => opt.trim() !== "") } : {})
+        }))
+    });
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState(false);
+
+    const handleSubmit = async () => {
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
+        try {
+            const payload = prepareSurveyPayload();
+
+            const response = await fetch("/api/surveys", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            setSuccess(true);
+        } catch (err: any) {
+            setError(err?.response?.data?.message || "Failed to create survey.");
+        } finally {
+            setLoading(false);
+            router.push('/feedback/surveys');
+        }
+    };
+
     return (
         <div className="grid grid-cols-5 max-lg:grid-cols-1 gap-4 flex-2">
             {/* ===== Builder Section ===== */}
             <div className="flex-1 lg:col-span-2">
                 <h2 className="font-bold mb-4 x3l text-primary">New Survey</h2>
                 <input
-                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    className="w-full p-2 mb-2 border outline-0 border-stroke focus:border-primary rounded"
                     placeholder="Survey Title"
                     value={title}
                     onChange={e => setTitle(e.target.value)}
@@ -55,17 +96,19 @@ export default function FormBuilder() {
                 <textarea
                     className="w-full p-2 mb-2 h-max outline-0 focus:border-primary border border-gray-300 rounded"
                     placeholder="Survey Description"
+                    rows={5}
                     value={description}
                     onChange={e => setDescription(e.target.value)}
                 />
-                <label className="flex items-center gap-2 mb-4">
+                {/* Survey activity if needed */}
+                {/* <label className="flex items-center gap-2 mb-4">
                     <input
                         type="checkbox"
                         checked={active}
                         onChange={e => setActive(e.target.checked)}
                     />
                     <span>Survey Activation</span>
-                </label>
+                </label> */}
                 <DragDropContext onDragEnd={reorderQuestions}>
                     <Droppable droppableId="questions">
                         {(provided) => (
@@ -99,14 +142,25 @@ export default function FormBuilder() {
                     styles="text-white p-3 px-5 base rounded-xl hover:bg-primary-dark transition mb-4"
                     onClick={addQuestion}
                 />
+                {error && <div className="text-red-500 mb-2">{error}</div>}
+                {success && <div className="text-green-600 mb-2">Survey created successfully!</div>}
             </div>
             {/* ===== Preview Section ===== */}
-            <PreviewPane
-                title={title}
-                description={description}
-                active={active}
-                questions={questions}
-            />
+            <div className="lg:col-span-3 text-end">
+                <PrimaryButton
+                    text={loading ? "Saving..." : "Save"}
+                    styles="text-white p-3 base rounded-xl bg-green-600 hover:bg-green-700 transition mb-4"
+                    onClick={handleSubmit}
+                    icon={<FaRegSave />}
+                    isLoading={loading}
+                />
+                <PreviewPane
+                    title={title}
+                    description={description}
+                    active={active}
+                    questions={questions}
+                />
+            </div>
         </div>
     );
 }

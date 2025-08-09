@@ -158,6 +158,10 @@
   @apply rounded-2xl max-lg:rounded-xl max-md:rounded-lg
 }
 
+.rounded-x3l {
+  @apply rounded-3xl max-lg:rounded-2xl max-md:rounded-xl
+}
+
 .rounded-gl {
   @apply rounded-lg max-lg:rounded-md max-md:rounded-sm
 }

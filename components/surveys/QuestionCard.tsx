@@ -28,7 +28,7 @@ const typeOptions = [
 export default function QuestionCard({ question, onUpdate, onRemove, dragHandleProps, index }: Props) {
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
     return (
-        <div className="border border-gray-300 rounded-3xl p-4 bg-gray-50 relative">
+        <div className="border border-gray-300 rounded-x3l p-4 bg-gray-50 relative">
             <div className="flex items-center justify-between mb-4">
                 <button
                     type="button"
@@ -77,7 +77,7 @@ export default function QuestionCard({ question, onUpdate, onRemove, dragHandleP
             </div>
             {question.type === "multiple" && (
                 <div>
-                    <h4 className="font-semibold mb-2">Options</h4>
+                    <h4 className="font-semibold my-2">Options</h4>
                     {question.options?.map((opt, idx) => (
                         <div key={idx} className="flex items-center gap-2 mb-2">
                             <input

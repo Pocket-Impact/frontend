@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${bricolageGrotesque.variable} bg-background ${inter.variable} antialiased h-screen`}>
+      <body className={`${bricolageGrotesque.variable} overflow-hidden bg-background ${inter.variable} antialiased h-screen`}>
         {children}
       </body>
     </html>

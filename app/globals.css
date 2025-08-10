@@ -146,6 +146,16 @@
   display: none;
 }
 
+.scrolly::-webkit-scrollbar {
+  width: 8px;
+  display: block;
+  @apply bg-stroke;
+}
+
+.scrolly::-webkit-scrollbar-thumb {
+  background: #0A400CBB;
+}
+
 .input {
   @apply bg-white pl-3 border focus:border-primary text-base border-gray-300 rounded-lg p-2 w-full outline-4;
 }

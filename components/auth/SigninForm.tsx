@@ -34,7 +34,7 @@ const SigninForm = () => {
                             <input value={formData.password} className={`input ${errors.password ? "outline-error focus:outline-error" : "outline-white focus:outline-primary/20"}`} onChange={(e) => { setErrors({ ...errors, password: "" }); setFormData({ ...formData, password: e.target.value }) }} type="password" id="password" name="password" placeholder='••••••••••' />
                         </div>
                     </section>
-                    <PrimaryButton type='submit' isLoading={isLoading} text='Sign in' styles={`text-sm w-max mt-3 h-full op font-medium rounded-lg p-3`} />
+                    <PrimaryButton type='submit' isLoading={isLoading} text={isLoading ? 'Signing in...' : 'Sign in'} styles={`text-sm w-max mt-3 h-full op font-medium rounded-lg py-3 ${isLoading ? "pl-3" : "px-4"}`} />
                     <div className='mt-2'>
                         <span>No account ?</span> <Link href="/auth/signup" className='font-bold text-primary hover:underline underline-offset-2'><span>Sign up</span></Link>
                     </div>

@@ -1,5 +1,6 @@
 import { useAlertStore } from '@/stores/alertStore';
 import { useAuthStore } from '@/stores/authStores';
+import { apiFetch } from '@/utils/apiFetch';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
@@ -33,7 +34,7 @@ const useSignin = () => {
 
     const signIn = async (data: FormData) => {
         try {
-            const response = await fetch('http://localhost:5000/api/auth/login', {
+            const response = await apiFetch('http://localhost:5000/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),

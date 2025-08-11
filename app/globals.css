@@ -176,10 +176,22 @@
   @apply rounded-2xl max-lg:rounded-xl max-md:rounded-lg
 }
 
+.rounded-t-x2l {
+  @apply rounded-t-2xl max-lg:rounded-t-xl max-md:rounded-t-lg
+}
+
 .rounded-x3l {
   @apply rounded-3xl max-lg:rounded-2xl max-md:rounded-xl
 }
 
 .rounded-gl {
   @apply rounded-lg max-lg:rounded-md max-md:rounded-sm
+}
+
+.rounded-dm {
+  @apply rounded-md max-lg:rounded-sm max-md:rounded-[0px]
+}
+
+.rounded-t-dm {
+  @apply rounded-t-md max-lg:rounded-t-sm max-md:rounded-t-[0px]
 }

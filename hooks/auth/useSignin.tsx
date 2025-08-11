@@ -1,3 +1,4 @@
+import { useAlertStore } from '@/stores/alertStore';
 import { useAuthStore } from '@/stores/authStores';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
@@ -13,6 +14,7 @@ const useSignin = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const router = useRouter();
     const { setUser } = useAuthStore();
+    const { setMessage, clearMessage } = useAlertStore();
 
     const validate = (data: FormData) => {
         let newErrors: FormData = { email: "", password: "" };
@@ -46,6 +48,10 @@ const useSignin = () => {
             } else {
                 setIsLoading(false);
                 setUser(json.data.user);
+                setMessage("Successfully signed in");
+                setTimeout(() => {
+                    clearMessage();
+                }, 3000);
 
                 if (json.data.user.isVerified) {
                     router.push('/feedback/dashboard');
@@ -60,12 +66,12 @@ const useSignin = () => {
     };
 
     const onSubmit = (e: React.FormEvent) => {
-        setIsLoading(true);
         e.preventDefault();
         const validationErrors = validate(formData);
         setErrors(validationErrors);
-
+        
         if (!validationErrors.email && !validationErrors.password) {
+            setIsLoading(true);
             signIn(formData);
         }
     };

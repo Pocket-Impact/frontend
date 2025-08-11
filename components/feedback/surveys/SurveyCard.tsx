@@ -1,15 +1,38 @@
 "use client"
+import { useAlertStore } from '@/stores/alertStore'
+import { apiFetch } from '@/utils/apiFetch'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 import { RiDeleteBinLine, RiEditLine, RiSurveyLine } from 'react-icons/ri'
 
 const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
     const [showConfirm, setShowConfirm] = useState(false);
+    const { setMessage, clearMessage } = useAlertStore((state) => state);
+    const router = useRouter();
 
     const handleConfirm = () => {
-        // TODO: Replace with actual delete logic
-        setShowConfirm(false);
-        alert('Survey deleted!');
+        const deleteSurvey = async () => {
+            const response = await apiFetch(`http://localhost:5000/api/surveys/${survey._id}`, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                setMessage('Survey deleted successfully.');
+                router.refresh();
+                setTimeout(() => {
+                    clearMessage();
+                }, 3000);
+            } else {
+                console.log('Failed to delete survey.');
+            }
+        };
+
+        deleteSurvey();
     };
 
     return (
@@ -35,17 +58,17 @@ const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
                     <RiDeleteBinLine />
                     <span>Delete</span>
                     {showConfirm && (
-                        <div className="absolute right-0 top-full mt-1 bg-white items-center border border-stroke rounded shadow-lg p3 z-10 w-max flex gap-2">
+                        <div className="absolute cursor-default right-0 top-full mt-1 bg-white items-center border border-stroke rounded shadow-lg p3 z-10 w-max flex gap-2">
                             <span className="text-black sm w-30">Are you sure you want to delete?</span>
                             <div className='flex items-center gap-2 justify-end'>
                                 <button
-                                    className="flex items-center gap-2 p-2 base rounded-gl bg-red-800"
+                                    className="flex items-center gap-2 p-2 base cursor-pointer rounded-gl bg-red-800"
                                     onClick={handleConfirm}
                                 >
                                     Confirm
                                 </button>
                                 <button
-                                    className="flex items-center gap-2 p-2 base text-black rounded-gl bg-gray-200 hover:bg-gray-300"
+                                    className="flex items-center gap-2 p-2 base cursor-pointer text-black rounded-gl bg-gray-200 hover:bg-gray-300"
                                     onClick={() => setShowConfirm(false)}
                                 >
                                     Cancel

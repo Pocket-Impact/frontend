@@ -13,9 +13,9 @@ const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
     };
 
     return (
-        <div className='border p-4 flex flex-col gap-4 justify-between rounded-x2l border-stroke relative'>
+        <div className='border p4 flex flex-col gap-4 justify-between rounded-x2l border-stroke relative'>
             <div className='flex items-center gap-2'>
-                <div className='bg-primary p-2 rounded-lg w-max text-white'>
+                <div className='bg-primary p-2 rounded-gl w-max text-white'>
                     <RiSurveyLine />
                 </div>
                 <div className='font-semibold'>{survey.title}</div>
@@ -24,28 +24,28 @@ const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
                 {survey.description}
             </p>
             <div className='flex gap-2 justify-end text-white'>
-                <Link href="" className='flex items-center gap-2 base bg-primary p-2 rounded-lg'>
+                <Link href="" className='flex items-center gap-2 base bg-primary p-2 rounded-gl'>
                     <RiEditLine />
                     <span>Edit</span>
                 </Link>
                 <div
-                    className='flex relative items-center gap-2 base cursor-pointer bg-red-800 p-2 rounded-lg'
+                    className='flex relative items-center gap-2 base cursor-pointer bg-red-800 p-2 rounded-gl'
                     onClick={() => setShowConfirm(!showConfirm)}
                 >
                     <RiDeleteBinLine />
                     <span>Delete</span>
                     {showConfirm && (
-                        <div className="absolute right-0 top-full mt-1 bg-white items-center border border-stroke rounded shadow-lg p-3 z-10 w-max flex gap-2">
+                        <div className="absolute right-0 top-full mt-1 bg-white items-center border border-stroke rounded shadow-lg p3 z-10 w-max flex gap-2">
                             <span className="text-black sm w-30">Are you sure you want to delete?</span>
                             <div className='flex items-center gap-2 justify-end'>
                                 <button
-                                    className="flex items-center gap-2 p-2 base rounded-lg bg-red-800"
+                                    className="flex items-center gap-2 p-2 base rounded-gl bg-red-800"
                                     onClick={handleConfirm}
                                 >
                                     Confirm
                                 </button>
                                 <button
-                                    className="flex items-center gap-2 p-2 base text-black rounded-lg bg-gray-200 hover:bg-gray-300"
+                                    className="flex items-center gap-2 p-2 base text-black rounded-gl bg-gray-200 hover:bg-gray-300"
                                     onClick={() => setShowConfirm(false)}
                                 >
                                     Cancel

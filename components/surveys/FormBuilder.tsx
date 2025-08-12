@@ -8,13 +8,33 @@ import { apiFetch } from "@/utils/apiFetch";
 import { FaRegSave } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
-export default function FormBuilder() {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
+type FormBuilderProps = {
+    initialTitle?: string;
+    initialDescription?: string;
+    initialQuestions?: Question[];
+    onSave?: (data: { title: string; description: string; questions: Question[] }) => Promise<void> | void;
+    loading?: boolean;
+    error?: string | null;
+    success?: boolean;
+};
+
+export default function FormBuilder({
+    initialTitle = "",
+    initialDescription = "",
+    initialQuestions = [],
+    onSave,
+    loading: externalLoading,
+    error: externalError,
+    success: externalSuccess,
+}: FormBuilderProps) {
+    const [title, setTitle] = useState(initialTitle);
+    const [description, setDescription] = useState(initialDescription);
     const [active, setActive] = useState(false);
-    const [questions, setQuestions] = useState<Question[]>([]);
-    const [nextId, setNextId] = useState(1);
-    const router = useRouter()
+    const [questions, setQuestions] = useState<Question[]>(initialQuestions);
+    const [nextId, setNextId] = useState(
+        initialQuestions.length > 0 ? Math.max(...initialQuestions.map(q => q.id)) + 1 : 1
+    );
+    const router = useRouter();
 
     const addQuestion = () => {
         setQuestions([
@@ -55,28 +75,33 @@ export default function FormBuilder() {
         }))
     });
 
+
+    // Only used for standalone create mode
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
 
+
     const handleSubmit = async () => {
-        setLoading(true);
-        setError(null);
-        setSuccess(false);
-        try {
-            const payload = prepareSurveyPayload();
-
-            const response = await apiFetch("/api/surveys", {
-                method: "POST",
-                body: JSON.stringify(payload),
-            });
-
-            setSuccess(true);
-        } catch (err: any) {
-            setError(err?.response?.data?.message || "Failed to create survey.");
-        } finally {
-            setLoading(false);
-            router.push('/feedback/surveys');
+        if (onSave) {
+            await onSave({ title, description, questions });
+        } else {
+            setLoading(true);
+            setError(null);
+            setSuccess(false);
+            try {
+                const payload = prepareSurveyPayload();
+                const response = await apiFetch("/api/surveys", {
+                    method: "POST",
+                    body: JSON.stringify(payload),
+                });
+                setSuccess(true);
+            } catch (err: any) {
+                setError(err?.response?.data?.message || "Failed to create survey.");
+            } finally {
+                setLoading(false);
+                router.push('/feedback/surveys');
+            }
         }
     };
 
@@ -140,17 +165,17 @@ export default function FormBuilder() {
                     styles="text-white p-3 px-5 base rounded-xl hover:bg-primary-dark transition mb-4"
                     onClick={addQuestion}
                 />
-                {error && <div className="text-red-500 mb-2">{error}</div>}
-                {success && <div className="text-green-600 mb-2">Survey created successfully!</div>}
+                {(externalError ?? error) && <div className="text-red-500 mb-2">{externalError ?? error}</div>}
+                {(externalSuccess ?? success) && <div className="text-green-600 mb-2">Survey saved successfully!</div>}
             </div>
             {/* ===== Preview Section ===== */}
             <div className="lg:col-span-3 text-end">
                 <PrimaryButton
-                    text={loading ? "Saving..." : "Save"}
+                    text={(externalLoading ?? loading) ? "Saving..." : "Save"}
                     styles="text-white p-3 base rounded-xl bg-green-600 hover:bg-green-700 transition mb-4"
                     onClick={handleSubmit}
                     icon={<FaRegSave />}
-                    isLoading={loading}
+                    isLoading={externalLoading ?? loading}
                 />
                 <PreviewPane
                     title={title}

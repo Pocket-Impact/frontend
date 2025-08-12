@@ -109,7 +109,7 @@ export default function FormBuilder({
         <div className="grid grid-cols-5 max-lg:grid-cols-1 gap-4 flex-2">
             {/* ===== Builder Section ===== */}
             <div className="flex-1 lg:col-span-2">
-                <h2 className="font-bold mb-4 x3l text-primary">New Survey</h2>
+                <h2 className="font-bold mb-4 x3l text-primary">{initialTitle ? initialTitle : "New Survey"}</h2>
                 <input
                     className="w-full p-2 mb-2 border outline-0 border-stroke focus:border-primary rounded"
                     placeholder="Survey Title"

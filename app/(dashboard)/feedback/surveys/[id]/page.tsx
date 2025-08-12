@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { apiFetch } from "@/utils/apiFetch";
 import FormBuilder from "@/components/surveys/FormBuilder";
 import { Question } from "@/components/surveys/QuestionCard";
+import { DotLottie, DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 export default function SurveyEditPage() {
     const params = useParams();
@@ -13,6 +14,7 @@ export default function SurveyEditPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [initialSurvey, setInitialSurvey] = useState<{
+        id: string;
         title: string;
         description: string;
         questions: Question[];
@@ -31,6 +33,7 @@ export default function SurveyEditPage() {
                 const survey = json?.data?.survey;
                 if (!survey) throw new Error("Survey not found");
                 setInitialSurvey({
+                    id: survey._id,
                     title: survey.title || "",
                     description: survey.description || "",
                     questions: (survey.questions || []).map((q: any, idx: number) => ({
@@ -64,10 +67,11 @@ export default function SurveyEditPage() {
                     ...(q.type === "multiple" ? { options: q.options?.filter(opt => opt.trim() !== "") } : {}),
                 })),
             };
-            await apiFetch(`/api/surveys/${surveyId}`, {
+            await apiFetch(`/api/surveys/${initialSurvey?.id}`, {
                 method: "PUT",
                 body: JSON.stringify(payload),
             });
+            router.push(`/feedback/surveys`);
             setSuccess(true);
             // Optionally, redirect or refetch
             // router.push("/feedback/surveys");
@@ -78,7 +82,17 @@ export default function SurveyEditPage() {
         }
     }
 
-    if (loading) return <div className="p-8 text-center">Loading survey...</div>;
+    if (loading) return (
+        <div className="p-8 text-center">
+            <DotLottieReact
+                src="/animations/loading.lottie"
+                loop
+                autoplay
+                className="w-10"
+                style={{ height: "auto" }}
+            />
+        </div>
+        );
     if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
     if (!initialSurvey) return null;
 

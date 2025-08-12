@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
+import AlertComponent from "@/components/AlertComponent";
 
 const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -27,7 +28,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${bricolageGrotesque.variable} overflow-hidden bg-background ${inter.variable} antialiased h-screen`}>
+      <body className={`${bricolageGrotesque.variable} overflow-y-scroll pt-14 scrolly bg-background ${inter.variable} antialiased h-screen`}>
+        <AlertComponent />
         {children}
       </body>
     </html>

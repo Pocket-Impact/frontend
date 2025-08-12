@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { useAlertStore } from "@/stores/alertStore";
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
 import QuestionCard, { Question, QuestionType } from "@/components/surveys/QuestionCard";
 import PreviewPane from "@/components/surveys/PreviewPane";
@@ -35,6 +36,7 @@ export default function FormBuilder({
         initialQuestions.length > 0 ? Math.max(...initialQuestions.map(q => q.id)) + 1 : 1
     );
     const router = useRouter();
+    const {setMessage, clearMessage} = useAlertStore(state => state);
 
     const addQuestion = () => {
         setQuestions([
@@ -85,6 +87,10 @@ export default function FormBuilder({
     const handleSubmit = async () => {
         if (onSave) {
             await onSave({ title, description, questions });
+            setMessage("Changes saved successfully!");
+            setTimeout(() => {
+                clearMessage();
+            }, 3000);
         } else {
             setLoading(true);
             setError(null);
@@ -96,6 +102,7 @@ export default function FormBuilder({
                     body: JSON.stringify(payload),
                 });
                 setSuccess(true);
+                setMessage("Survey created successfully!");
             } catch (err: any) {
                 setError(err?.response?.data?.message || "Failed to create survey.");
             } finally {
@@ -107,7 +114,7 @@ export default function FormBuilder({
 
     return (
         <div className="grid grid-cols-5 max-lg:grid-cols-1 gap-4 flex-2">
-            {/* ===== Builder Section ===== */}
+            {/* Builder Section */}
             <div className="flex-1 lg:col-span-2">
                 <h2 className="font-bold mb-4 x3l text-primary">{initialTitle ? initialTitle : "New Survey"}</h2>
                 <input
@@ -166,9 +173,8 @@ export default function FormBuilder({
                     onClick={addQuestion}
                 />
                 {(externalError ?? error) && <div className="text-red-500 mb-2">{externalError ?? error}</div>}
-                {(externalSuccess ?? success) && <div className="text-green-600 mb-2">Survey saved successfully!</div>}
             </div>
-            {/* ===== Preview Section ===== */}
+            {/* Preview Section */}
             <div className="lg:col-span-3 text-end">
                 <PrimaryButton
                     text={(externalLoading ?? loading) ? "Saving..." : "Save"}

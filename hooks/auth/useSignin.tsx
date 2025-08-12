@@ -54,6 +54,17 @@ const useSignin = () => {
                     clearMessage();
                 }, 3000);
 
+                // Immediately refresh token after login
+                try {
+                    const refreshRes = await apiFetch('/api/auth/refresh', {
+                        method: 'POST',
+                        credentials: 'include'
+                    });
+                    const refreshJson = await refreshRes.json();
+                } catch (err) {
+                    console.log(err);
+                }
+                
                 if (json.data.user.isVerified) {
                     router.push('/feedback/dashboard');
                     setErrors({ email: "", password: "" });
@@ -70,7 +81,7 @@ const useSignin = () => {
         e.preventDefault();
         const validationErrors = validate(formData);
         setErrors(validationErrors);
-        
+
         if (!validationErrors.email && !validationErrors.password) {
             setIsLoading(true);
             signIn(formData);

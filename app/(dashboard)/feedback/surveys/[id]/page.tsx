@@ -5,6 +5,8 @@ import { apiFetch } from "@/utils/apiFetch";
 import FormBuilder from "@/components/surveys/FormBuilder";
 import { Question } from "@/components/surveys/QuestionCard";
 import { DotLottie, DotLottieReact } from "@lottiefiles/dotlottie-react";
+import Link from "next/link";
+import { RxCaretLeft } from "react-icons/rx";
 
 export default function SurveyEditPage() {
     const params = useParams();
@@ -73,8 +75,6 @@ export default function SurveyEditPage() {
             });
             router.push(`/feedback/surveys`);
             setSuccess(true);
-            // Optionally, redirect or refetch
-            // router.push("/feedback/surveys");
         } catch (err: any) {
             setError(err?.response?.data?.message || "Failed to save survey.");
         } finally {
@@ -92,12 +92,18 @@ export default function SurveyEditPage() {
                 style={{ height: "auto" }}
             />
         </div>
-        );
+    );
     if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
     if (!initialSurvey) return null;
 
     return (
-        <div className="max-w-6xl mx-auto py-8">
+        <div className="max-w-6xl mx-auto pb-8">
+            <Link href="/feedback/surveys" className='flex items-center gap-2 hover:gap-3 transition-all cursor-pointer mb-4 duration-300'>
+                <div className='bg-primary/80 hover:bg-primary transition duration-300 text-white rounded-lg w-max p-1'>
+                    <RxCaretLeft className='w-6 h-auto' />
+                </div>
+                <span className='text-black/70 font-medium'>Back to Surveys</span>
+            </Link>
             <FormBuilder
                 initialTitle={initialSurvey.title}
                 initialDescription={initialSurvey.description}

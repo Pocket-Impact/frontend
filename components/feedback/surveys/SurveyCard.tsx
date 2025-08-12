@@ -4,6 +4,7 @@ import { apiFetch } from '@/utils/apiFetch'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import { FiSend } from 'react-icons/fi'
 import { RiDeleteBinLine, RiEditLine, RiSurveyLine } from 'react-icons/ri'
 import { VscFeedback } from 'react-icons/vsc'
 
@@ -45,30 +46,35 @@ const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
                     </div>
                     <div className='font-semibold base'>{survey.title}</div>
                 </div>
-                <div
-                    className='flex text-white relative items-center gap-2 base cursor-pointer bg-orange-700 hover:bg-orange-800 transition duration-300 p-2 rounded-gl'
-                    onClick={() => setShowConfirm(!showConfirm)}
-                >
-                    <RiDeleteBinLine className='w-4 h-auto max-lg:w-3.5 max-md:w-3 max-sm:w-2.5' />
-                    {showConfirm && (
-                        <div className="absolute cursor-default right-0 top-full mt-1 bg-white items-center border border-stroke rounded shadow-lg p3 z-10 w-max flex gap-2">
-                            <span className="text-black sm w-30">Are you sure you want to delete?</span>
-                            <div className='flex items-center gap-2 justify-end'>
-                                <button
-                                    className="flex items-center gap-2 p-2 sm cursor-pointer rounded-gl bg-orange-700"
-                                    onClick={handleConfirm}
-                                >
-                                    Confirm
-                                </button>
-                                <button
-                                    className="flex items-center gap-2 p-2 sm transition duration-300 cursor-pointer text-black rounded-gl bg-gray-200 hover:bg-gray-300"
-                                    onClick={() => setShowConfirm(false)}
-                                >
-                                    Cancel
-                                </button>
+                <div className='flex items-center gap-2'>
+                    <div
+                        className='flex text-white relative items-center gap-2 base cursor-pointer bg-orange-700 hover:bg-orange-800 transition duration-300 p-2 rounded-gl'
+                        onClick={() => setShowConfirm(!showConfirm)}
+                    >
+                        <RiDeleteBinLine className='w-4 h-auto max-lg:w-3.5 max-md:w-3 max-sm:w-2.5' />
+                        {showConfirm && (
+                            <div className="absolute cursor-default right-0 top-full mt-1 bg-white items-center border border-stroke rounded shadow-lg p3 z-10 w-max flex gap-2">
+                                <span className="text-black sm w-30">Are you sure you want to delete?</span>
+                                <div className='flex items-center gap-2 justify-end'>
+                                    <button
+                                        className="flex items-center gap-2 p-2 sm cursor-pointer rounded-gl bg-orange-700"
+                                        onClick={handleConfirm}
+                                    >
+                                        Confirm
+                                    </button>
+                                    <button
+                                        className="flex items-center gap-2 p-2 sm transition duration-300 cursor-pointer text-black rounded-gl bg-gray-200 hover:bg-gray-300"
+                                        onClick={() => setShowConfirm(false)}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
+                    </div>
+                    <button className='bg-secondary rounded-gl hover:bg-orange-300 cursor-pointer transition duration-300 p-2'>
+                        <FiSend className='w-4 h-auto max-lg:w-3.5 max-md:w-3 max-sm:w-2.5' />
+                    </button>
                 </div>
             </div>
             <Link href={`/feedback/surveys/${survey.uniqueLinkId}`}>

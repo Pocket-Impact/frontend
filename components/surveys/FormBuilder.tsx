@@ -103,6 +103,9 @@ export default function FormBuilder({
                 });
                 setSuccess(true);
                 setMessage("Survey created successfully!");
+                setTimeout(() => {
+                    clearMessage();
+                }, 3000);
             } catch (err: any) {
                 setError(err?.response?.data?.message || "Failed to create survey.");
             } finally {

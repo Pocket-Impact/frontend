@@ -1,9 +1,10 @@
 import ResponsesGrid from '@/components/feedback/surveys/ResponsesGrid'
+import { apiFetch } from '@/utils/apiFetch'
 import Link from 'next/link'
 import React from 'react'
 import { RxCaretLeft } from 'react-icons/rx'
 
-const page = () => {
+const page = async ({ params }: any) => {
     return (
         <div className='inter'>
             <Link href="/feedback/surveys" className='flex items-center gap-2 hover:gap-3 transition-all cursor-pointer mb-4 duration-300'>

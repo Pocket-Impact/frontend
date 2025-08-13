@@ -1,26 +1,24 @@
 import { FaXTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
+import { SiAirtel } from 'react-icons/si'
+import { RiMastercardFill } from 'react-icons/ri'
 
 interface SocialIcon {
-  name: 'twitter' | 'linkedin' | 'instagram'
+  name: string
   icon: IconType
-  url: string
 }
 
-export const socialIcons: SocialIcon[] = [
+export const icons: SocialIcon[] = [
   {
-    name: 'twitter',
+    name: 'visa',
     icon: FaXTwitter,
-    url: 'https://twitter.com/no_ig_account',
   },
   {
-    name: 'linkedin',
-    icon: FaLinkedin,
-    url: 'https://linkedin.com/in/no_ig_account',
+    name: 'airtel',
+    icon: SiAirtel,
   },
   {
-    name: 'instagram',
-    icon: FaInstagram,
-    url: 'https://instagram.com/no_ig_account',
+    name: 'master-card',
+    icon: RiMastercardFill,
   },
 ]

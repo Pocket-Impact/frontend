@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { links } from '@/lib/links'
 import { link } from 'fs'
 import Link from 'next/link'
-import { socialIcons } from '@/lib/icons'
+import { icons } from '@/lib/icons'
 
 const FooterSection = () => {
     return (
@@ -19,12 +19,10 @@ const FooterSection = () => {
                         <p>Pocket Impact is a unified platform designed to help NGOs manage their projects, teams, data, and communication in one place — making it easier to drive meaningful change.</p>
                     </div>
                     <div className='flex gap-4'>
-                        {socialIcons.map((icon, index) => (
-                            <Link href={icon.url} key={icon.name}>
-                                <div className='bg-white/80 hover:bg-white/100 transition duration-300 p-2 max-md:p-1.5 rounded-lg' key={index}>
-                                    <icon.icon className='xl w-6 max-lg:w-4 max-md:w-3 h-auto' />
-                                </div>
-                            </Link>
+                        {icons.map((icon, index) => (
+                            <div className='bg-white/80 hover:bg-white/100 transition duration-300 p-2 max-md:p-1.5 rounded-lg' key={index}>
+                                <icon.icon className='xl w-6 max-lg:w-4 max-md:w-3 h-auto' />
+                            </div>
                         ))}
                     </div>
                 </div>

@@ -8,7 +8,7 @@ export type PricingPlan = {
 
 export const plans: PricingPlan[] = [
   {
-    name: "Basic",
+    name: "Starter",
     price: 10,
     unit: "per user per month",
     description: "This is the basic pricing plan.",
@@ -20,7 +20,7 @@ export const plans: PricingPlan[] = [
     ],
   },
   {
-    name: "Business",
+    name: "Growth",
     price: 25,
     unit: "per user per month",
     description: "For small teams that need more control and collaboration.",

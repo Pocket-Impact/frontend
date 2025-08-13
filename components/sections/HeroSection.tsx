@@ -10,14 +10,15 @@ const HeroSection = () => {
             <div className="relative z-10 flex h-full flex-col items-center justify-end px-4">
                 <div className="max-w-3xl fade-down text-center">
                     <h1 className="x5l font-bold flex text-white bricolage flex-col mb-4">
-                        <span>One Platform. Infinite <span className='text-secondary underline decoration-wavy'>Good.</span></span>
-                        <span>All-in-One Tools for the World’s Changemakers.</span>
+                        <span> AI-Powered Tools to</span>
+                        <span>Supercharge Your Social <span className='text-secondary underline decoration-wavy'>Impact</span></span>
                     </h1>
                     <p className="base inter mb-8 max-md:mb-6 text-white/80">
-                        Crafted for mission-first teams — perfect for dashboards, reports, and real-world results.
+                        Automate operations, engage donors, and measure impact — all from your pocket.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
-                        <SecondaryButton text="Get Started" styles="rounded-xl effect font-semibold py-4 max-md:py-2 px-8 max-md:px-4" />
+                        <SecondaryButton text="Start Free Trial" styles="rounded-xl effect font-semibold py-4 max-md:py-2 px-8 max-md:px-4" />
+                        <button className="rounded-xl bg-white/10 text-white cursor-pointer hover:bg-white/15 shadow-2xl transition duration-300 inter font-semibold py-4 max-md:py-2 px-8 max-md:px-4">See How It Works</button>
                     </div>
                 </div>
                 <div className='w-full max-w-7xl fade-up mt-8 px-3 pt-3 border-x border-t bg-white/20 backdrop-blur-2xl border-white h-64 rounded-t-3xl'>

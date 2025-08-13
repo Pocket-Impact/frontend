@@ -16,8 +16,8 @@ const Testimonial = ({ testimonial }: any) => {
                 <p className='base text-black/70 mt-4 w-full'>{testimonial.comment}</p>
             </div>
             <div className='mt-5'>
-                <p className='font-bold'>{testimonial.author}</p>
-                <p className=''>{testimonial.authorPosition}</p>
+                <p className='font-bold base'>{testimonial.author}</p>
+                <p className='base'>{testimonial.authorPosition}</p>
             </div>
         </div>
     )

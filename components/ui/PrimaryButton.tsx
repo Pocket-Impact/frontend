@@ -8,7 +8,7 @@ const PrimaryButton: React.FC<{ text?: string, textStyles?: string, styles?: str
                 (
                     <div className='flex items-center gap-2 max-md:gap-1.5'>
                         {icon && <span className=''>{icon}</span>}
-                        <span className={`text ${textStyles}`}>{text}</span>
+                        {text && <span className={`text ${textStyles}`}>{text}</span>}
                     </div>
                 )
                 :

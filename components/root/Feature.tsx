@@ -10,7 +10,7 @@ const Feature: React.FC<{ feature: Feature; index: number }> = ({ feature, index
             <div className='p-5'>
                 <span className='font-bold xl'>{feature.name}</span>
                 <div className='flex gap-2 items-start'>
-                    <p className='text-black/70 font-light base inter mt-1 flex gap-2'>{feature.points[0]}.</p>
+                    <p className='text-black/70 font-light base inter mt-1 flex gap-2'>{feature.points.join(", ")}.</p>
                 </div>
             </div>
         </div>

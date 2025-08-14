@@ -24,25 +24,24 @@ export interface Feature {
 export const features: Feature[] = [
     {
         icon: VscRobot,
-        name: 'Virtual Program Assistant',
+        name: 'Service Delivery',
         points: [
-            "Automates beneficiary onboarding and service tracking, analyzes sentiment and engagement, analyzes sentiment and engagement",
-            "Sends reminders via WhatsApp, SMS, or email",
-            "Tracks service usage and engagement",
+            "Virtual Program Assistant (WhatsApp/SMS onboarding, tracking, reports)",
+            "HR Coordinator Agent (Volunteer screening, onboarding kits)",
+            "Community Feedback Agent (Surveys, sentiment analysis)",
         ]
     },
     {
         icon: IoDocumentTextOutline,
-        name: 'HR Coordinator Agent',
+        name: 'Impact & Reporting',
         points: [
-            "Screens applications and schedules interviews",
-            "Manages volunteer onboarding and training",
-            "Tracks volunteer engagement and performance",
+            "M\&E Reporting Assistant (Automated donor-ready reports)",
+            "Impact Mapping & Strategy Planner (SDG alignment & data-driven strategy)",
         ]
     },
     {
         icon: LuGraduationCap,
-        name: 'Learning & Training Agent',
+        name: 'Fundraising & Donor Engagement',
         points: [
             "Provides AI-guided learning for field teams",
             "Tracks training progress and outcomes",
@@ -53,9 +52,8 @@ export const features: Feature[] = [
         icon: MdOutlineFeedback,
         name: 'Community Feedback Agent',
         points: [
-            "Collects feedback through multiple channels, analyzes sentiment and engagement, analyzes sentiment and engagement",
-            "Analyzes sentiment and engagement",
-            "Provides insights for program improvement",
+            "AI Grant Proposal Writer (Custom proposals in minutes)",
+            "Donor Engagement Agent (Automated campaigns & nudges)",
         ]
     }   
 ]

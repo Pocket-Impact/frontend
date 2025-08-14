@@ -4,7 +4,7 @@ import Pricing from '@/components/root/Pricing'
 
 const PricingSection = () => {
     return (
-        <div id='pricing' className='bg-cblack max-lg:pb-10 pt-28 px-18 max-lg:px-14 max-md:px-10 h-max flex flex-col items-center justify-end relative rounded-2xl'>
+        <div id='pricing' className='bg-cblack max-lg:pb-10 mt-16 pt-28 px-18 max-lg:px-14 max-md:px-10 h-max flex flex-col items-center justify-end relative rounded-2xl'>
             <div className="absolute bottom-0 h-3/4 left-0 right-0 top-0 bg-[linear-gradient(to_right,#FFFFFF15_1px,transparent_1px),linear-gradient(to_bottom,#FFFFFF15_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]">
             </div>
             <div className='flex flex-col items-center gap-3'>

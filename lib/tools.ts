@@ -8,6 +8,7 @@ import { LuGraduationCap } from "react-icons/lu";
 import { MdOutlineFeedback } from "react-icons/md";
 import { FaRegHandshake } from 'react-icons/fa6';
 import { BiDonateHeart } from 'react-icons/bi';
+import { TbReportSearch } from 'react-icons/tb';
 
 
 export interface Tool {
@@ -34,7 +35,7 @@ export const features: Feature[] = [
     ]
   },
   {
-    icon: IoDocumentTextOutline,
+    icon: TbReportSearch,
     name: 'Impact & Reporting',
     points: [
       "M&E Reporting Assistant (Automated donor-ready reports)",

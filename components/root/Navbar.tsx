@@ -29,7 +29,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div className={`px-4 md:flex hidden z-50 bg-background rounded-b-2xl fixed w-full max-w-[1440px] justify-between inter h-16 items-center p-2 left-1/2 top-0 -translate-x-[50%] ${borderClass}`}>
+            <div className={`px-4 md:flex hidden z-50 bg-background/10 backdrop-blur-sm rounded-b-2xl fixed w-full max-w-[1440px] justify-between inter h-16 items-center p-2 left-1/2 top-0 -translate-x-[50%] ${borderClass}`}>
                 <div className='flex items-center gap-2'>
                     <Image src={logo} alt="Pocket Impact Logo" width={logo.width} height={logo.height} className='w-8 h-8' />
                     <span className='bricolage xl'>

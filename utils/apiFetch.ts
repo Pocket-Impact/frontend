@@ -5,7 +5,7 @@ export const apiFetch = async (url: string, options: RequestInit = {}) => {
     if (isServer && url.startsWith('/')) {
         url = baseUrl + url; // prepend base url on server
     }
-    
+
     let response = await fetch(url, {
         ...options,
         credentials: 'include',
@@ -17,9 +17,12 @@ export const apiFetch = async (url: string, options: RequestInit = {}) => {
 
 
     if (response.status === 401) {
-        await fetch(baseUrl + '/api/auth/refresh-token', {
-            method: 'POST'
-        })
+        await fetch(baseUrl + '/api/auth/refresh-token',
+            {
+                method: 'POST',
+                credentials: 'include'
+            },
+        )
 
         response = await fetch(url, {
             ...options,

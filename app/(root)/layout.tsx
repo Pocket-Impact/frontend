@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${bricolageGrotesque.variable} ${inter.variable} bg-background antialiased`}
+        className={`${bricolageGrotesque.variable} scrolly ${inter.variable} bg-background antialiased`}
       >
         <Navbar />
         {children}

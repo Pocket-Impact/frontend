@@ -25,7 +25,7 @@ const Navbar = () => {
     }, []);
 
 
-    const borderClass = scrolled ? "outline outline-primary" : "outline outline-background";
+    const borderClass = scrolled ? "outline outline-primary" : "outline outline-background/10";
 
     return (
         <>

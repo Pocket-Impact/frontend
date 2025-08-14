@@ -10,7 +10,7 @@ const page = async () => {
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
 
-  const response = await apiFetch('http://localhost:5000/api/surveys', {
+  const response = await apiFetch('/api/surveys', {
     headers: {
       'Cookie': cookieHeader,
       'Content-Type': 'application/json',

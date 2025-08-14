@@ -41,7 +41,7 @@ const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
 
     return (
         <>
-            <SendSurvey open={sendSurvey} close={setSendSurvey} link={survey.uniqueLinkId} />
+            <SendSurvey open={sendSurvey} close={setSendSurvey} link={survey._id} />
             <div className='flex flex-col gap-1 justify-between relative'>
                 <div className='flex items-center justify-between gap-2 p4 border border-stroke rounded-md rounded-t-2xl'>
                     <div className='flex gap-2 items-center'>

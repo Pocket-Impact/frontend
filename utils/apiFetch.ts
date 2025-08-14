@@ -1,6 +1,6 @@
 export const apiFetch = async (url: string, options: RequestInit = {}) => {
     const isServer = typeof window === 'undefined';
-    const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+    const baseUrl = process.env.BASE_URL || 'http://localhost:5000';
 
     if (isServer && url.startsWith('/')) {
         url = baseUrl + url; // prepend base url on server

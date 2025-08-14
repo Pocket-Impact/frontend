@@ -6,6 +6,8 @@ import { IoDocumentTextOutline } from "react-icons/io5";
 import { VscRobot } from "react-icons/vsc";
 import { LuGraduationCap } from "react-icons/lu";
 import { MdOutlineFeedback } from "react-icons/md";
+import { FaRegHandshake } from 'react-icons/fa6';
+import { BiDonateHeart } from 'react-icons/bi';
 
 
 export interface Tool {
@@ -22,40 +24,32 @@ export interface Feature {
 
 
 export const features: Feature[] = [
-    {
-        icon: VscRobot,
-        name: 'Service Delivery',
-        points: [
-            "Virtual Program Assistant (WhatsApp/SMS onboarding, tracking, reports)",
-            "HR Coordinator Agent (Volunteer screening, onboarding kits)",
-            "Community Feedback Agent (Surveys, sentiment analysis)",
-        ]
-    },
-    {
-        icon: IoDocumentTextOutline,
-        name: 'Impact & Reporting',
-        points: [
-            "M\&E Reporting Assistant (Automated donor-ready reports)",
-            "Impact Mapping & Strategy Planner (SDG alignment & data-driven strategy)",
-        ]
-    },
-    {
-        icon: LuGraduationCap,
-        name: 'Fundraising & Donor Engagement',
-        points: [
-            "Provides AI-guided learning for field teams",
-            "Tracks training progress and outcomes",
-            "Suggests personalized learning paths",
-        ]
-    },
-    {
-        icon: MdOutlineFeedback,
-        name: 'Community Feedback Agent',
-        points: [
-            "AI Grant Proposal Writer (Custom proposals in minutes)",
-            "Donor Engagement Agent (Automated campaigns & nudges)",
-        ]
-    }   
+  {
+    icon: FaRegHandshake,
+    name: 'Service Delivery',
+    points: [
+      "Virtual Program Assistant (WhatsApp/SMS onboarding, tracking, reports)",
+      "HR Coordinator Agent (Volunteer screening, onboarding kits)",
+      "Community Feedback Agent (Surveys, sentiment analysis)",
+    ]
+  },
+  {
+    icon: IoDocumentTextOutline,
+    name: 'Impact & Reporting',
+    points: [
+      "M&E Reporting Assistant (Automated donor-ready reports)",
+      "Impact Mapping & Strategy Planner (SDG alignment & data-driven strategy)",
+    ]
+  },
+  {
+    icon: BiDonateHeart,
+    name: 'Fundraising & Donor Engagement',
+    points: [
+      "Provides AI-guided learning for field teams",
+      "Tracks training progress and outcomes",
+      "Suggests personalized learning paths",
+    ]
+  }  
 ]
 
 export const tools: Tool[] = [

@@ -1,26 +1,5 @@
 import React from 'react'
-import { AiOutlineLineChart } from 'react-icons/ai';
-import { BiDonateHeart } from 'react-icons/bi';
-import { IoIosHammer } from 'react-icons/io';
-import { TbReportSearch } from 'react-icons/tb';
-
-export const problems = [
-    {
-        title: "Manual Reporting & Admin Overhead",
-        text: "Too much paperwork and manual processes slow down your mission.",
-        icon: TbReportSearch
-    },
-    {
-        title: "Difficulty Engaging Donors at Scale",
-        text: "Reaching and inspiring donors is challenging without the right tools.",
-        icon: BiDonateHeart
-    },
-    {
-        title: "Limited Capacity to Measure & Show Real Impact",
-        text: "It's hard to track and communicate the true results of your work.",
-        icon: AiOutlineLineChart
-    }
-];
+import { problems } from '@/lib/problems'
 
 const ProblemsSection = () => {
     return (
@@ -37,8 +16,8 @@ const ProblemsSection = () => {
                             <problem.icon  className="w-8 h-auto max-lg:w-7 max-md:w-6 max-sm:w-5" />
                         </div>
                         <div>
-                            <h3 className='font-semibold base'>{problem.title}</h3>
-                            <p className='text-black/70 sm'>{problem.text}</p>
+                            <h3 className='font-semibold lg'>{problem.title}</h3>
+                            <p className='text-black/70 base'>{problem.text}</p>
                         </div>
                     </div>
                 ))}

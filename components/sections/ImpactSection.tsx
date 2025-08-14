@@ -1,25 +1,5 @@
 import React from 'react'
-
-
-const impact = [
-    {
-        value: "80%",
-        text: "Less time spent on donor reporting",
-
-    },
-    {
-        value: "2x",
-        text: "Increase in donor retention",
-    },
-    {
-        value: "95% ",
-        text: "Faster beneficiary onboarding",
-    },
-    {
-        value: "10+",
-        text: "Countries with non profits trust us"
-    }
-]
+import { impact } from '@/lib/impact'
 
 const ImpactSection = () => {
     return (
@@ -31,7 +11,7 @@ const ImpactSection = () => {
                 {impact.map((item, index) => (
                     <div key={index} className='bg-white/75 p-6 flex flex-col justify-between gap-36 max-sm:gap-20 rounded-xl'>
                         <span className='x5l font-bold'>{item.value}</span>
-                        <span className='base text-primary'>{item.text}.</span>
+                        <span className='xl text-primary'>{item.text}.</span>
                     </div>
                 ))}
             </div>

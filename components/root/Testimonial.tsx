@@ -7,10 +7,10 @@ const Testimonial = ({ testimonial }: any) => {
             <div>
                 <div className='flex items-center gap-2'>
                     {Array.from({ length: testimonial.rating }, (_, index) => (
-                        <MdOutlineStar key={index} className='w-5 h-auto' />
+                        <MdOutlineStar key={index} className='w-5 h-auto text-amber-500' />
                     ))}
                     {Array.from({ length: 5 - testimonial.rating }, (_, index) => (
-                        <MdOutlineStarBorder key={index} className='w-5 h-auto' />
+                        <MdOutlineStarBorder key={index} className='w-5 h-auto text-amber-500' />
                     ))}
                 </div>
                 <p className='base text-black/70 mt-4 w-full'>{testimonial.comment}</p>

@@ -100,14 +100,14 @@ const FeedbackForm = () => {
     </div>;
 
     return (
-        <div className="max-w-2xl mx-auto inter flex flex-col items-start justify-center">
+        <div className="max-w-xl w-full bg-white max-md:h-screen xl:min-h-[670px] p-10 border-t-primary lg:border-t-5 inter flex flex-col items-start">
             <div className="flex justify-between">
                 <h3 className="x5l font-bold mb-8 text-primary">Feedback Form</h3>
             </div>
             {error && <div className="text-red-500 mt-2">{error}</div>}
             <h4 className="xl font-bold">{survey?.title}</h4>
             <p className="mb-4 text-gray-700 base">{survey?.description}</p>
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="w-full" onSubmit={handleSubmit}>
                 {survey?.questions.map((q, index) => (
                     <div key={q._id} className="mb-4">
                         <label className="block base font-semibold mb-2">{q.questionText}</label>
@@ -122,7 +122,7 @@ const FeedbackForm = () => {
                         )}
                         {q.type === "choice" && (
                             q.options?.map((opt, idx) => (
-                                <div key={idx} className="flex base items-center gap-2 mb-2">
+                                <div key={idx} className="flex base w-full items-center gap-2 mb-2">
                                     <input
                                         type="radio"
                                         id={`q${q._id}_option_${idx}`}
@@ -134,7 +134,7 @@ const FeedbackForm = () => {
                                     />
                                     <label
                                         htmlFor={`q${q._id}_option_${idx}`}
-                                        className="cursor-pointer p-2 px-3 rounded border border-gray-300 w-full bg-white transition-colors peer-checked:bg-primary/50 peer-checked:text-white peer-checked:border-primary/50"
+                                        className="cursor-pointer w-full p-2 px-3 rounded border border-gray-300 bg-white transition-colors peer-checked:bg-primary/50 peer-checked:text-white peer-checked:border-primary/50"
                                     >
                                         {opt}
                                     </label>

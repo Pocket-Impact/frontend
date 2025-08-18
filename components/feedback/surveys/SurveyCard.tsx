@@ -81,8 +81,8 @@ const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
                         </div>
                     </div>
                 </div>
-                <Link href={`/feedback/surveys/${survey.uniqueLinkId}`}>
-                    <div className='border border-stroke p4 rounded-md flex flex-col gap-4'>
+                <Link className='h-full' href={`/feedback/surveys/${survey.uniqueLinkId}`}>
+                    <div className='border border-stroke h-full p4 rounded-md flex flex-col gap-4'>
                         <p className='base text-black/80 line-clamp-3'>
                             {survey.description}
                         </p>

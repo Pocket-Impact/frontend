@@ -10,7 +10,7 @@ const FeaturesSection = () => {
                 <h1 className='font-bold bricolage x5l mb-4 mt-3'>Everything You Need in <br /> One Pocket</h1>
                 <p className='text-black/70 inter base'>Pocket Impact helps you do more good, faster. We've got tools for every step of your journey.</p>
             </div>
-            <div className='grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-4 mt-16 w-full max-w-5xl'>
+            <div className='grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-4 mt-16 w-full max-w-6xl'>
                 {features.map((feature, index) => (
                     <Feature key={feature.name} feature={feature} index={index} />
                 ))}

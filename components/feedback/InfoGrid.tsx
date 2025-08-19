@@ -18,8 +18,10 @@ const InfoGrid = () => {
   }, []);
 
   return (
-    <div className=''>
-      <div></div>
+    <div className='grid grid-cols-5'>
+      <div className='bg-white border col-span-3 border-stroke p-5 rounded-lg'>
+      <h2 className='lg font-medium'>Feedback Overview</h2>
+      </div>
     </div>
   )
 }

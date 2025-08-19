@@ -5,13 +5,13 @@ const OverviewCard: React.FC<{ card: any, index: number }> = ({ card }) => {
     const [showTooltip, setShowTooltip] = useState(false);
 
     return (
-        <div className='border bg-white border-stroke p-4 flex justify-between gap-5 rounded-x2l'>
+        <div className='border bg-white border-stroke p-4 flex justify-between gap-5 rounded-lg'>
             <div className='flex flex-col gap-5'>
                 <div className='flex items-center gap-2'>
                     <div className='bg-secondary/30 p-2 rounded-lg'>
                         <card.icon className='w-4 max-lg:w-3.5  max-md:w-3 h-auto' />
                     </div>
-                    <span className='font-semibold base'>{card.title}</span>
+                    <span className='font-medium base'>{card.title}</span>
                 </div>
                 <div className='flex items-center gap-2'>
                     <span className='text-black font-medium x3l'>

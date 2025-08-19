@@ -10,8 +10,10 @@ const Dashboard = () => {
         <p className='text-black/60 base'>Welcome to the dashboard, <span className='font-bold'>admin</span></p>
       </div>
       {/* Overview */}
-      <OverviewGrid />
-      <InfoGrid />
+      <div className='flex flex-col gap-6'>
+        <OverviewGrid />
+        <InfoGrid />
+      </div>
     </div>
   )
 }

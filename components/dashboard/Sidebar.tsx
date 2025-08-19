@@ -51,15 +51,16 @@ const Sidebar = () => {
     return (
         <div className='h-full flex flex-col bg-white w-[300px] md:min-w-[300px] max-md:w-max justify-between border-r border-stroke inter'>
             <div className='flex flex-col'>
-                <div className='flex items-center gap-2 p4 border-b border-stroke'>
-                    <Image src={logo} alt="Pocket Impact Logo" width={logo.width} height={logo.height} className='w-12 max-lg:w-10 max-md:w-8 h-auto' />
-                    <div className='flex flex-col max-md:hidden'>
-                        <span className='inter base font-semibold'>Pocket Impact</span>
-                        <span className='inter sm text-black/70'>Feedback tool</span>
-                    </div>
+                <div className='flex items-center gap-2 p4 h-16 border-b border-stroke'>
+                    <Image src={logo}
+                        alt="Pocket Impact Logo"
+                        width={logo.width} height={logo.height}
+                        className='w-8 max-lg:w-10 max-md:w-8 h-auto'
+                    />
+                    <span className='inter lg font-semibold max-md:hidden'>Pocket Impact</span>
                 </div>
                 <div className='p4 flex flex-col border-b border-stroke gap-2 max-md:gap-1.5'>
-                    <span className='font-bold text-black/50 xs max-md:hidden uppercase'>Feedback links</span>
+                    <span className='font-medium text-black/60 xs max-md:hidden uppercase'>GENERAL</span>
                     <div className='flex flex-col gap-2'>
                         {links.map((link) => (
                             <SideLink key={link.name} active={currentLink.includes(link.name.toLowerCase())} link={link} />
@@ -67,7 +68,7 @@ const Sidebar = () => {
                     </div>
                 </div>
                 <div className='p4 flex flex-col gap-2 max-md:gap-1.5'>
-                    <span className='font-bold text-black/50 xs max-md:hidden uppercase'>Other tools</span>
+                    <span className='font-medium text-black/60 xs max-md:hidden uppercase'>Other tools</span>
                     <div className='flex flex-col gap-2'>
                         {tools.map((link) => (
                             <SideLink key={link.name} active={currentLink.includes(link.name.toLowerCase())} link={link} />
@@ -77,7 +78,7 @@ const Sidebar = () => {
             </div>
             <div>
                 <OrgTab />
-                <div className='border-t border-stroke p4 text-center sm text-black/50'>
+                <div className='border-t max-md:hidden border-stroke p4 text-center sm text-black/50'>
                     &copy; {new Date().getFullYear()} Pocket Impact Inc
                 </div>
             </div>

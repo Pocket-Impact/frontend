@@ -6,6 +6,8 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import AlertComponent from "../../components/AlertComponent";
+import { FiSearch } from "react-icons/fi";
+import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 
 const bricolageGrotesque = Bricolage_Grotesque({
     subsets: ["latin"],
@@ -37,8 +39,11 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             <body className={`${bricolageGrotesque.variable} overflow-hidden bg-background h-screen ${inter.variable} antialiased flex`}>
                 <AlertComponent />
                 <Sidebar />
-                <div className="bg-clear rounded-x2l overflow-y-scroll inter p-6 py-4 max-lg:p-5 max-md:p-4 w-full">
-                    {children}
+                <div className="w-full">
+                    <DashboardNavbar />
+                    <div className="bg-clear overflow-y-scroll inter p-8 max-lg:p-5 max-md:p-4 w-full">
+                        {children}
+                    </div>
                 </div>
             </body>
         </html>

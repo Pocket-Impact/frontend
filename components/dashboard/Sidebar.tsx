@@ -47,7 +47,7 @@ const tools = [
 
 const Sidebar = () => {
     const currentLink = usePathname()
-    
+
     return (
         <div className='h-full flex flex-col justify-between inter'>
             <div className='flex flex-col gap-2'>
@@ -58,10 +58,13 @@ const Sidebar = () => {
                         <span className='inter sm text-black/70'>Feedback tool</span>
                     </div>
                 </div>
-                <div className='bg-white border border-[#DDDDDD] p-2.5 max-lg:p-2 max-md:p-1.5 max-md:w-max flex flex-col gap-2.5 rounded-x2l'>
-                    {links.map((link) => (
-                        <SideLink key={link.name} active={currentLink.includes(link.name.toLowerCase())} link={link} />
-                    ))}
+                <div className='mt-3 max-md:mt-0'>
+                    <span className='sm ml-2 font-bold text-gray-700 max-md:hidden'>Feedback links</span>
+                    <div className='bg-white border mt-2 border-[#DDDDDD] p-2.5 max-lg:p-2 max-md:p-1.5 max-md:w-max flex flex-col gap-2.5 rounded-x2l'>
+                        {links.map((link) => (
+                            <SideLink key={link.name} active={currentLink.includes(link.name.toLowerCase())} link={link} />
+                        ))}
+                    </div>
                 </div>
                 <div className='mt-3 max-md:mt-0'>
                     <span className='sm ml-2 font-bold text-gray-700 max-md:hidden'>Other tools</span>

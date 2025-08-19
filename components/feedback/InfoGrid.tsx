@@ -18,8 +18,8 @@ const InfoGrid = () => {
   }, []);
 
   return (
-    <div className='mt-6 gap-4  h-full'>
-      <div className='border lg:col-span-2 p-5 overflow-y-scroll border-stroke rounded-2xl flex flex-col gap-3 h-[440px]'>
+    <div className='mt-6 gap-4 h-full'>
+      <div className='border bg-white lg:col-span-2 p-5 overflow-y-scroll border-stroke rounded-2xl flex flex-col gap-3 h-[440px]'>
         <div className='flex justify-between items-center'>
           <h2 className='font-semibold xl'>Survey List</h2>
           <Link href='/dashboard/feedback/surveys'>

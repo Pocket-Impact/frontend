@@ -1,19 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { IoMdInformationCircleOutline } from 'react-icons/io'
 
-const OverviewCard: React.FC<{ card: any }> = ({ card }) => {
+const OverviewCard: React.FC<{ card: any, index: number }> = ({ card }) => {
+    const [showTooltip, setShowTooltip] = useState(false);
+
     return (
-        <div className='p-3 max-lg:p-2.5 max-md:p-2 max-sm:p-1.5 h-max rounded-x2l border border-stroke flex justify-between'>
-            <div className='bg-primary rounded-gl flex items-center justify-center px-6 max-lg:px-4 max-md:px-2.5 base text-white font-semibold'>
-                {card.value}
-            </div>
-            <div className='lg:gap-4 flex flex-col items-end'>
-                <div className='flex flex-col items-end'>
+        <div className='border bg-white border-stroke p-4 flex justify-between gap-5 rounded-x2l'>
+            <div className='flex flex-col gap-5'>
+                <div className='flex items-center gap-2'>
+                    <div className='bg-secondary/30 p-2 rounded-lg'>
+                        <card.icon className='w-4 max-lg:w-3.5  max-md:w-3 h-auto' />
+                    </div>
                     <span className='font-semibold base'>{card.title}</span>
-                    <span className='text-black/50 sm'>{card.subtitle}</span>
                 </div>
-                <div className='text-black p-2 bg-secondary rounded-md'>
-                    <card.icon className='w-4 max-lg:w-3.5 max-md:w-3 h-auto' />
+                <div className='flex items-center gap-2'>
+                    <span className='text-black font-medium x3l'>
+                        {card.value}
+                    </span>
+                    <div className={`bg-lime-100 text-lime-500 xs px-1.5 p-1 rounded-lg`}>
+                        <span>18.5 %</span>
+                    </div>
                 </div>
+            </div>
+            <div
+                className='relative text-black/60 hover:bg-black/10 hover:text-black transition duration-300 cursor-pointer h-max p-1 rounded-lg'
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+            >
+                <IoMdInformationCircleOutline className='w-5 h-max ' />
+                {showTooltip && (
+                    <div className="absolute right-full mr-2 top-0 bg-black/10 p-1.5 rounded-lg text-black/80 xs inline text-nowrap">
+                        Total {card.title.toLowerCase()}
+                    </div>
+                )}
             </div>
         </div>
     )

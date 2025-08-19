@@ -30,12 +30,6 @@ const OverviewGrid = () => {
             subtitle: "All responses",
             icon: RiSurveyLine,
         },
-        {
-            value: "0005",
-            title: "Reviews",
-            subtitle: "All reviews",
-            icon: RiSurveyLine,
-        },
     ];
     useEffect(() => {
         const fetchSurveys = async () => {
@@ -47,15 +41,13 @@ const OverviewGrid = () => {
     }, []);
     
     return (
-        <div className='grid gap-6 max-lg:gap-2.5 max-md:gap-2 grid-cols-4 max-lg:grid-cols-2 mt-8'>
+        <div className='grid gap-6 max-lg:gap-2.5 max-md:gap-2 grid-cols-3 max-lg:grid-cols-2 mt-8'>
             {/* Surveys Card */}
-            <OverviewCard card={overviewCards[0]} />
+            <OverviewCard card={overviewCards[0]} index={0} />
             {/* Feedback Card */}
-            <OverviewCard card={overviewCards[1]} />
+            <OverviewCard card={overviewCards[1]} index={1} />
             {/* Responses Card */}
-            <OverviewCard card={overviewCards[2]} />
-            {/* Reviews Card */}
-            <OverviewCard card={overviewCards[3]} />
+            <OverviewCard card={overviewCards[2]} index={2} />
         </div >
     )
 }

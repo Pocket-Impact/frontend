@@ -80,6 +80,10 @@
   @apply text-2xl max-lg:text-xl max-md:text-lg max-sm:text-base;
 }
 
+.lg {
+  @apply text-lg max-lg:text-base max-md:text-sm max-sm:text-xs;
+}
+
 .x3l {
   @apply text-3xl max-lg:text-2xl max-md:text-xl max-sm:text-lg;
 }
@@ -102,6 +106,10 @@
 
 .sm {
   @apply text-sm max-lg:text-xs max-md:text-[11px] max-sm:text-[10px];
+}
+
+.xs {
+  @apply text-xs max-lg:text-[10px] max-md:text-[9px] max-sm:text-[8px];
 }
 
 .xl {

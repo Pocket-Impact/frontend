@@ -2,11 +2,12 @@
 
 @theme {
   --color-background: #F0FCF2;
+  --color-clear: #f2fcf4;
   --color-primary: #0A400C;
   --color-secondary: #FED16A;
   --color-cblack: #191C1F;
   --color-error: #FFEDD4;
-  --color-stroke: #DDDDDD;
+  --color-stroke: #CCCCCC;
 }
 
 .bricolage {

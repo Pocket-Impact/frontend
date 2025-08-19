@@ -49,33 +49,38 @@ const Sidebar = () => {
     const currentLink = usePathname()
 
     return (
-        <div className='h-full flex flex-col justify-between inter'>
-            <div className='flex flex-col gap-2'>
-                <div className='flex items-center gap-2 w-[300px] max-md:w-max bg-white border border-[#DDDDDD] rounded-x2l max-lg:p-2 max-md:p-1.5 p-2.5'>
+        <div className='h-full flex flex-col bg-white w-[300px] md:min-w-[300px] max-md:w-max justify-between border-r border-stroke inter'>
+            <div className='flex flex-col'>
+                <div className='flex items-center gap-2 p4 border-b border-stroke'>
                     <Image src={logo} alt="Pocket Impact Logo" width={logo.width} height={logo.height} className='w-12 max-lg:w-10 max-md:w-8 h-auto' />
                     <div className='flex flex-col max-md:hidden'>
                         <span className='inter base font-semibold'>Pocket Impact</span>
                         <span className='inter sm text-black/70'>Feedback tool</span>
                     </div>
                 </div>
-                <div className='mt-3 max-md:mt-0'>
-                    <span className='sm ml-2 font-bold text-gray-700 max-md:hidden'>Feedback links</span>
-                    <div className='bg-white border mt-2 border-[#DDDDDD] p-2.5 max-lg:p-2 max-md:p-1.5 max-md:w-max flex flex-col gap-2.5 rounded-x2l'>
+                <div className='p4 flex flex-col border-b border-stroke gap-2 max-md:gap-1.5'>
+                    <span className='font-bold text-black/50 xs max-md:hidden uppercase'>Feedback links</span>
+                    <div className='flex flex-col gap-2'>
                         {links.map((link) => (
                             <SideLink key={link.name} active={currentLink.includes(link.name.toLowerCase())} link={link} />
                         ))}
                     </div>
                 </div>
-                <div className='mt-3 max-md:mt-0'>
-                    <span className='sm ml-2 font-bold text-gray-700 max-md:hidden'>Other tools</span>
-                    <div className='bg-white border border-[#DDDDDD] mt-2 max-lg:p-2 max-md:p-1.5 max-md:w-max p-2.5 flex flex-col gap-2.5 rounded-x2l'>
+                <div className='p4 flex flex-col gap-2 max-md:gap-1.5'>
+                    <span className='font-bold text-black/50 xs max-md:hidden uppercase'>Other tools</span>
+                    <div className='flex flex-col gap-2'>
                         {tools.map((link) => (
                             <SideLink key={link.name} active={currentLink.includes(link.name.toLowerCase())} link={link} />
                         ))}
                     </div>
                 </div>
             </div>
-            <OrgTab />
+            <div>
+                <OrgTab />
+                <div className='border-t border-stroke p4 text-center sm text-black/50'>
+                    &copy; {new Date().getFullYear()} Pocket Impact Inc
+                </div>
+            </div>
         </div>
     )
 }

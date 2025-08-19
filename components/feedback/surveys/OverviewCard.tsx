@@ -8,7 +8,7 @@ const OverviewCard: React.FC<{ card: any, index: number }> = ({ card }) => {
         <div className='border bg-white border-stroke p-4 flex justify-between gap-5 rounded-lg'>
             <div className='flex flex-col gap-5'>
                 <div className='flex items-center gap-2'>
-                    <div className='bg-secondary/30 p-2 rounded-lg'>
+                    <div className='bg-black/20 p-2 rounded-sm'>
                         <card.icon className='w-4 max-lg:w-3.5  max-md:w-3 h-auto' />
                     </div>
                     <span className='font-medium base'>{card.title}</span>

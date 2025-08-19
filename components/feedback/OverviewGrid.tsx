@@ -47,7 +47,7 @@ const OverviewGrid = () => {
     }, []);
     
     return (
-        <div className='grid gap-3 max-lg:gap-2.5 max-md:gap-2 grid-cols-4 max-lg:grid-cols-2 mt-8'>
+        <div className='grid gap-6 max-lg:gap-2.5 max-md:gap-2 grid-cols-4 max-lg:grid-cols-2 mt-8'>
             {/* Surveys Card */}
             <OverviewCard card={overviewCards[0]} />
             {/* Feedback Card */}

@@ -44,7 +44,7 @@ const Navbar = () => {
                     ))}
                 </div>
                 <div>
-                    <Link href="/auth/signup">
+                    <Link href="/auth/signup" prefetch>
                         <PrimaryButton text="Get Started" styles="text-sm effect py-3 px-4" />
                     </Link>
                 </div>

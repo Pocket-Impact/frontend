@@ -18,8 +18,8 @@ const InfoGrid = () => {
   }, []);
 
   return (
-    <div className='mt-3 gap-4  h-full'>
-      <div className='border lg:col-span-2 p-3 overflow-y-scroll border-stroke rounded-2xl flex flex-col gap-2 h-[450px]'>
+    <div className='mt-6 gap-4  h-full'>
+      <div className='border lg:col-span-2 p-5 overflow-y-scroll border-stroke rounded-2xl flex flex-col gap-3 h-[440px]'>
         <div className='flex justify-between items-center'>
           <h2 className='font-semibold xl'>Survey List</h2>
           <Link href='/dashboard/feedback/surveys'>
@@ -33,9 +33,9 @@ const InfoGrid = () => {
           </div>
         }
         {surveys && surveys.map((survey) => (
-          <div key={survey._id} className='p-3 border h-max w-full border-stroke'>
+          <div key={survey._id} className='p-3 border h-max mt-3 w-full border-stroke'>
             <h3 className='font-semibold base'>{survey.title}</h3>
-            <p className='sm text-black/50'>{survey.description}</p>
+            <p className='sm text-black/50 mt-2'>{survey.description}</p>
           </div>
         ))}
         {surveys.length === 0 && !loading && (

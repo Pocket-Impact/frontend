@@ -9,11 +9,11 @@ const HeroSection = () => {
             </div>
             <div className="relative z-10 flex h-full flex-col items-center justify-end px-4">
                 <div className="max-w-3xl fade-down text-center">
-                    <h1 className="x5l font-bold flex text-white bricolage flex-col mb-4">
+                    <h1 className="x5l font-bold flex text-white bricolage flex-col gap-5 mb-7">
                         <span> AI-Powered Tools to</span>
                         <span>Supercharge Your Social <span className='text-secondary underline decoration-wavy'>Impact</span></span>
                     </h1>
-                    <p className="base inter mb-8 max-md:mb-6 text-white/80">
+                    <p className="base inter mb-12 max-md:mb-8 text-white/80">
                         Automate operations, engage donors, and measure impact — all from your pocket.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">

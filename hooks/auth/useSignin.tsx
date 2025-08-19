@@ -33,6 +33,7 @@ const useSignin = () => {
     };
 
     const signIn = async (data: FormData) => {
+        setIsLoading(true);
         try {
             const response = await apiFetch('http://localhost:5000/api/auth/login', {
                 method: 'POST',
@@ -44,36 +45,38 @@ const useSignin = () => {
             const json = await response.json();
 
             if (!response.ok) {
-                setIsLoading(false);
                 setErrors({ email: "Invalid Email or Password", password: "Invalid Email or Password" });
-            } else {
                 setIsLoading(false);
-                setUser(json.data.user);
-                setMessage("Successfully signed in");
-                setTimeout(() => {
-                    clearMessage();
-                }, 3000);
+                return;
+            }
 
-                // Immediately refresh token after login
-                try {
-                    const refreshRes = await apiFetch('/api/auth/refresh', {
-                        method: 'POST',
-                        credentials: 'include'
-                    });
-                    const refreshJson = await refreshRes.json();
-                } catch (err) {
-                    console.log(err);
-                }
-                
-                if (json.data.user.isVerified) {
-                    router.push('/feedback/dashboard');
-                    setErrors({ email: "", password: "" });
-                } else {
-                    router.push('/auth/verify-otp');
-                }
+            setUser(json.data.user);
+            setMessage("Successfully signed in");
+            setTimeout(() => {
+                clearMessage();
+            }, 3000);
+
+            // Immediately refresh token after login
+            try {
+                const refreshRes = await apiFetch('/api/auth/refresh', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                await refreshRes.json(); // Optionally handle response
+            } catch (err) {
+                // Optionally handle refresh error
+            }
+
+            setIsLoading(false);
+            if (json.data.user.isVerified) {
+                setErrors({ email: "", password: "" });
+                router.push('/feedback/dashboard');
+            } else {
+                router.push('/auth/verify-otp');
             }
         } catch (error) {
             setErrors({ email: "Network error", password: "" });
+            setIsLoading(false);
         }
     };
 
@@ -83,7 +86,6 @@ const useSignin = () => {
         setErrors(validationErrors);
 
         if (!validationErrors.email && !validationErrors.password) {
-            setIsLoading(true);
             signIn(formData);
         }
     };

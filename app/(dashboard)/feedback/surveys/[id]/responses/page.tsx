@@ -17,16 +17,17 @@ const page = () => {
     useEffect(() => {
         const fetchResponses = async () => {
             setLoading(true);
-            const res = await apiFetch(`http://localhost:5000/api/feedback/${id}`);
+            const res = await apiFetch(`/api/responses/${id}`);
             if (res.ok) {
                 const data = await res.json();
                 console.log(data);
                 setResponses(data.data);
+                setLoading(false);
             } else {
+                setLoading(false);
                 const data = await res.json();
                 console.log(data.message);
             }
-            setLoading(false);
         };
         fetchResponses();
     }, [id]);
@@ -60,7 +61,7 @@ const page = () => {
                     </div>
                 }
                 {responses.length == 0 && !loading && (
-                    <div className="border rounded-xl h-[74px] flex items-center justify-center border-stroke p3 text-black/60">
+                    <div className="border bg-white rounded-xl h-[74px] flex items-center justify-center border-stroke p3 text-black/60">
                         No responses yet.
                     </div>
                 )}

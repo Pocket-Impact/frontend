@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${bricolageGrotesque.variable} overflow-y-scroll pt-14 flex items-end justify-center bg-background ${inter.variable} antialiased h-screen`}>
+      <body className={`${bricolageGrotesque.variable} overflow-hidden pt-14 flex items-end justify-center bg-background ${inter.variable} antialiased h-screen`}>
         <AlertComponent />
         {children}
       </body>

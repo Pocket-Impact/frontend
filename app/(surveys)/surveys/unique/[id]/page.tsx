@@ -52,12 +52,12 @@ const FeedbackForm = () => {
 
     const preparePayload = () => ({
         surveyId,
-        feedbacks: survey?.questions
+        responses: survey?.questions
             .map(q => ({
                 questionId: q._id!,
                 answer: answers[q._id!] !== undefined ? String(answers[q._id!]) : ""
             }))
-            .filter(fb => fb.answer !== "")
+            .filter(resp => resp.answer !== "")
     });
 
 
@@ -67,14 +67,15 @@ const FeedbackForm = () => {
         setError(null);
         try {
             const payload = preparePayload();
-            const res = await apiFetch("/api/feedback", {
+            const res = await apiFetch("/api/responses", {
                 method: "POST",
                 body: JSON.stringify(payload),
             });
 
             const json = await res.json();
             if (!res.ok) {
-                setError(json.message || "Failed to submit feedback.");
+                setError("Failed to submit feedback.");
+                console.log(json);
             } else {
                 setAnswers({});
                 setMessage("Feedback submitted successfully.");
@@ -100,7 +101,7 @@ const FeedbackForm = () => {
     </div>;
 
     return (
-        <div className="max-w-xl w-full bg-white max-md:h-screen xl:min-h-[670px] p-10 border-t-primary lg:border-t-5 inter flex flex-col items-start">
+        <div className="max-w-xl w-full bg-white scrolly max-md:h-screen xl:min-h-[670px] xl:h-[670px] overflow-y-scroll p-10 border-t-primary lg:border-t-5 inter flex flex-col items-start">
             <div className="flex justify-between">
                 <h3 className="x5l font-bold mb-8 text-primary">Feedback Form</h3>
             </div>

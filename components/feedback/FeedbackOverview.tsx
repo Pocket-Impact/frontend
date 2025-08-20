@@ -37,7 +37,7 @@ const FeedbackChart = () => {
     }, []);
 
     return (
-        <div className='bg-white border col-span-2 flex flex-col gap-4 border-stroke h-full p-4 pb-1 rounded-lg'>
+        <div className='bg-white border lg:col-span-2 flex flex-col gap-4 border-stroke h-full p-4 pb-1 rounded-lg'>
             <div className='flex items-start justify-between'>
                 <div className='flex items-center gap-2'>
                     <div className='bg-black/10 p-2 rounded-sm'>
@@ -57,7 +57,7 @@ const FeedbackChart = () => {
                     </div>
                 </div>
             </div>
-            <div className="w-full h-full">
+            <div className="w-full h-full min-h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={dummyDailyFeedbacks}>
                         <XAxis

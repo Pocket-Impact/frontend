@@ -14,6 +14,7 @@ const Dashboard = () => {
           <InfoGrid />
         </div>
       </div>
+      <br /><br />
     </div>
   )
 }

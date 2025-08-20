@@ -1,7 +1,5 @@
 "use client"
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
-import FeedbackOverview from './FeedbackOverview';
 import { AiOutlineRise } from 'react-icons/ai';
 
 const dummyRecentFeedbacks = [
@@ -10,7 +8,7 @@ const dummyRecentFeedbacks = [
     comment: "Could be improved, but overall good.",
     timeAgo: "1h ago",
     sentiment: "Neutral",
-    sentimentColor: "bg-yellow-200/70 text-yellow-500"
+    sentimentColor: "bg-yellow-200/70 text-yellow-700"
   },
   {
     userInitial: "C",
@@ -51,7 +49,7 @@ const dummyRecentFeedbacks = [
 
 const RecentFeedback = () => {
   return (
-    <div className='bg-white border-stroke flex flex-col gap-2 border p-4 rounded-lg col-span-3'>
+    <div className='bg-white border-stroke flex flex-col gap-2 border p-4 rounded-lg lg:col-span-3'>
         <div className='flex items-center -mt-1 gap-2'>
           <div className='bg-black/10 p-2 rounded-sm'>
             <AiOutlineRise className='w-3.5 h-auto' />

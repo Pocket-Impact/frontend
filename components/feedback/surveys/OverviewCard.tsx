@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { IoMdInformationCircleOutline } from 'react-icons/io'
+import { MdOutlineArrowOutward } from 'react-icons/md';
 
 const OverviewCard: React.FC<{ card: any, index: number }> = ({ card }) => {
     const [showTooltip, setShowTooltip] = useState(false);
@@ -8,7 +9,7 @@ const OverviewCard: React.FC<{ card: any, index: number }> = ({ card }) => {
         <div className='border bg-white border-stroke p-4 flex justify-between gap-5 rounded-lg'>
             <div className='flex flex-col gap-5'>
                 <div className='flex items-center gap-2'>
-                    <div className='bg-black/20 p-2 rounded-sm'>
+                    <div className='bg-black/10 p-2 rounded-sm'>
                         <card.icon className='w-4 max-lg:w-3.5  max-md:w-3 h-auto' />
                     </div>
                     <span className='font-medium base'>{card.title}</span>
@@ -17,8 +18,9 @@ const OverviewCard: React.FC<{ card: any, index: number }> = ({ card }) => {
                     <span className='text-black font-medium x3l'>
                         {card.value}
                     </span>
-                    <div className={`bg-lime-100 text-lime-500 xs px-1.5 p-1 rounded-lg`}>
+                    <div className={`bg-lime-100 text-lime-500 xs px-1.5 p-1 rounded-lg flex items-center gap-1`}>
                         <span>18.5 %</span>
+                        <MdOutlineArrowOutward className='text-lime-600' />
                     </div>
                 </div>
             </div>

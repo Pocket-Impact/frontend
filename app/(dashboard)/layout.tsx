@@ -39,9 +39,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             <body className={`${bricolageGrotesque.variable} overflow-hidden bg-background h-screen ${inter.variable} antialiased flex`}>
                 <AlertComponent />
                 <Sidebar />
-                <div className="w-full">
+                <div className="w-full h-full">
                     <DashboardNavbar />
-                    <div className="bg-clear overflow-y-scroll inter p-8 max-lg:p-5 max-md:p-4 w-full">
+                    <div className="bg-clear overflow-y-scroll inter p-6 h-full max-lg:p-5 max-md:p-4 w-full">
                         {children}
                     </div>
                 </div>

@@ -3,7 +3,8 @@ import PrimaryButton from '@/components/ui/PrimaryButton'
 import { useAlertStore } from '@/stores/alertStore'
 import { apiFetch } from '@/utils/apiFetch'
 import React, { useState } from 'react'
-import { IoMdClose } from 'react-icons/io'
+import Papa from 'papaparse';
+import { FiUpload } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5'
 
 const SendSurvey: React.FC<{ open: boolean, close: Function, link: string }> = ({ open, close, link }) => {
@@ -12,6 +13,7 @@ const SendSurvey: React.FC<{ open: boolean, close: Function, link: string }> = (
     const [error, setError] = useState<string | null>(null)
     const { setMessage, clearMessage } = useAlertStore((state) => state);
     const [loading, setLoading] = useState<boolean>(false);
+    const [csvFile, setCsvFile] = useState<File | null>(null);
 
     const addEmail = () => {
         let newError = ""
@@ -73,6 +75,36 @@ const SendSurvey: React.FC<{ open: boolean, close: Function, link: string }> = (
                     <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} className='p-3 w-full base outline-0 pl-2' placeholder='e.g. john@example.com' />
                     <button type="button" onClick={addEmail} className='p-3 bg-primary text-white min-w-max rounded-lg base h-full cursor-pointer'>Add email</button>
                 </form>
+                <div className='mt-2'>
+                    <label htmlFor='csv-upload' className='block mb-1 font-medium'>Or upload CSV file:</label>
+                    <div className='relative w-full'>
+                        <input
+                            id='csv-upload'
+                            type='file'
+                            accept='.csv'
+                            style={{ display: 'none' }}
+                            onChange={e => {
+                                const file = e.target.files?.[0];
+                                setCsvFile(file || null);
+                                if (!file) return;
+                                Papa.parse(file, {
+                                    header: false,
+                                    skipEmptyLines: true,
+                                    complete: (results: any) => {
+                                        const allEmails = results.data.flat().filter((val: string) => val.includes('@') && val.includes('.'));
+                                        setEmails(prev => Array.from(new Set([...prev, ...allEmails])));
+                                    },
+                                });
+                            }}
+                        />
+                        <label htmlFor='csv-upload' className='flex items-center gap-2 cursor-pointer border rounded-md p-2 w-full bg-white hover:bg-primary/2 transition'>
+                            <FiUpload className='w-5 h-5 text-primary' />
+                            <span className='base text-black/70'>
+                                {csvFile ? csvFile.name : 'Upload file'}
+                            </span>
+                        </label>
+                    </div>
+                </div>
                 <div className='flex flex-wrap gap-2 mt-2'>
                     {emails.map((email, index) => (
                         <span key={index} className='bg-green-100 cursor-default flex items-center gap-2 border-2 text-green-600 p-1 base rounded-full pl-2 border-green-300'>

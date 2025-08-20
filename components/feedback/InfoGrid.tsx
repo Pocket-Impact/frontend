@@ -1,83 +1,86 @@
 "use client"
-import { apiFetch } from '@/utils/apiFetch';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
-import { MdOutlineArrowOutward } from 'react-icons/md';
-import { VscFeedback } from 'react-icons/vsc';
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-} from 'recharts';
+import FeedbackOverview from './FeedbackOverview';
+import { AiOutlineRise } from 'react-icons/ai';
 
-const dummyDailyFeedbacks = [
-  { day: "Mon", Feedbacks: 2 },
-  { day: "Tue", Feedbacks: 5 },
-  { day: "Wed", Feedbacks: 3 },
-  { day: "Thu", Feedbacks: 7 },
-  { day: "Fri", Feedbacks: 4 },
-  { day: "Sat", Feedbacks: 6 },
-  { day: "Sun", Feedbacks: 1 },
+const dummyRecentFeedbacks = [
+  {
+    userInitial: "E",
+    comment: "Could be improved, but overall good.",
+    timeAgo: "1h ago",
+    sentiment: "Neutral",
+    sentimentColor: "bg-yellow-200/70 text-yellow-500"
+  },
+  {
+    userInitial: "C",
+    comment: "Not satisfied with the experience.",
+    timeAgo: "10m ago",
+    sentiment: "Negative",
+    sentimentColor: "bg-red-100 text-red-500"
+  },
+  {
+    userInitial: "G",
+    comment: "Not satisfied with the experience.",
+    timeAgo: "10m ago",
+    sentiment: "Negative",
+    sentimentColor: "bg-red-100 text-red-500"
+  },
+  {
+    userInitial: "E",
+    comment: "Could be improved, but overall good.",
+    timeAgo: "1h ago",
+    sentiment: "Neutral",
+    sentimentColor: "bg-yellow-200/70 text-yellow-500"
+  },
+  {
+    userInitial: "G",
+    comment: "Not satisfied with the experience.",
+    timeAgo: "10m ago",
+    sentiment: "Negative",
+    sentimentColor: "bg-red-100 text-red-500"
+  },
+  {
+    userInitial: "E",
+    comment: "Could be improved, but overall good.",
+    timeAgo: "1h ago",
+    sentiment: "Neutral",
+    sentimentColor: "bg-yellow-200/70 text-yellow-500"
+  },
 ];
 
 const InfoGrid = () => {
-  const [surveys, setSurveys] = useState<any[]>([]);
-  const [loading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchSurveys = async () => {
-      const surveyRes = await apiFetch('/api/surveys');
-      const surveyData = await surveyRes.json();
-      setSurveys(surveyData.data.surveys);
-      setIsLoading(false);
-    }
-    fetchSurveys();
-  }, []);
-
   return (
-    <div className='grid grid-cols-5 gap-4 h-[436px]'>
-      <div className='bg-white border col-span-2 flex flex-col gap-4 border-stroke h-full p-4 pb-1 rounded-lg'>
-        <div className='flex items-start justify-between'>
-          <div className='flex items-center gap-2'>
-            <div className='bg-black/10 p-2 rounded-sm'>
-              <VscFeedback className='w-3.5 h-auto' />
-            </div>
+    <div className='grid grid-cols-5 gap-6 max-lg:gap-5 max-md:grid-cols-1 h-[436px]'>
+      <FeedbackOverview />
+      <div className='bg-white border-stroke flex flex-col gap-2 border p-4 rounded-lg col-span-3'>
+        <div className='flex items-center -mt-1 gap-2'>
+          <div className='bg-black/10 p-2 rounded-sm'>
+            <AiOutlineRise className='w-3.5 h-auto' />
+          </div>
+          <div className='flex flex-col'>
             <h2 className='sm font-medium'>
-              Feedback Overview
+              Recent Feedback
+            </h2>
+            <h2 className='xs'>
+              Most recent feedback received
             </h2>
           </div>
-          <div>
-            <div className='flex flex-col items-center gap-1'>
-              <div className={`bg-red-100 text-red-500 xs w-max px-1.5 p-1 rounded-sm flex items-center gap-1`}>
-                <span>18.5 %</span>
-                <MdOutlineArrowOutward className='text-red-600 rotate-90' />
-              </div>
-              <span className='xs'> - 26 Today</span>
-            </div>
-          </div>
         </div>
-        <div className="w-full h-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={dummyDailyFeedbacks}>
-              <XAxis
-                dataKey="day"
-                axisLine={{ stroke: '#0A400C' }}
-                tickLine={false}
-                tick={{ fill: '#0A400C' }}
-              />
-              <Tooltip cursor={{ fill: 'rgba(10, 64, 12, 0.1)' }} />
-              <Bar
-                dataKey="Feedbacks"
-                fill="#0A400CEE"
-                radius={[8, 8, 0, 0]}
-                isAnimationActive={false}
-              />
-            </BarChart>
-          </ResponsiveContainer>
+        <div className='flex flex-col gap-2'>
+          {dummyRecentFeedbacks.map((feedback, index) => (
+            <div key={index} className='p-2 rounded-sm border border-stroke cursor-default flex justify-between items-center'>
+              <div className='flex items-center gap-2'>
+                <div className='flex flex-col'>
+                  <span className='sm'>{feedback.comment}</span>
+                  <span className='xs text-black/60 '>{feedback.timeAgo}</span>
+                </div>
+              </div>
+              <div className={`bg-lime-100 p-1 px-1.5 mr-1 text-lime-500 w-max xs ${feedback.sentimentColor}`}>
+                {feedback.sentiment}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

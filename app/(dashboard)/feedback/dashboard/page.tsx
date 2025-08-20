@@ -1,3 +1,4 @@
+"use client"
 import InfoGrid from '@/components/feedback/InfoGrid'
 import OverviewGrid from '@/components/feedback/OverviewGrid'
 import React from 'react'

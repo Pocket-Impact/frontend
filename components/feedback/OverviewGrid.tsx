@@ -10,6 +10,7 @@ import { apiFetch } from '@/utils/apiFetch';
 
 const OverviewGrid = () => {
     const [surveys, setSurveys] = useState<any[]>([]);
+    const [responses, setResponses] = useState<any[]>([]);
 
     const overviewCards = [
         {
@@ -25,19 +26,24 @@ const OverviewGrid = () => {
             icon: VscFeedback,
         },
         {
-            value: "0032",
+            value: responses?.length.toString().padStart(4, '0'),
             title: "Responses",
             subtitle: "All responses",
             icon: RiSurveyLine,
         },
     ];
     useEffect(() => {
-        const fetchSurveys = async () => {
+        const fetchData = async () => {
             const surveyRes = await apiFetch('/api/surveys');
             const surveyData = await surveyRes.json();
             setSurveys(surveyData?.data?.surveys);
+
+            const responsesRes = await apiFetch('/api/responses/organisation/');
+            const responsesData = await responsesRes.json();
+            console.log(responsesData.data);
+            setResponses(responsesData?.data);
         }
-        fetchSurveys();
+        fetchData();
     }, []);
     
     return (

@@ -43,7 +43,7 @@ const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
         <>
             <SendSurvey open={sendSurvey} close={setSendSurvey} link={survey._id} />
             <div className='flex flex-col gap-1 justify-between relative'>
-                <div className='flex items-center justify-between gap-2 p4 border border-stroke rounded-md rounded-t-2xl'>
+                <div className='flex items-center bg-white justify-between gap-2 p4 border border-stroke rounded-md rounded-t-2xl'>
                     <div className='flex gap-2 items-center'>
                         <div className='bg-primary p-2 rounded-gl w-max text-white'>
                             <RiSurveyLine className='w-4 h-auto max-lg:w-3.5 max-md:w-3 max-sm:w-2.5' />
@@ -81,8 +81,8 @@ const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
                         </div>
                     </div>
                 </div>
-                <Link className='h-full' href={`/feedback/surveys/${survey.uniqueLinkId}`}>
-                    <div className='border border-stroke h-full p4 rounded-md flex flex-col gap-4'>
+                <Link className='h-full' href={`/feedback/surveys/${survey.uniqueLinkId}`} prefetch>
+                    <div className='border bg-white border-stroke h-full p4 rounded-md flex flex-col gap-4'>
                         <p className='base text-black/80 line-clamp-3'>
                             {survey.description}
                         </p>
@@ -90,7 +90,7 @@ const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
                         </div>
                     </div>
                 </Link>
-                <Link href={`/feedback/surveys/${survey._id}/responses`} className='border border-stroke group hover:bg-primary/80 hover:text-white p4 rounded-t-md transition duration-300 cursor-pointer rounded-b-2xl'>
+                <Link href={`/feedback/surveys/${survey._id}/responses`} prefetch className='border bg-white border-stroke group hover:bg-primary/80 hover:text-white p4 rounded-t-md transition duration-300 cursor-pointer rounded-b-2xl'>
                     <div className='flex items-center gap-2 '>
                         <div className='bg-primary group-hover:bg-white p-2 rounded-gl group-hover:text-primary transition duration-300 w-max text-white'>
                             <VscFeedback className='w-4 h-auto max-lg:w-3.5 max-md:w-3 max-sm:w-2.5' />

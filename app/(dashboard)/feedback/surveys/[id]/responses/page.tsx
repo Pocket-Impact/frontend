@@ -17,16 +17,14 @@ const page = () => {
     useEffect(() => {
         const fetchResponses = async () => {
             setLoading(true);
-            const res = await apiFetch(`/api/responses/${id}`);
+            const res = await apiFetch(`http://localhost:5000/api/responses/survey/${id}`);
             if (res.ok) {
                 const data = await res.json();
-                console.log(data);
                 setResponses(data.data);
                 setLoading(false);
             } else {
                 setLoading(false);
                 const data = await res.json();
-                console.log(data.message);
             }
         };
         fetchResponses();
@@ -68,7 +66,7 @@ const page = () => {
                 {responses.map((response: any, idx: number) => (
                     <div
                         key={response._id || idx}
-                        className={`border rounded-xl ${open[response._id] ? 'h-max' : 'h-[74px] max-sm:h-[66px] max-md:h-[70px] max-lg:h-[72px]'} transition-all duration-300 overflow-hidden border-stroke p3 mb-4`}
+                        className={`border rounded-xl bg-white ${open[response._id] ? 'h-max' : 'h-[74px] max-sm:h-[66px] max-md:h-[70px] max-lg:h-[72px]'} transition-all duration-300 overflow-hidden border-stroke p3 mb-4`}
                     >
                         <div className='flex items-center justify-between gap-2'>
                             <div className='flex items-center gap-2'>
@@ -103,14 +101,19 @@ const page = () => {
                             </div>
                         </div>
                         <div className='mt-4 ml-2'>
-                            {response.feedbacks?.map((fb: any, qidx: number) => (
+                            {response.responses?.map((ans: any, qidx: number) => (
                                 <div key={qidx} className="mb-2">
                                     <p className='font-semibold base'>
-                                        {fb.questionText || fb.questionId}
+                                        {ans.questionText || ans.questionId}
                                     </p>
-                                    <p className='text-black/60 base'>
-                                        {fb.answer}
-                                    </p>
+                                    <div className='flex gap-2 items-center'>
+                                        <p className='text-black/60 base'>
+                                            {ans.answer}
+                                        </p>
+                                        <p className={`text-black/60 base ${ans.sentiment === "positive" ? "text-lime-600" : ans.sentiment === "negative" ? "text-red-500" : "text-yellow-500"}`}>
+                                            {ans.sentiment}
+                                        </p>
+                                    </div>
                                 </div>
                             ))}
                         </div>

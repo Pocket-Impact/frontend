@@ -13,7 +13,7 @@ const OverviewGrid = () => {
 
     const overviewCards = [
         {
-            value: surveys ? surveys.length.toString().padStart(4, '0') : "--",
+            value: surveys?.length.toString().padStart(4, '0'),
             title: "Surveys",
             subtitle: "All surveys",
             icon: RiSurveyLine,
@@ -35,7 +35,7 @@ const OverviewGrid = () => {
         const fetchSurveys = async () => {
             const surveyRes = await apiFetch('/api/surveys');
             const surveyData = await surveyRes.json();
-            setSurveys(surveyData.data.surveys);
+            setSurveys(surveyData?.data?.surveys);
         }
         fetchSurveys();
     }, []);

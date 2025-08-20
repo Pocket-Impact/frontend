@@ -41,7 +41,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                 <Sidebar />
                 <div className="w-full h-full">
                     <DashboardNavbar />
-                    <div className="bg-clear overflow-y-scroll inter p-6 h-full max-lg:p-5 max-md:p-4 w-full">
+                    <div className="bg-clear overflow-y-scroll inter p-6 h-11/12 max-lg:p-5 max-md:p-4 w-full">
                         {children}
                     </div>
                 </div>

@@ -28,7 +28,7 @@ const typeOptions = [
 export default function QuestionCard({ question, onUpdate, onRemove, dragHandleProps, index }: Props) {
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
     return (
-        <div className="border border-gray-300 rounded-x3l p-4 bg-gray-50 relative">
+        <div className="border border-gray-300 rounded-lg p-4 bg-gray-50 relative">
             <div className="flex items-center justify-between mb-4">
                 <button
                     type="button"
@@ -41,7 +41,7 @@ export default function QuestionCard({ question, onUpdate, onRemove, dragHandleP
             </div>
             <input
                 type="text"
-                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                className="w-full p-2 mb-2 outline-none border border-stroke focus:border-primary rounded"
                 placeholder="Question label"
                 value={question.label}
                 onChange={e => onUpdate(question.id, { label: e.target.value })}
@@ -82,7 +82,7 @@ export default function QuestionCard({ question, onUpdate, onRemove, dragHandleP
                         <div key={idx} className="flex items-center gap-2 mb-2">
                             <input
                                 type="text"
-                                className="p-2 border border-gray-300 rounded w-full"
+                                className="p-2 outline-none border border-stroke focus:border-primary rounded w-full"
                                 placeholder={`Option ${idx + 1}`}
                                 value={opt}
                                 onChange={e => {
@@ -93,7 +93,7 @@ export default function QuestionCard({ question, onUpdate, onRemove, dragHandleP
                             />
                             <button
                                 type="button"
-                                className="text-white bg-red-500 cursor-pointer duration-300 transition hover:bg-red-600 px-3 py-2.5 rounded"
+                                className="text-white h-full bg-orange-500 cursor-pointer duration-300 transition hover:bg-orange-600 px-3 py-2.5 rounded"
                                 onClick={() => {
                                     const newOptions = (question.options ?? []).filter((_, i) => i !== idx);
                                     onUpdate(question.id, { options: newOptions });
@@ -106,7 +106,7 @@ export default function QuestionCard({ question, onUpdate, onRemove, dragHandleP
                     <PrimaryButton
                         text="Add Option"
                         type="button"
-                        styles="bg-primary rounded-lg text-white w-full p-2 rounded hover:bg-primary-dark transition"
+                        styles="bg-primary rounded-sm flex justify-center text-white w-full p-2 rounded hover:bg-primary-dark transition"
                         onClick={() => onUpdate(question.id, { options: [...(question.options ?? []), ""] })}
                     />
                 </div>

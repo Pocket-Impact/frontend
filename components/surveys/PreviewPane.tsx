@@ -11,9 +11,9 @@ type Props = {
 
 export default function PreviewPane({ title, description, active, questions }: Props) {
     return (
-        <div className="bg-gray-100 text-start rounded-x3l p-6 h-max">
+        <div className="bg-white scrolly h-[560px] overflow-y-scroll overflow-clip border border-stroke text-start p-6">
             <div className="flex justify-between">
-                <h3 className="text-xl font-bold mb-2 text-primary">Preview</h3>
+            <h3 className="text-xl font-medium mb-2 text-primary">Preview</h3>
                 {/* Survey status logic if needed */}
                 {/* <div className="mb-2">
                     <span className={`px-2 py-1 rounded ${active ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"}`}>
@@ -21,8 +21,8 @@ export default function PreviewPane({ title, description, active, questions }: P
                     </span>
                 </div> */}
             </div>
-            <h4 className="text-xl font-bold">{title}</h4>
-            <p className="mb-4 text-gray-700">{description}</p>
+            {title && <h4 className="text-xl font-bold">{title}</h4>}
+            {description && <p className="mb-4 text-gray-700">{description}</p>}
             <form className="space-y-6">
                 {questions.map((q, index) => (
                     <div key={q.id} className="mb-4">
@@ -72,7 +72,12 @@ export default function PreviewPane({ title, description, active, questions }: P
                         )}
                     </div>
                 ))}
-                <PrimaryButton text="Submit answer" styles="p-3 px-4 rounded-xl bg-primary text-white hover:bg-primary-dark transition" />
+                {questions.length === 0 && (
+                    <p className="text-gray-500">No questions available for preview.</p>
+                )}
+                {questions.length > 0 && (
+                    <PrimaryButton text="Submit answer" styles="p-3 px-4 rounded-xl bg-primary text-white hover:bg-primary-dark transition" />
+                )}
             </form>
         </div>
     );

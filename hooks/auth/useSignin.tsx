@@ -47,6 +47,7 @@ const useSignin = () => {
             if (!response.ok) {
                 setErrors({ email: "Invalid Email or Password", password: "Invalid Email or Password" });
                 setIsLoading(false);
+                console.log(json);
                 return;
             }
 

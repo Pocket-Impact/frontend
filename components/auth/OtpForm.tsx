@@ -50,7 +50,7 @@ const OtpForm = () => {
             ))}
           </div>
           <PrimaryButton isLoading={isLoading} type="submit" text='Verify' styles='w-full p-3 rounded-lg mt-4' />
-          <button onClick={resendOTP} className='font-semibold text-primary/80 mt-3 cursor-pointer'>Resend OTP</button>
+          <button type='button' onClick={resendOTP} className='font-semibold text-primary/80 mt-3 cursor-pointer'>Resend OTP</button>
         </form>
       </div>
     </div>

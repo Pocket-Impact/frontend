@@ -25,6 +25,11 @@ const links = [
         href: "/feedback/analytics",
         icon: VscGraph
     },
+    {
+        name: "Feedbacks",
+        href: "/feedback/feedbacks",
+        icon: VscFeedback
+    },
 ]
 
 const tools = [

@@ -36,7 +36,7 @@ const page = () => {
     <div>
       <div className='flex justify-between'>
         <div className=''>
-          <h1 className='x2l font-bold'>Surveys</h1>
+          <h1 className='x2l font-semibold'>Surveys</h1>
           <p className='text-black/60 base'>Review and manage surveys of your organisation</p>
         </div>
         <Link href="/feedback/surveys/new">

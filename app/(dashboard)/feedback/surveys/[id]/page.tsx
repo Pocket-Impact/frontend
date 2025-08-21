@@ -5,8 +5,6 @@ import { apiFetch } from "@/utils/apiFetch";
 import FormBuilder from "@/components/surveys/FormBuilder";
 import { Question } from "@/components/surveys/QuestionCard";
 import { DotLottie, DotLottieReact } from "@lottiefiles/dotlottie-react";
-import Link from "next/link";
-import { RxCaretLeft } from "react-icons/rx";
 
 export default function SurveyEditPage() {
     const params = useParams();

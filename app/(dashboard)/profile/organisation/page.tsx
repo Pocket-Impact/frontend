@@ -46,11 +46,11 @@ const page = () => {
                     <p className='text-black/60 base'>Manage organisation.</p>
                 </div>
                 <div>
-                    <PrimaryButton onClick={handleClick} text='Log out' styles='p-3 rounded-lg' icon={<LuLogOut  className='rotate-180' />} />
+                    <PrimaryButton onClick={handleClick} text='Log out' styles='p-3 rounded-lg' icon={<LuLogOut className='rotate-180' />} />
                 </div>
             </div>
-            <div className='grid h-[400px] gap-6 grid-cols-5'>
-                <div className='bg-white col-span-2 flex flex-col gap-4 border rounded-lg p-4 border-stroke'>
+            <div className='grid h-[400px] gap-6 lg:grid-cols-5'>
+                <div className='bg-white w-full lg:col-span-2 flex flex-col gap-4 border rounded-lg p4 border-stroke'>
                     <div>
                         <h3 className='font-semibold lg'>Organisation details</h3>
                         <h3 className='text-black/60 sm'>View and edit organisation information</h3>
@@ -68,9 +68,32 @@ const page = () => {
                         <span className='base'>Medium (20 - 100)</span>
                     </div>
                 </div>
-                <div className='bg-white col-span-3 rounded-lg border border-stroke'></div>
+                <div className='bg-white lg:col-span-3 flex flex-col gap-4 p4 rounded-lg border border-stroke'>
+                    <div>
+                        <h3 className='font-semibold lg'>Users</h3>
+                        <h3 className='text-black/60 sm'>View and edit organisation users</h3>
+                    </div>
+                    <div>
+                        <table className='w-full'>
+                            <thead className='bg-black/10'>
+                                <tr>
+                                    <th className='font-medium px-3 py-2 sm text-start'>Full name</th>
+                                    <th className='font-medium px-3 py-2 sm text-start'>Email</th>
+                                    <th className='font-medium px-3 py-2 sm text-start'>Role</th>
+                                </tr>
+                            </thead>
+                            <tbody className=''>
+                                <tr>
+                                    <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'>Gutabarwa Chlomi Justifié</td>
+                                    <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'>gutabarwaa@gmail.com</td>
+                                    <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'>Admin</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div className='grid grid-cols-3 gap-6'>
+            <div className='grid lg:grid-cols-3 gap-6'>
                 {overviewCards.map((card: any, index: number) => (
                     <OverviewCard key={index} user={true} card={card} index={index} />
                 ))}

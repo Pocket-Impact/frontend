@@ -41,21 +41,17 @@ const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
 
     return (
         <>
-            <SendSurvey open={sendSurvey} close={setSendSurvey} link={survey._id} />
-            <div className='flex flex-col gap-1 justify-between relative'>
-                <div className='flex items-center bg-white justify-between gap-2 p4 border border-stroke rounded-md rounded-t-2xl'>
+            <div className='flex flex-col bg-white border border-stroke p-4 rounded-lg justify-between relative'>
+                <div className='flex items-center justify-between gap-2 pb-4'>
                     <div className='flex gap-2 items-center'>
-                        <div className='bg-primary p-2 rounded-gl w-max text-white'>
+                        <div className='bg-primary p-2 rounded-sm w-max text-white'>
                             <RiSurveyLine className='w-4 h-auto max-lg:w-3.5 max-md:w-3 max-sm:w-2.5' />
                         </div>
                         <div className='font-semibold base'>{survey.title}</div>
                     </div>
                     <div className='flex items-center gap-2'>
-                        <button onClick={() => setSendSurvey(true)} className='bg-secondary rounded-gl hover:bg-orange-300 cursor-pointer transition duration-300 p-2'>
-                            <FiSend className='w-4 h-auto max-lg:w-3.5 max-md:w-3 max-sm:w-2.5' />
-                        </button>
                         <div
-                            className='flex text-white relative items-center gap-2 base cursor-pointer bg-orange-700 hover:bg-orange-800 transition duration-300 p-2 rounded-gl'
+                            className='flex text-white relative items-center gap-2 base cursor-pointer bg-orange-700 hover:bg-orange-800 transition duration-300 p-2 rounded-sm'
                             onClick={() => setShowConfirm(!showConfirm)}
                         >
                             <RiDeleteBinLine className='w-4 h-auto max-lg:w-3.5 max-md:w-3 max-sm:w-2.5' />
@@ -82,20 +78,13 @@ const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
                     </div>
                 </div>
                 <Link className='h-full' href={`/feedback/surveys/${survey.uniqueLinkId}`} prefetch>
-                    <div className='border bg-white border-stroke h-full p4 rounded-md flex flex-col gap-4'>
+                    <div className='h-full flex flex-col gap-4'>
                         <p className='base text-black/80 line-clamp-3'>
                             {survey.description}
                         </p>
-                        <div className='flex gap-2 justify-end text-white'>
+                        <div className='flex gap-2 justify-end sm font-semibold text-black/60'>
+                            Click to manage survey
                         </div>
-                    </div>
-                </Link>
-                <Link href={`/feedback/surveys/${survey._id}/responses`} prefetch className='border bg-white border-stroke group hover:bg-primary/80 hover:text-white p4 rounded-t-md transition duration-300 cursor-pointer rounded-b-2xl'>
-                    <div className='flex items-center gap-2 '>
-                        <div className='bg-primary group-hover:bg-white p-2 rounded-gl group-hover:text-primary transition duration-300 w-max text-white'>
-                            <VscFeedback className='w-4 h-auto max-lg:w-3.5 max-md:w-3 max-sm:w-2.5' />
-                        </div>
-                        <div className='font-semibold base'>Responses</div>
                     </div>
                 </Link>
             </div>

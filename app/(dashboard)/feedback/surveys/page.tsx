@@ -39,7 +39,7 @@ const page = () => {
           <h1 className='x2l font-semibold'>Surveys</h1>
           <p className='text-black/60 base'>Review and manage surveys of your organisation</p>
         </div>
-        <Link href="/feedback/surveys/new">
+        <Link href="/feedback/surveys/new" prefetch>
           <PrimaryButton text='Create a new survey' textStyles='max-md:hidden' styles='py-3 px-2 base max-lg:py-2.5 max-md:py-2 rounded-gl' icon={<IoAddOutline className='w-5 h-auto max-md:w-4' />} />
         </Link>
       </div>

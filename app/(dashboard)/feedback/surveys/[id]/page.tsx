@@ -95,8 +95,10 @@ export default function SurveyEditPage() {
     if (!initialSurvey) return null;
 
     return (
-        <div className="max-w-6xl mx-auto pb-8">
+        <div className="max-w-6xl mx-auto">
             <FormBuilder
+                edit={true}
+                initialId={initialSurvey.id}
                 initialTitle={initialSurvey.title}
                 initialDescription={initialSurvey.description}
                 initialQuestions={initialSurvey.questions}

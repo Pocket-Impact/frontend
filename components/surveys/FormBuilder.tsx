@@ -10,8 +10,13 @@ import { FaRegSave } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { RxCaretLeft } from "react-icons/rx";
 import Link from "next/link";
+import SecondaryButton from "../ui/SecondaryButton";
+import { FiSend } from "react-icons/fi";
+import SendSurvey from "../feedback/surveys/SendSurvey";
+import { VscFeedback } from "react-icons/vsc";
 
 type FormBuilderProps = {
+    initialId: string;
     initialTitle?: string;
     initialDescription?: string;
     initialQuestions?: Question[];
@@ -19,9 +24,12 @@ type FormBuilderProps = {
     loading?: boolean;
     error?: string | null;
     success?: boolean;
+    edit?: boolean;
 };
 
 export default function FormBuilder({
+    edit,
+    initialId,
     initialTitle = "",
     initialDescription = "",
     initialQuestions = [],
@@ -84,7 +92,7 @@ export default function FormBuilder({
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
-
+    const [sendSurvey, setSendSurvey] = useState(false);
 
     const handleSubmit = async () => {
         if (onSave) {
@@ -119,20 +127,45 @@ export default function FormBuilder({
 
     return (
         <>
+            <SendSurvey open={sendSurvey} close={setSendSurvey} link={initialId} />
             <div className="flex justify-between items-center">
                 <Link href="/feedback/surveys" className='flex items-center gap-2 hover:gap-3 transition-all cursor-pointer mb-4 duration-300'>
                     <div className='bg-primary/80 hover:bg-primary transition duration-300 text-white rounded-lg w-max p-1'>
-                        <RxCaretLeft className='w-6 h-auto' />
+                        <RxCaretLeft className='w-6 h-auto max-lg:w-5 max-md:w-4' />
                     </div>
-                    <span className='text-black/70 font-medium'>Back to Surveys</span>
+                    <span className='text-black/70 font-medium base'>Back to Surveys</span>
                 </Link>
-                <PrimaryButton
-                    text={(externalLoading ?? loading) ? "Saving..." : "Save"}
-                    styles="text-white p-3 base rounded-xl bg-green-600 hover:bg-green-700 transition mb-4"
-                    onClick={handleSubmit}
-                    icon={<FaRegSave />}
-                    isLoading={externalLoading ?? loading}
-                />
+                <div className="flex gap-3 max-md:gap-1 h-full items-center">
+                    {edit &&
+                        <div className="flex gap-2 items-center">
+                            <Link href={`/feedback/surveys/${initialId}/responses`} prefetch>
+                                <SecondaryButton
+                                    text="View responses"
+                                    styles="p-3 base bg-transparent rounded-xl hover:bg-black/10 md:px-4 bg-green-600 transition mb-4"
+                                    icon={<VscFeedback />}
+                                    textStyles="max-md:hidden"
+                                    isLoading={externalLoading ?? loading}
+                                />
+                            </Link>
+                            <SecondaryButton
+                                text="Send"
+                                styles="p-3 base rounded-xl bg-green-600 hover:bg-orange-300 transition mb-4"
+                                onClick={() => setSendSurvey(true)}
+                                icon={<FiSend />}
+                                textStyles="max-md:hidden"
+                                isLoading={externalLoading ?? loading}
+                            />
+                        </div>
+                    }
+                    <PrimaryButton
+                        text={(externalLoading ?? loading) ? "Saving..." : "Save"}
+                        styles="text-white p-3 base rounded-xl bg-green-600 effect transition mb-4"
+                        onClick={handleSubmit}
+                        icon={<FaRegSave />}
+                        textStyles="max-md:hidden"
+                        isLoading={externalLoading ?? loading}
+                    />
+                </div>
             </div>
             <div className="grid grid-cols-5 max-lg:grid-cols-1 gap-4 flex-2">
                 {/* Builder Section */}

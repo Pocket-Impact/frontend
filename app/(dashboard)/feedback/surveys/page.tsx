@@ -40,7 +40,7 @@ const page = () => {
           <p className='text-black/60 base'>Review and manage surveys of your organisation</p>
         </div>
         <Link href="/feedback/surveys/new" prefetch>
-          <PrimaryButton text='Create a new survey' textStyles='max-md:hidden' styles='py-3 px-2 base max-lg:py-2.5 max-md:py-2 rounded-gl' icon={<IoAddOutline className='w-5 h-auto max-md:w-4' />} />
+          <PrimaryButton text='Create survey' textStyles='max-md:hidden mr-1' styles='py-3 px-2 base max-lg:py-2.5 max-md:py-2 rounded-gl' icon={<IoAddOutline className='w-5 h-auto max-md:w-4' />} />
         </Link>
       </div>
       <div className='grid gap-3 max-lg:gap-2.5 max-md:gap-2 max-sm:grid-cols-1 grid-cols-3 max-lg:grid-cols-1 max-xl:grid-cols-2 mt-6'>

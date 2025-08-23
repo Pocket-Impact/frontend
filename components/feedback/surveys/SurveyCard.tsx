@@ -78,7 +78,7 @@ const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
                     </div>
                 </div>
                 <Link className='h-full' href={`/feedback/surveys/${survey.uniqueLinkId}`} prefetch>
-                    <div className='h-full flex flex-col gap-4'>
+                    <div className='h-full flex flex-col justify-between gap-4'>
                         <p className='base text-black/80 line-clamp-3'>
                             {survey.description}
                         </p>

@@ -5,9 +5,6 @@ import { VscFeedback } from 'react-icons/vsc';
 import OverviewCard from './surveys/OverviewCard';
 import { apiFetch } from '@/utils/apiFetch';
 
-
-
-
 const OverviewGrid = () => {
     const [surveys, setSurveys] = useState<any[]>([]);
     const [responses, setResponses] = useState<any[]>([]);

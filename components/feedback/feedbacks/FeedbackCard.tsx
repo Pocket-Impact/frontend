@@ -11,8 +11,10 @@ const FeedbackCard: React.FC<{ feedback: any }> = ({ feedback }) => {
                     </div>
                     <div className='font-semibold base'>{feedback.category}</div>
                 </div>
-                <div className={`bg-lime-200/70 text-lime-500 xs px-1.5 p-1 rounded-sm font-semibold flex items-center gap-1`}>
-                    <span>Positive</span>
+                <div
+                    className={`${feedback.sentiment.toLowerCase() == 'positive' ? "bg-lime-200/70 text-lime-500" : ""} ${feedback.sentiment.toLowerCase() == 'negative' ? "bg-orange-200/70 text-orange-500" : ""} ${feedback.sentiment.toLowerCase() == 'neutral' ? "bg-yellow-200/70 text-yellow-500" : ""} xs px-1.5 p-1 rounded-sm font-semibold flex items-center gap-1`}
+                >
+                    <span>{feedback.sentiment}</span>
                 </div>
             </div>
             <div className='h-full flex flex-col justify-between gap-4'>

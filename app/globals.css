@@ -10,9 +10,9 @@
   --color-stroke: #CCCCCC;
 }
 
-/* .bricolage {
+.bricolage {
   font-family: var(--font-bricolage-grotesque);
-} */
+}
 
 .fade-up {
   animation: fadeUp 0.5s ease-in-out forwards;
@@ -64,9 +64,9 @@
   }
 }
 
-/* .inter {
+.inter {
   font-family: var(--font-inter);
-} */
+}
 
 /* texts styles */
 .x7l {
@@ -76,7 +76,7 @@
 .x5l {
   @apply text-5xl max-lg:text-4xl max-md:text-3xl max-sm:text-xl;
 }
-
+  
 .x2l {
   @apply text-2xl max-lg:text-xl max-md:text-lg max-sm:text-base;
 }

@@ -10,6 +10,7 @@ const page = async () => {
     if (cookie) {
         redirect('/feedback/dashboard')
     }
+    
     return (
         <div className='flex flex-col h-screen'>
             <SigninForm />

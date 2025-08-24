@@ -1,5 +1,5 @@
+"use client"
 import FeedbackCard from '@/components/feedback/feedbacks/FeedbackCard'
-import SurveyCard from '@/components/feedback/surveys/SurveyCard'
 import React from 'react'
 
 const feedbacks = [

@@ -37,7 +37,6 @@ const OverviewGrid = () => {
 
             const responsesRes = await apiFetch('/api/responses/organisation/');
             const responsesData = await responsesRes.json();
-            console.log(responsesData.data);
             setResponses(responsesData?.data);
         }
         fetchData();

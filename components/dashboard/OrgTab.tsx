@@ -23,7 +23,7 @@ const OrgTab = () => {
                 </Link>
             </div>
         ) : (
-            <div className='p4'>
+            <div className='p-4 max-md:p-1'>
                 <div className='flex w-full cursor-pointer items-center gap-2.5 max-lg:gap-2 max-md:gap-1.5 animate-pulse max-md:w-max bg-white border border-[#DDDDDD] rounded-x2l max-lg:p-2 max-md:p-1.5 p-2.5'>
                     <div className='max-lg:w-10 w-12 h-12 max-md:w-8 uppercase flex items-center justify-center xl font-bold text-white bg-black/20 rounded-gl max-lg:h-10 max-md:h-8'>
                         {organisationName.slice(0, 2)}

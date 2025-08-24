@@ -5,6 +5,7 @@ import { apiFetch } from '@/utils/apiFetch';
 import { redirect } from 'next/navigation';
 import React from 'react'
 import { BiSearch, BiUser } from 'react-icons/bi';
+import { IoAdd } from 'react-icons/io5';
 import { LuLogOut } from 'react-icons/lu';
 
 const overviewCards: any = [
@@ -46,7 +47,7 @@ const page = () => {
                     <p className='text-black/60 base'>Manage organisation.</p>
                 </div>
                 <div>
-                    <PrimaryButton onClick={handleClick} text='Log out' styles='p-3 rounded-lg' icon={<LuLogOut className='rotate-180' />} />
+                    <PrimaryButton onClick={handleClick} text='Log out' styles='p-3 effect rounded-lg' icon={<LuLogOut className='rotate-180' />} />
                 </div>
             </div>
             <div className='grid h-[400px] gap-6 lg:grid-cols-5'>
@@ -69,9 +70,15 @@ const page = () => {
                     </div>
                 </div>
                 <div className='bg-white lg:col-span-3 flex flex-col gap-4 p4 rounded-lg border border-stroke'>
-                    <div>
-                        <h3 className='font-semibold lg'>Users</h3>
-                        <h3 className='text-black/60 sm'>View and edit organisation users</h3>
+                    <div className='flex justify-between items-start'>
+                        <div>
+                            <h3 className='font-semibold lg'>Users</h3>
+                            <h3 className='text-black/60 sm'>View and edit organisation users</h3>
+                        </div>
+                        <button className='flex hover:border-stroke border border-white transition duration-300 cursor-pointer p-1 rounded-[3px] pr-2 items-center gap-2'>
+                            <IoAdd />
+                            <span className='sm'>Add user</span>
+                        </button>
                     </div>
                     <div>
                         <table className='w-full'>

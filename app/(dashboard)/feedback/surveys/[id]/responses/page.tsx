@@ -8,10 +8,20 @@ import React, { useEffect, useState } from 'react'
 import { IoIosAdd, IoIosRemove } from 'react-icons/io'
 import { RxCaretLeft } from 'react-icons/rx'
 
-const page = () => {
+const Page = () => {
     const { id } = useParams();
     const [open, setOpen] = useState<{ [key: string]: boolean }>({});
-    const [responses, setResponses] = useState<any[]>([]);
+    const [responses, setResponses] = useState<Array<{
+        _id?: string;
+        user?: { fullname?: string };
+        createdAt?: string;
+        responses?: Array<{
+            questionText?: string;
+            questionId?: string;
+            answer?: string;
+            sentiment?: string;
+        }>;
+    }>>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -124,4 +134,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

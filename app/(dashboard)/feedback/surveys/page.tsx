@@ -6,7 +6,7 @@ import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { IoAddOutline } from 'react-icons/io5'
 
-const page = () => {
+const Page = () => {
   const [surveys, setSurveys] = React.useState([]);
 
   useEffect(() => {
@@ -52,4 +52,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

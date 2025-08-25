@@ -6,7 +6,7 @@ import FormBuilder from "@/components/surveys/FormBuilder";
 import { Question } from "@/components/surveys/QuestionCard";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
-export default function SurveyEditPage() {
+export default function Page() {
     const params = useParams();
     const router = useRouter();
     const surveyId = params?.id as string;

@@ -1,7 +1,7 @@
 import FormBuilder from '@/components/surveys/FormBuilder'
 import React from 'react'
 
-const page = () => {
+const Page = () => {
     return (
         <div>
             <FormBuilder />
@@ -9,4 +9,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

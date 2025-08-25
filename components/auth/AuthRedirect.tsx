@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/stores/authStores';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 const AuthRedirect = () => {
     const { _id, hasHydrated } = useAuthStore((state) => (state));

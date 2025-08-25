@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react'
 import { Country } from '@/lib/countries'
 import { SignupFormErrors } from '@/lib/errors';

@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { apiFetch } from "@/utils/apiFetch";
 import FormBuilder from "@/components/surveys/FormBuilder";
 import { Question } from "@/components/surveys/QuestionCard";
-import { DotLottie, DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 export default function SurveyEditPage() {
     const params = useParams();

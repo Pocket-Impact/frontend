@@ -16,7 +16,7 @@ import SendSurvey from "../feedback/surveys/SendSurvey";
 import { VscFeedback } from "react-icons/vsc";
 
 type FormBuilderProps = {
-    initialId: string;
+    initialId?: string;
     initialTitle?: string;
     initialDescription?: string;
     initialQuestions?: Question[];

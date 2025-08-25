@@ -8,7 +8,7 @@ import { FiUpload } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5'
 import { BiCopy } from 'react-icons/bi'
 
-const SendSurvey: React.FC<{ open: boolean, close: Function, link: string }> = ({ open, close, link }) => {
+const SendSurvey: React.FC<{ open: boolean, close: Function, link?: string }> = ({ open, close, link }) => {
     const [email, setEmail] = useState('')
     const [emails, setEmails] = useState<string[]>([])
     const [error, setError] = useState<string | null>(null)

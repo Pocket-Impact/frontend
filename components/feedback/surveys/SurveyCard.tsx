@@ -3,17 +3,13 @@ import { useAlertStore } from '@/stores/alertStore'
 import { apiFetch } from '@/utils/apiFetch'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import { FiSend } from 'react-icons/fi'
+import React, { useState } from 'react'
 import { RiDeleteBinLine, RiEditLine, RiSurveyLine } from 'react-icons/ri'
-import { VscFeedback } from 'react-icons/vsc'
-import SendSurvey from './SendSurvey'
 
 const SurveyCard: React.FC<{ survey: any }> = ({ survey }) => {
     const [showConfirm, setShowConfirm] = useState(false);
     const { setMessage, clearMessage } = useAlertStore((state) => state);
     const router = useRouter();
-    const [sendSurvey, setSendSurvey] = useState(false);
 
     const handleConfirm = () => {
         const deleteSurvey = async () => {

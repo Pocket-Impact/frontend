@@ -6,7 +6,6 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import AlertComponent from "../../components/AlertComponent";
-import { FiSearch } from "react-icons/fi";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 
 const bricolageGrotesque = Bricolage_Grotesque({

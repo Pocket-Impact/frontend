@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { AiOutlineRise } from 'react-icons/ai';
 
 const dummyRecentFeedbacks = [

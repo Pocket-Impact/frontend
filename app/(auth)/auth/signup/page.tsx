@@ -1,5 +1,4 @@
 import SignupForm from '@/components/auth/SignupForm'
-// app/signup/page.tsx (server component)
 import { getCountries, type Country } from '@/lib/countries'
 
 export default async function SignupPage() {

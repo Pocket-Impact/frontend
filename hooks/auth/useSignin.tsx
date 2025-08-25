@@ -35,7 +35,7 @@ const useSignin = () => {
     const signIn = async (data: FormData) => {
         setIsLoading(true);
         try {
-            const response = await apiFetch('http://localhost:5000/api/auth/login', {
+            const response = await apiFetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),

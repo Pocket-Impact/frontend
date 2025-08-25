@@ -1,11 +1,7 @@
-import { FaRobot, FaFileAlt, FaHandsHelping, FaChartBar, FaUsers, FaGraduationCap, FaMoneyBillWave, FaComments, FaMapMarkedAlt, FaShieldAlt } from 'react-icons/fa';
+import { FaHandsHelping, FaChartBar, FaUsers, FaGraduationCap, FaMoneyBillWave, FaComments, FaMapMarkedAlt, FaShieldAlt } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 import { RiRobot2Line } from "react-icons/ri";
 import { CgFileDocument } from "react-icons/cg";
-import { IoDocumentTextOutline } from "react-icons/io5";
-import { VscRobot } from "react-icons/vsc";
-import { LuGraduationCap } from "react-icons/lu";
-import { MdOutlineFeedback } from "react-icons/md";
 import { FaRegHandshake } from 'react-icons/fa6';
 import { BiDonateHeart } from 'react-icons/bi';
 import { TbReportSearch } from 'react-icons/tb';
@@ -51,7 +47,7 @@ export const features: Feature[] = [
       "Tracks training progress and outcomes",
       "Suggests personalized learning paths",
     ]
-  }  
+  }
 ]
 
 export const tools: Tool[] = [

@@ -36,15 +36,23 @@ export default function Page() {
                     id: survey._id,
                     title: survey.title || "",
                     description: survey.description || "",
-                    questions: (survey.questions || []).map((q: any, idx: number) => ({
+                    questions: (survey.questions || []).map((q: {
+                        type: string;
+                        questionText: string;
+                        options?: string[];
+                    }, idx: number) => ({
                         id: idx + 1,
                         type: q.type === "choice" ? "multiple" : q.type,
                         label: q.questionText,
                         options: q.options || undefined,
                     })),
                 });
-            } catch (err: any) {
-                setError(err?.message || "Failed to load survey.");
+            } catch (err) {
+                if (err instanceof Error) {
+                    setError(err.message || "Failed to load survey.");
+                } else {
+                    setError("Failed to load survey.");
+                }
             } finally {
                 setLoading(false);
             }
@@ -73,8 +81,8 @@ export default function Page() {
             });
             router.push(`/feedback/surveys`);
             setSuccess(true);
-        } catch (err: any) {
-            setError(err?.response?.data?.message || "Failed to save survey.");
+        } catch (err) {
+            setError("Failed to save survey.");
         } finally {
             setSaving(false);
         }

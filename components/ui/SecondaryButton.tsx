@@ -1,7 +1,7 @@
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import React from 'react'
 
-const SecondaryButton: React.FC<{ text?: string, textStyles?: string, styles?: string, isLoading?: boolean, type?: "button" | "submit" | "reset", icon?: any, onClick?: () => void }> = ({ text, styles, type, textStyles, icon, onClick, isLoading }) => {
+const SecondaryButton: React.FC<{ text?: string; textStyles?: string; styles?: string; isLoading?: boolean; type?: "button" | "submit" | "reset"; icon?: React.ReactNode; onClick?: () => void }> = ({ text, styles, type, textStyles, icon, onClick, isLoading }) => {
     return (
         <button type={type} disabled={isLoading} className={`bg-secondary ${isLoading ? `${icon ? "" : ""} opacity-80 text-center cursor-not-allowed` : `${icon ? "" : ""} cursor-pointer`} transition duration-300 h-max text-black rounded-full inter ${styles}`} onClick={onClick}>
             {!isLoading ?

@@ -73,10 +73,10 @@ const Page = () => {
                         No responses yet.
                     </div>
                 )}
-                {responses.map((response: any, idx: number) => (
+                {responses.map((response, idx) => (
                     <div
                         key={response._id || idx}
-                        className={`border rounded-xl bg-white ${open[response._id] ? 'h-max' : 'h-[74px] max-sm:h-[66px] max-md:h-[70px] max-lg:h-[72px]'} transition-all duration-300 overflow-hidden border-stroke p3 mb-4`}
+                        className={`border rounded-xl bg-white ${open[response._id ?? ""] ? 'h-max' : 'h-[74px] max-sm:h-[66px] max-md:h-[70px] max-lg:h-[72px]'} transition-all duration-300 overflow-hidden border-stroke p3 mb-4`}
                     >
                         <div className='flex items-center justify-between gap-2'>
                             <div className='flex items-center gap-2'>
@@ -98,12 +98,12 @@ const Page = () => {
                                 onClick={() =>
                                     setOpen((prev) => ({
                                         ...prev,
-                                        [response._id]: !prev[response._id],
+                                        [response._id ?? ""]: !prev[response._id ?? ""],
                                     }))
                                 }
                                 className='hover:bg-stroke/80 transition duration-300 cursor-pointer p3 rounded-md'
                             >
-                                {!open[response._id] ? (
+                                {!open[response._id ?? ""] ? (
                                     <IoIosAdd className='w-6 h-6' />
                                 ) : (
                                     <IoIosRemove className='w-6 h-6' />
@@ -111,7 +111,7 @@ const Page = () => {
                             </div>
                         </div>
                         <div className='mt-4 ml-2'>
-                            {response.responses?.map((ans: any, qidx: number) => (
+                            {response.responses?.map((ans, qidx) => (
                                 <div key={qidx} className="mb-2">
                                     <p className='font-semibold base'>
                                         {ans.questionText || ans.questionId}

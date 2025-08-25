@@ -7,7 +7,14 @@ import React, { useEffect } from 'react'
 import { IoAddOutline } from 'react-icons/io5'
 
 const Page = () => {
-  const [surveys, setSurveys] = React.useState([]);
+  type Survey = {
+    _id: string;
+    title: string;
+    description: string;
+    questions: unknown[];
+    // Add more fields as needed
+  };
+  const [surveys, setSurveys] = React.useState<Survey[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +51,7 @@ const Page = () => {
         </Link>
       </div>
       <div className='grid gap-3 max-lg:gap-2.5 max-md:gap-2 max-sm:grid-cols-1 grid-cols-3 max-lg:grid-cols-1 max-xl:grid-cols-2 mt-6'>
-        {surveys?.map((survey: any) => (
+        {surveys?.map((survey) => (
           <SurveyCard key={survey._id} survey={survey} />
         ))}
       </div>

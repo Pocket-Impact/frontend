@@ -1,3 +1,4 @@
+import { useAlertStore } from '@/stores/alertStore';
 import { useAuthStore } from '@/stores/authStores';
 import { apiFetch } from '@/utils/apiFetch';
 import { useRouter } from 'next/navigation';
@@ -10,6 +11,7 @@ const useOTP = () => {
     const [error, setError] = useState<string | null>(null);
     const { email } = useAuthStore((state) => state);
     const router = useRouter();
+    const { setMessage, clearMessage } = useAlertStore((state) => state);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
         const value = e.target.value.replace(/[^0-9]/g, '');
@@ -60,7 +62,7 @@ const useOTP = () => {
 
     const verify = async () => {
         try {
-            const response = await apiFetch('http://localhost:5000/api/auth/verify-otp', {
+            const response = await apiFetch('/api/auth/verify-otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp: otp.join('') }),
@@ -80,7 +82,7 @@ const useOTP = () => {
             console.error(error);
         }
     }
-    
+
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
@@ -96,11 +98,17 @@ const useOTP = () => {
     };
 
     const resendOTP = async () => {
-        setIsLoading(true);
-        const response = await fetch('http://localhost:5000/api/auth/resend-otp', {
+        const response = await fetch('/api/auth/resend-otp', {
             credentials: 'include'
         })
-        setIsLoading(false);
+
+        if (response.ok) {
+            setMessage("OTP resent successfully");
+
+            setTimeout(() => {
+                clearMessage();
+            }, 3000);
+        }
 
         return null;
     }

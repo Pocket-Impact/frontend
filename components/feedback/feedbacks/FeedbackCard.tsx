@@ -1,9 +1,12 @@
 import React from 'react'
 import { VscFeedback } from 'react-icons/vsc'
+import FeedbackDetails from './FeedbackDetails'
 
 const FeedbackCard: React.FC<{ feedback: any }> = ({ feedback }) => {
+    const [open, setOpen] = React.useState(false);
     return (
-        <div className='bg-white inter cursor-pointer border flex flex-col gap-4 border-stroke p4 rounded-lg'>
+        <div onClick={() => setOpen(!open)} className='bg-white inter cursor-pointer border flex flex-col gap-4 border-stroke p4 rounded-lg'>
+            <FeedbackDetails feedback={feedback} open={open} close={() => setOpen(false)} />
             <div className='flex justify-between items-start'>
                 <div className='flex gap-2 items-center'>
                     <div className='bg-primary p-2 rounded-sm w-max text-white'>

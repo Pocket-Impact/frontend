@@ -25,7 +25,7 @@ const FeedbackForm = () => {
 
     useEffect(() => {
         const fetchSurvey = async () => {
-            const res = await apiFetch(`http://localhost:5000/api/surveys/unique/${id}`);
+            const res = await apiFetch(`/api/surveys/unique/${id}`);
             if (res.ok) {
                 const data = await res.json();
                 setSurvey(data.data.survey);
@@ -104,7 +104,7 @@ const FeedbackForm = () => {
     </div>;
 
     return (
-        <div className="max-w-xl w-full bg-white scrolly h-full max-md:h-screen overflow-y-scroll border-stroke border p-10 inter flex flex-col items-start">
+        <div className="max-w-xl w-full bg-white scrolly h-full max-md:h-screen overflow-y-scroll border-stroke border p-6 inter flex flex-col items-start">
             <div className="flex justify-between">
                 <h3 className="x5l font-bold mb-8 text-primary">Survey Form</h3>
             </div>

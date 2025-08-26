@@ -5,7 +5,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className='h-full'>
+    <div className='min-h-screen'>
       <div className='flex flex-col h-full gap-4'>
         <div className='flex items-start justify-between max-md:flex-col gap-4'>
           <div className=''>
@@ -25,7 +25,6 @@ const page = () => {
           <InfoGrid />
         </div>
       </div>
-      <br /><br />
     </div>
   )
 }

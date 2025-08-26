@@ -10,6 +10,7 @@ import {
     Area,
     XAxis,
     Tooltip,
+    CartesianGrid,
 } from 'recharts';
 
 const dummyDailyFeedbacks = [
@@ -39,7 +40,7 @@ const FeedbackChart = () => {
     }, []);
 
     return (
-        <div className='bg-white border row-span-2 lg:col-span-2 flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 pb-1 rounded-lg'>
+        <div className='bg-white border row-span-2 lg:col-span-2 flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 rounded-lg'>
             <div className='flex items-start justify-between'>
                 <div className='flex items-center gap-2'>
                     <div className='bg-black/10 p-2 rounded-sm'>
@@ -69,13 +70,14 @@ const FeedbackChart = () => {
                             tick={{ fill: '#0A400C' }}
                         />
                         <Tooltip cursor={{ fill: 'rgba(10, 64, 12, 0.1)' }} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                         <Area
                             type="monotone"
                             dataKey="Feedbacks"
                             stroke="#212121"
                             fill="#AAAAAA"
                             strokeWidth={2}
-                            isAnimationActive={false}
+                            isAnimationActive={true}
                         />
                     </AreaChart>
                 </ResponsiveContainer>

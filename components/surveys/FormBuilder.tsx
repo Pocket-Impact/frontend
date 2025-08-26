@@ -25,11 +25,13 @@ type FormBuilderProps = {
     error?: string | null;
     success?: boolean;
     edit?: boolean;
+    uniqueLink: string;
 };
 
 export default function FormBuilder({
     edit,
     initialId,
+    uniqueLink,
     initialTitle = "",
     initialDescription = "",
     initialQuestions = [],
@@ -127,7 +129,7 @@ export default function FormBuilder({
 
     return (
         <div className="h-full flex flex-col gap-6">
-            <SendSurvey open={sendSurvey} close={setSendSurvey} link={initialId} />
+            <SendSurvey uniqueLink={uniqueLink} open={sendSurvey} close={setSendSurvey} link={initialId} />
             <div className="flex w-full h-12 justify-between items-start">
                 <Link href="/feedback/surveys" className='flex items-center gap-2 hover:gap-3 transition-all cursor-pointer duration-300'>
                     <div className='bg-primary/80 hover:bg-primary transition duration-300 text-white rounded-lg w-max p-1'>
@@ -178,7 +180,7 @@ export default function FormBuilder({
                         onChange={e => setTitle(e.target.value)}
                     />
                     <textarea
-                        className="w-full p-2 mb-2 h-max outline-0 bg-white focus:border-primary border border-gray-300 rounded"
+                        className="w-full p-2 mb-2 min-h-max outline-0 bg-white focus:border-primary border border-gray-300 rounded"
                         placeholder="Survey Description"
                         rows={5}
                         value={description}

@@ -7,8 +7,9 @@ import Papa from 'papaparse';
 import { FiUpload } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5'
 import { BiCopy } from 'react-icons/bi'
+import { unique } from 'next/dist/build/utils'
 
-const SendSurvey: React.FC<{ open: boolean, close: Function, link?: string }> = ({ open, close, link }) => {
+const SendSurvey: React.FC<{ open: boolean, close: Function, link?: string, uniqueLink: string }> = ({ open, close, link, uniqueLink }) => {
     const [email, setEmail] = useState('')
     const [emails, setEmails] = useState<string[]>([])
     const [error, setError] = useState<string | null>(null)
@@ -68,7 +69,7 @@ const SendSurvey: React.FC<{ open: boolean, close: Function, link?: string }> = 
     const handleCopy = () => {
         if (link) {
 
-            navigator.clipboard.writeText(`${window.location.origin}/surveys/unique/${link}`);
+            navigator.clipboard.writeText(`${window.location.origin}/surveys/unique/${uniqueLink}`);
             setCopied(true);
             setTimeout(() => setCopied(false), 3000);
         }

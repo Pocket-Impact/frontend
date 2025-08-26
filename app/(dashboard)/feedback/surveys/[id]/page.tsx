@@ -15,6 +15,7 @@ export default function Page() {
     const [error, setError] = useState<string | null>(null);
     const [initialSurvey, setInitialSurvey] = useState<{
         id: string;
+        uniqueLinkId: string;
         title: string;
         description: string;
         questions: Question[];
@@ -34,6 +35,7 @@ export default function Page() {
                 if (!survey) throw new Error("Survey not found");
                 setInitialSurvey({
                     id: survey._id,
+                    uniqueLinkId: survey.uniqueLinkId,
                     title: survey.title || "",
                     description: survey.description || "",
                     questions: (survey.questions || []).map((q: {
@@ -106,6 +108,7 @@ export default function Page() {
         <div className="h-full">
             <FormBuilder
                 edit={true}
+                uniqueLink={initialSurvey.uniqueLinkId}
                 initialId={initialSurvey.id}
                 initialTitle={initialSurvey.title}
                 initialDescription={initialSurvey.description}

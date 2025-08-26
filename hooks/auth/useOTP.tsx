@@ -59,8 +59,9 @@ const useOTP = () => {
         const nextIdx = Math.min(idx + paste.length, 5);
         inputsRef.current[nextIdx]?.focus();
     };
-
+    
     const verify = async () => {
+        setIsLoading(true);
         try {
             const response = await apiFetch('/api/auth/verify-otp', {
                 method: 'POST',
@@ -70,11 +71,17 @@ const useOTP = () => {
             });
 
             const json = await response.json();
+
             if (!response.ok) {
                 setIsLoading(false);
                 console.log(json)
                 setError(json.message);
             } else {
+                setMessage("Successfully verified user");
+            
+                setTimeout(() => {
+                    clearMessage();
+                }, 3000);
                 setIsLoading(false);
                 router.push('/feedback/dashboard')
             }
@@ -82,11 +89,10 @@ const useOTP = () => {
             console.error(error);
         }
     }
-
+    
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setIsLoading(true);
-
+        
         if (otp.some((digit) => digit === '')) {
             setError('Please enter all digits');
             return;
@@ -98,7 +104,7 @@ const useOTP = () => {
     };
 
     const resendOTP = async () => {
-        const response = await fetch('/api/auth/resend-otp', {
+        const response = await apiFetch('/api/auth/resend-otp', {
             credentials: 'include'
         })
 

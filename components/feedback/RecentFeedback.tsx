@@ -1,4 +1,5 @@
 "use client"
+import Link from 'next/link';
 import React from 'react'
 import { AiOutlineRise } from 'react-icons/ai';
 
@@ -49,36 +50,39 @@ const dummyRecentFeedbacks = [
 
 const RecentFeedback = () => {
   return (
-    <div className='bg-white border-stroke flex flex-col gap-2 border p-4 rounded-lg lg:col-span-3'>
-        <div className='flex items-center -mt-1 gap-2'>
-          <div className='bg-black/10 p-2 rounded-sm'>
-            <AiOutlineRise className='w-3.5 h-auto' />
-          </div>
-          <div className='flex flex-col'>
-            <h2 className='sm font-medium'>
-              Recent Feedback
-            </h2>
-            <h2 className='xs'>
-              Most recent feedback received
-            </h2>
-          </div>
+    <div className='bg-white border-stroke flex flex-col gap-2 border p-4 rounded-lg lg:col-span-3 min-h-0 flex-1'>
+      <div className='flex items-center -mt-1 gap-2'>
+        <div className='bg-black/10 p-2 rounded-sm'>
+          <AiOutlineRise className='w-3.5 h-auto' />
         </div>
-        <div className='flex flex-col gap-2'>
-          {dummyRecentFeedbacks.map((feedback, index) => (
-            <div key={index} className='p-2 rounded-sm border border-stroke cursor-default flex justify-between items-center'>
-              <div className='flex items-center gap-2'>
-                <div className='flex flex-col'>
-                  <span className='sm'>{feedback.comment}</span>
-                  <span className='xs text-black/60 '>{feedback.timeAgo}</span>
-                </div>
-              </div>
-              <div className={`bg-lime-100 p-1 px-1.5 mr-1 text-lime-500 w-max xs ${feedback.sentimentColor}`}>
-                {feedback.sentiment}
-              </div>
-            </div>
-          ))}
+        <div className='flex flex-col'>
+          <h2 className='sm font-medium'>
+            Recent Feedback
+          </h2>
+          <h2 className='xs'>
+            Most recent feedback received
+          </h2>
         </div>
       </div>
+      <div className='flex flex-col gap-2'>
+        {dummyRecentFeedbacks.map((feedback, index) => (
+          <div key={index} className='p-2 rounded-sm border border-stroke cursor-default flex justify-between items-center'>
+            <div className='flex items-center gap-2'>
+              <div className='flex flex-col'>
+                <span className='sm'>{feedback.comment}</span>
+                <span className='xs text-black/60 '>{feedback.timeAgo}</span>
+              </div>
+            </div>
+            <div className={`bg-lime-100 p-1 px-1.5 mr-1 text-lime-500 w-max xs ${feedback.sentimentColor}`}>
+              {feedback.sentiment}
+            </div>
+          </div>
+        ))}
+        <Link href='/feedback/feedbacks' className='p-2 flex justify-center rounded-sm border border-stroke hover:bg-cblack cursor-pointer hover:text-white duration-300 items-center'>
+          <span className='sm'>View all</span>
+        </Link>
+      </div>
+    </div>
   )
 }
 

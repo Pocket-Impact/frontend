@@ -6,8 +6,8 @@ import { VscFeedback } from 'react-icons/vsc';
 
 import {
     ResponsiveContainer,
-    BarChart,
-    Bar,
+    AreaChart,
+    Area,
     XAxis,
     Tooltip,
 } from 'recharts';
@@ -19,6 +19,8 @@ const dummyDailyFeedbacks = [
     { day: "Thu", Feedbacks: 7 },
     { day: "Fri", Feedbacks: 4 },
     { day: "Sat", Feedbacks: 6 },
+    { day: "Sun", Feedbacks: 1 },
+    { day: "Sun", Feedbacks: 1 },
     { day: "Sun", Feedbacks: 1 },
 ];
 
@@ -37,7 +39,7 @@ const FeedbackChart = () => {
     }, []);
 
     return (
-        <div className='bg-white border lg:col-span-2 flex flex-col gap-4 border-stroke h-full p-4 pb-1 rounded-lg'>
+        <div className='bg-white border row-span-2 lg:col-span-2 flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 pb-1 rounded-lg'>
             <div className='flex items-start justify-between'>
                 <div className='flex items-center gap-2'>
                     <div className='bg-black/10 p-2 rounded-sm'>
@@ -59,7 +61,7 @@ const FeedbackChart = () => {
             </div>
             <div className="w-full h-full min-h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={dummyDailyFeedbacks}>
+                    <AreaChart data={dummyDailyFeedbacks}>
                         <XAxis
                             dataKey="day"
                             axisLine={{ stroke: '#191C1F' }}
@@ -67,13 +69,15 @@ const FeedbackChart = () => {
                             tick={{ fill: '#0A400C' }}
                         />
                         <Tooltip cursor={{ fill: 'rgba(10, 64, 12, 0.1)' }} />
-                        <Bar
+                        <Area
+                            type="monotone"
                             dataKey="Feedbacks"
-                            fill="#212121"
-                            radius={[8, 8, 0, 0]}
+                            stroke="#212121"
+                            fill="#AAAAAA"
+                            strokeWidth={2}
                             isAnimationActive={false}
                         />
-                    </BarChart>
+                    </AreaChart>
                 </ResponsiveContainer>
             </div>
         </div>

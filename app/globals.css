@@ -97,6 +97,10 @@
   @apply text-base max-lg:text-sm max-md:text-xs max-sm:text-[11px];
 }
 
+.p2 {
+  @apply p-2 max-lg:p-1.5 max-md:p-1;
+}
+
 .p3 {
   @apply p-3 max-lg:p-2.5 max-md:p-2.5 max-sm:p-2
 }

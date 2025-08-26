@@ -77,28 +77,28 @@ const SendSurvey: React.FC<{ open: boolean, close: Function, link?: string }> = 
     return (
         <div className={` ${open ? 'absolute' : 'hidden'} bg-black/30 op-2 h-full top-0 p-3 flex flex-col items-center justify-center left-0 w-full backdrop-blur-sm z-10`}>
             <div className='w-full max-w-3xl flex flex-col gap-4'>
-                <div className='bg-white mr-3 w-max rounded-2xl self-end hover:bg-orange-300 transition duration-300 border p-2 right-3 cursor-pointer' onClick={() => { setEmails([]); close(false); setEmail(''); setError(null) }}>
-                    <IoClose className='w-8 h-auto max-lg:w-6 max-md:w-6 max-sm:w-4' />
+                <div className='bg-white mr-3 w-max rounded-lg self-end hover:bg-orange-300 transition duration-300 border p-2 right-3 cursor-pointer' onClick={() => { setEmails([]); close(false); setEmail(''); setError(null) }}>
+                    <IoClose className='w-6 h-auto max-lg:w-5 max-md:w-4' />
                 </div>
-                <div className='flex flex-col gap-2 border border-stroke bg-white rounded-3xl p-5 text-black w-full max-w-3xl'>
+                <div className='flex flex-col gap-2 border border-stroke bg-white rounded-lg p4 text-black w-full max-w-3xl'>
                     <div className='flex items-center justify-between'>
-                        <h1 className='x2l mb-2 font-bold'>Enter emails to send the survey</h1>
+                        <h1 className='xl mb-2 font-bold'>Enter emails to send the survey</h1>
                         <button
-                            className='flex bg-primary/10 items-center gap-2 mr-2 hover:bg-primary/20 p-1 hover:text-black transition duration-300 rounded-lg px-2 cursor-pointer base'
+                            className='flex bg-primary/10 items-center gap-2 hover:bg-primary/20 p-2 rounded-sm hover:text-black transition duration-300 cursor-pointer base'
                             onClick={handleCopy}
                             type="button"
                         >
-                            <BiCopy />
-                            <span>{copied ? 'Copied' : 'Link'}</span>
+                            <BiCopy className='' />
+                            <span className='sm'>{copied ? 'Copied' : 'Link'}</span>
                         </button>
                     </div>
                     <span className='text-orange-600 mb-1 mr-2 self-end sm'>{error}</span>
-                    <form action="" onSubmit={(e) => { e.preventDefault(); addEmail(); }} className={`w-full border ${error ? 'border-orange-400' : 'border-primary'} p-2 flex items-center bg-white rounded-2xl`}>
-                        <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} className='p-3 w-full base outline-0 pl-2' placeholder='e.g. john@example.com' />
-                        <button type="button" onClick={addEmail} className='p-3 bg-primary text-white min-w-max rounded-lg base h-full cursor-pointer'>Add email</button>
+                    <form action="" onSubmit={(e) => { e.preventDefault(); addEmail(); }} className={`w-full border ${error ? 'border-orange-400' : 'border-primary'} p-1 flex items-center bg-white rounded-sm`}>
+                        <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} className='p2 w-full base outline-0 pl-1' placeholder='e.g. john@example.com' />
+                        <button type="button" onClick={addEmail} className='p-3 bg-primary effect text-white min-w-max base h-full cursor-pointer'><span className='text'>Add email</span></button>
                     </form>
                     <div className='mt-2'>
-                        <label htmlFor='csv-upload' className='block mb-1 font-medium'>Or upload CSV file:</label>
+                        <label htmlFor='csv-upload' className='block mb-1 base font-medium'>Or upload CSV file:</label>
                         <div className='relative w-full'>
                             <input
                                 id='csv-upload'
@@ -119,7 +119,7 @@ const SendSurvey: React.FC<{ open: boolean, close: Function, link?: string }> = 
                                     });
                                 }}
                             />
-                            <label htmlFor='csv-upload' className='flex items-center gap-2 cursor-pointer border rounded-md p-2 border-primary w-full bg-white hover:bg-primary/2 transition'>
+                            <label htmlFor='csv-upload' className='flex items-center gap-2 cursor-pointer border rounded-sm p-2 border-primary w-full bg-white hover:bg-primary/2 transition'>
                                 <FiUpload className='w-5 h-5 text-primary' />
                                 <span className='base text-black/70'>
                                     {csvFile ? csvFile.name : 'Upload file'}

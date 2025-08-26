@@ -63,9 +63,9 @@ const Navbar = () => {
                 </div>
                 <div className='flex flex-col mt-4 gap-3 bricolage w-full'>
                     {links.map((link) => (
-                        <Link href={link.href} key={link.name} className='p-2 w-full'>
+                        <a href={`/#${link.href}`} key={link.name} className='p-2 w-full'>
                             {link.name}
-                        </Link>
+                        </a>
                     ))}
                 </div>
             </div>

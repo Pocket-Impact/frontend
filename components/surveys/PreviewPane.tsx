@@ -11,9 +11,9 @@ type Props = {
 
 export default function PreviewPane({ title, description, active, questions }: Props) {
     return (
-        <div className="bg-white scrolly h-[560px] overflow-y-scroll overflow-clip border border-stroke text-start p-6">
+        <div className="bg-white scrolly flex-1 h-full min-h-0 overflow-y-auto border border-stroke text-start p-6 flex flex-col">
             <div className="flex justify-between">
-            <h3 className="text-xl font-medium mb-2 text-primary">Preview</h3>
+                <h3 className="text-xl font-medium mb-2 text-primary">Preview</h3>
                 {/* Survey status logic if needed */}
                 {/* <div className="mb-2">
                     <span className={`px-2 py-1 rounded ${active ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"}`}>

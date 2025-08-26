@@ -103,7 +103,7 @@ export default function Page() {
     if (!initialSurvey) return null;
 
     return (
-        <div className="max-w-6xl mx-auto">
+        <div className="h-full">
             <FormBuilder
                 edit={true}
                 initialId={initialSurvey.id}

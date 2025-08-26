@@ -126,22 +126,22 @@ export default function FormBuilder({
     };
 
     return (
-        <>
+        <div className="h-full flex flex-col gap-6">
             <SendSurvey open={sendSurvey} close={setSendSurvey} link={initialId} />
-            <div className="flex justify-between items-center">
-                <Link href="/feedback/surveys" className='flex items-center gap-2 hover:gap-3 transition-all cursor-pointer mb-4 duration-300'>
+            <div className="flex w-full h-12 justify-between items-start">
+                <Link href="/feedback/surveys" className='flex items-center gap-2 hover:gap-3 transition-all cursor-pointer duration-300'>
                     <div className='bg-primary/80 hover:bg-primary transition duration-300 text-white rounded-lg w-max p-1'>
                         <RxCaretLeft className='w-6 h-auto max-lg:w-5 max-md:w-4' />
                     </div>
                     <span className='text-black/70 font-medium base'>Back to Surveys</span>
                 </Link>
-                <div className="flex gap-3 max-md:gap-1 h-full items-center">
+                <div className="flex gap-3 max-md:gap-1 items-center">
                     {edit &&
                         <div className="flex gap-2 items-center">
                             <Link href={`/feedback/surveys/${initialId}/responses`} prefetch>
                                 <SecondaryButton
                                     text="View responses"
-                                    styles="p-3 base bg-transparent rounded-xl hover:bg-black/10 md:px-4 bg-green-600 transition mb-4"
+                                    styles="p-3 base bg-transparent rounded-xl hover:bg-black/10 md:px-4 bg-green-600 transition"
                                     icon={<VscFeedback />}
                                     textStyles="max-md:hidden"
                                     isLoading={externalLoading ?? loading}
@@ -149,7 +149,7 @@ export default function FormBuilder({
                             </Link>
                             <SecondaryButton
                                 text="Send"
-                                styles="p-3 base rounded-xl bg-green-600 hover:bg-orange-300 transition mb-4"
+                                styles="p-3 base rounded-xl bg-green-600 hover:bg-orange-300 transition"
                                 onClick={() => setSendSurvey(true)}
                                 icon={<FiSend />}
                                 textStyles="max-md:hidden"
@@ -159,7 +159,7 @@ export default function FormBuilder({
                     }
                     <PrimaryButton
                         text={(externalLoading ?? loading) ? "Saving..." : "Save"}
-                        styles="text-white p-3 base rounded-xl bg-green-600 effect transition mb-4"
+                        styles="text-white p-3 base rounded-xl bg-green-600 effect transition"
                         onClick={handleSubmit}
                         icon={<FaRegSave />}
                         textStyles="max-md:hidden"
@@ -167,9 +167,9 @@ export default function FormBuilder({
                     />
                 </div>
             </div>
-            <div className="grid grid-cols-5 max-lg:grid-cols-1 gap-4 flex-2">
+            <div className="grid grid-cols-5 flex-1 h-full min-h-0 max-lg:grid-cols-1 gap-4">
                 {/* Builder Section */}
-                <div className="flex-1 lg:col-span-2 p-6 bg-white border border-stroke h-[560px] overflow-y-scroll scrolly">
+                <div className="flex-1 h-full min-h-0 lg:col-span-2 p-6 bg-white border border-stroke overflow-y-auto scrolly flex flex-col">
                     <h2 className="text-xl font-medium mb-4 text-primary">Survey Editor</h2>
                     <input
                         className="w-full p-2 mb-2 border outline-0 bg-white border-stroke focus:border-primary rounded"
@@ -185,14 +185,14 @@ export default function FormBuilder({
                         onChange={e => setDescription(e.target.value)}
                     />
                     {/* Survey activity if needed */}
-                    {/* <label className="flex items-center gap-2 mb-4">
-                    <input
-                    type="checkbox"
-                    checked={active}
-                        onChange={e => setActive(e.target.checked)}
-                    />
-                    <span>Survey Activation</span>
-                </label> */}
+                    <label className="hidden items-center gap-2 mb-4">
+                        <input
+                            type="checkbox"
+                            checked={active}
+                            onChange={e => setActive(e.target.checked)}
+                        />
+                        <span>Survey Activation</span>
+                    </label>
                     <DragDropContext onDragEnd={reorderQuestions}>
                         <Droppable droppableId="questions">
                             {(provided) => (
@@ -223,12 +223,12 @@ export default function FormBuilder({
                     </DragDropContext>
                     <PrimaryButton
                         text="Add Question"
-                        styles="text-white p-3 px-5 base rounded-xl hover:bg-primary-dark transition mb-4"
+                        styles="text-white p-3 px-5 base rounded-xl hover:bg-primary-dark transition"
                         onClick={addQuestion}
                     />
                     {(externalError ?? error) && <div className="text-red-500 mb-2">{externalError ?? error}</div>}
                 </div>
-                <div className="lg:col-span-3 text-end">
+                <div className="lg:col-span-3 text-end h-full min-h-0 flex flex-col">
                     <PreviewPane
                         title={title}
                         description={description}
@@ -237,6 +237,6 @@ export default function FormBuilder({
                     />
                 </div>
             </div>
-        </>
+        </div>
     );
 }

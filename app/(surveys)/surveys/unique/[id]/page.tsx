@@ -101,7 +101,7 @@ const FeedbackForm = () => {
     </div>;
 
     return (
-        <div className="max-w-xl w-full bg-white scrolly max-md:h-screen xl:min-h-[670px] xl:h-[670px] overflow-y-scroll p-10 border-t-primary lg:border-t-5 inter flex flex-col items-start">
+        <div className="max-w-xl w-full bg-white scrolly h-full max-md:h-screen overflow-y-scroll border-stroke border p-10 inter flex flex-col items-start">
             <div className="flex justify-between">
                 <h3 className="x5l font-bold mb-8 text-primary">Feedback Form</h3>
             </div>
@@ -113,8 +113,7 @@ const FeedbackForm = () => {
                     <div key={q._id} className="mb-4">
                         <label className="block base font-semibold mb-2">{q.questionText}</label>
                         {q.type === "text" && (
-                            <input
-                                type="text"
+                            <textarea
                                 className="w-full base p-2 border bg-white border-gray-300 outline-0 focus:border-primary rounded"
                                 placeholder={`Answer ${(index + 1).toString().padStart(2, "0")}`}
                                 value={answers[q._id!] || ""}

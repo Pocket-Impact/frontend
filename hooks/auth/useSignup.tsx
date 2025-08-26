@@ -77,8 +77,7 @@ const useSignup = () => {
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsLoading(true);
-
+        
         let newErrors: SignupFormErrors = {
             fullName: "",
             phoneNumber: "",
@@ -94,7 +93,7 @@ const useSignup = () => {
         } else if (formData.organisationName.length < 5) {
             newErrors.organisationName = "Should be atleast 5 characters";
         }
-
+        
         if (!formData.organisationCountry) {
             newErrors.organisationCountry = "Required";
         }
@@ -102,15 +101,16 @@ const useSignup = () => {
         if (!formData.organisationSize) {
             newErrors.organisationSize = "Required";
         }
-
+        
         setErrors(newErrors);
-
+        
         if (Object.values(newErrors).every((error) => error === "")) {
             await signUp(formData);
         }
     }
-
+    
     const signUp = async (data: typeof formData) => {
+        setIsLoading(true);
         const body = {
             fullname: data.fullName,
             email: data.email,
@@ -120,13 +120,13 @@ const useSignup = () => {
             organisationSize: (`${data.organisationSize}`).toLowerCase(),
             password: data.password
         }
-
+        
         const response = await apiFetch('/api/auth/signup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
         });
-
+        
         const json = await response.json();
         if (!response.ok) {
             setIsLoading(false);

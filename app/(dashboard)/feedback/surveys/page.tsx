@@ -1,4 +1,5 @@
 "use client"
+import LoadingCard from '@/components/feedback/feedbacks/LoadingCard'
 import SurveyCard from '@/components/feedback/surveys/SurveyCard'
 import PrimaryButton from '@/components/ui/PrimaryButton'
 import { apiFetch } from '@/utils/apiFetch'
@@ -61,9 +62,9 @@ const Page = () => {
         </Link>
       </div>
       {loading ? (
-        <div className='text-black/60 base'>Loading surveys...</div>
-      ) : error ? (
-        <div className='text-red-500 mb-4 bg-red-100 w-full p-2 border-2 border-red-400'>{error}</div>
+        <div className='grid gap-3 max-lg:gap-2.5 max-md:gap-2 max-sm:grid-cols-1 grid-cols-3 max-lg:grid-cols-1 max-xl:grid-cols-2 mt-6'>
+          <LoadingCard />
+        </div>
       ) : (
         <div className='grid gap-3 max-lg:gap-2.5 max-md:gap-2 max-sm:grid-cols-1 grid-cols-3 max-lg:grid-cols-1 max-xl:grid-cols-2 mt-6'>
           {surveys.length === 0 ? (

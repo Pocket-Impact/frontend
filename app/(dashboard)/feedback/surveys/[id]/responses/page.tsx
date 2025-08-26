@@ -27,7 +27,7 @@ const Page = () => {
     useEffect(() => {
         const fetchResponses = async () => {
             setLoading(true);
-            const res = await apiFetch(`http://localhost:5000/api/responses/survey/${id}`);
+            const res = await apiFetch(`/api/responses/survey/${id}`);
             if (res.ok) {
                 const data = await res.json();
                 setResponses(data.data);
@@ -58,14 +58,12 @@ const Page = () => {
             </h2>
             <div className='mt-5'>
                 {loading &&
-                    <div className="mt-36 mx-auto bg-primary/70 py-5 rounded-x2l w-max">
-                        <DotLottieReact
-                            src="/animations/loading.lottie"
-                            loop
-                            autoplay
-                            className="w-20"
-                            style={{ height: "auto" }}
-                        />
+                    <div className="flex items-center animate-pulse gap-2 bg-white border border-stroke p3 rounded-x2l text-black/60">
+                        <span className='p-2 w-12 h-12 rounded-md bg-black/20'></span>
+                        <div className='flex flex-col gap-2'>
+                            <span className='p-2 w-20 h-full rounded-md bg-black/20'></span>
+                            <span className='p-2 w-48 h-full rounded-md bg-black/20'></span>
+                        </div>
                     </div>
                 }
                 {responses.length == 0 && !loading && (

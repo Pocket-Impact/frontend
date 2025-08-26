@@ -9,6 +9,7 @@ type User = {
     isVerified: boolean;
     hasHydrated: boolean;
     phonenumber: string;
+    organisationId: string;
     organisationName: string;
 };
 
@@ -26,6 +27,7 @@ const initState: User = {
     isVerified: false,
     hasHydrated: false,
     phonenumber: "",
+    organisationId: "",
     organisationName: "",
 };
 

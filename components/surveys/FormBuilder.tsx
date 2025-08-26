@@ -25,7 +25,7 @@ type FormBuilderProps = {
     error?: string | null;
     success?: boolean;
     edit?: boolean;
-    uniqueLink: string;
+    uniqueLink?: string;
 };
 
 export default function FormBuilder({
@@ -129,7 +129,9 @@ export default function FormBuilder({
 
     return (
         <div className="h-full flex flex-col gap-6">
-            <SendSurvey uniqueLink={uniqueLink} open={sendSurvey} close={setSendSurvey} link={initialId} />
+            {edit &&
+                <SendSurvey uniqueLink={uniqueLink} open={sendSurvey} close={setSendSurvey} link={initialId} />
+            }
             <div className="flex w-full h-12 justify-between items-start">
                 <Link href="/feedback/surveys" className='flex items-center gap-2 hover:gap-3 transition-all cursor-pointer duration-300'>
                     <div className='bg-primary/80 hover:bg-primary transition duration-300 text-white rounded-lg w-max p-1'>

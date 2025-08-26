@@ -3,32 +3,44 @@ import FeedbackCard from '@/components/feedback/feedbacks/FeedbackCard'
 import { useAuthStore } from '@/stores/authStores'
 import React, { useState } from 'react'
 import { BiCopy } from 'react-icons/bi'
-
-const feedbacks = [
-  {
-    sentiment: "Positive",
-    category: "Improvement",
-    content: "This is the review asdfe adfawe gdthdr bgysets grts tsergserg that I'm leaving on the tech of your org. It's so back actually it needs an upgrade for real"
-  },
-  {
-    sentiment: "Negative",
-    category: "Business",
-    content: "This is the review that I'm leaving on the tech of your org. It's so back actually it needs an upgrade for real"
-  },
-  {
-    sentiment: "Neutral",
-    category: "Agriculture",
-    content: "This is the review that I'm leaving on the tech of your org. It's so back actually it needs an upgrade for real"
-  },
-]
+import { apiFetch } from '@/utils/apiFetch';
 
 const page = () => {
   const [copied, setCopied] = useState(false);
-  const { organisationId, hasHydrated } = useAuthStore((state) => state)
+  const { organisationId, hasHydrated } = useAuthStore((state) => state);
+  const [feedbacks, setFeedbacks] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    const fetchFeedbacks = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        if (!organisationId) {
+          setError('Organisation ID is required.');
+          setLoading(false);
+          return;
+        }
+        const res = await apiFetch(`/api/feedbacks?organisationId=${organisationId}`);
+        const data = await res.json();
+        if (!res.ok || data.status === 'fail') {
+          setError(data.message || 'Could not fetch feedbacks.');
+        } else {
+          setFeedbacks(data.data || []);
+        }
+      } catch (err: any) {
+        setError('Server error. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFeedbacks();
+  }, [organisationId]);
 
   const handleCopy = () => {
     if (hasHydrated) {
-      navigator.clipboard.writeText(`${window.location.origin}/surveys/unique/${organisationId}`);
+      navigator.clipboard.writeText(`${window.location.origin}/feedbacks/${organisationId}`);
       setCopied(true);
       setTimeout(() => setCopied(false), 3000);
     }
@@ -48,15 +60,25 @@ const page = () => {
             type="button"
           >
             <BiCopy className='' />
-            <span className='sm'>{copied ? 'Copied' : 'Copy feedback link'}</span>
+            <span className='sm'>{copied ? 'Copied' : 'Organisation link'}</span>
           </button>
         </div>
       </div>
-      <div className='grid grid-cols-3 max-lg:grid-cols-1 gap-6 max-md:gap-4'>
-        {feedbacks.map((feedback) => (
-          <FeedbackCard key={feedback.category} feedback={feedback} />
-        ))}
-      </div>
+      {loading ? (
+        <div className='text-black/60 base'>Loading feedbacks...</div>
+      ) : error ? (
+        <div className='text-red-500 mb-4 bg-red-100 w-full p-2 border-2 border-red-400'>{error}</div>
+      ) : (
+        <div className='grid grid-cols-3 max-lg:grid-cols-1 gap-6 max-md:gap-4'>
+          {feedbacks.length === 0 ? (
+            <div className='col-span-3 text-black/60 base'>No feedback found for this organisation.</div>
+          ) : (
+            feedbacks.map((feedback) => (
+              <FeedbackCard key={feedback._id} feedback={feedback} />
+            ))
+          )}
+        </div>
+      )}
     </div>
   )
 }

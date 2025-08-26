@@ -4,6 +4,7 @@ import { useAuthStore } from '@/stores/authStores'
 import React, { useState } from 'react'
 import { BiCopy } from 'react-icons/bi'
 import { apiFetch } from '@/utils/apiFetch';
+import LoadingCard from '@/components/feedback/feedbacks/LoadingCard'
 
 const page = () => {
   const [copied, setCopied] = useState(false);
@@ -65,9 +66,9 @@ const page = () => {
         </div>
       </div>
       {loading ? (
-        <div className='text-black/60 base'>Loading feedbacks...</div>
-      ) : error ? (
-        <div className='text-red-500 mb-4 bg-red-100 w-full p-2 border-2 border-red-400'>{error}</div>
+        <div className='grid grid-cols-3 max-lg:grid-cols-1 gap-6 max-md:gap-4'>
+          <LoadingCard />
+        </div>
       ) : (
         <div className='grid grid-cols-3 max-lg:grid-cols-1 gap-6 max-md:gap-4'>
           {feedbacks.length === 0 ? (

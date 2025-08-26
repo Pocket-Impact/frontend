@@ -15,26 +15,36 @@ const Page = () => {
     // Add more fields as needed
   };
   const [surveys, setSurveys] = React.useState<Survey[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await apiFetch('/api/surveys', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      });
-
-
-      const json = await response.json();
-      if (!response.ok) console.log(json)
-      if (json && json.data && Array.isArray(json.data.surveys)) {
-        setSurveys(json.data.surveys);
-      } else {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await apiFetch('/api/surveys', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+        });
+        const json = await response.json();
+        if (!response.ok) {
+          setError(json.message || 'Could not fetch surveys.');
+          setSurveys([]);
+        } else if (json && json.data && Array.isArray(json.data.surveys)) {
+          setSurveys(json.data.surveys);
+        } else {
+          setSurveys([]);
+        }
+      } catch (err: any) {
+        setError('Server error. Please try again later.');
         setSurveys([]);
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
@@ -50,11 +60,21 @@ const Page = () => {
           <PrimaryButton text='Create survey' textStyles='max-md:hidden mr-1' styles='py-3 px-2 base max-lg:py-2.5 max-md:py-2 rounded-gl' icon={<IoAddOutline className='w-5 h-auto max-md:w-4' />} />
         </Link>
       </div>
-      <div className='grid gap-3 max-lg:gap-2.5 max-md:gap-2 max-sm:grid-cols-1 grid-cols-3 max-lg:grid-cols-1 max-xl:grid-cols-2 mt-6'>
-        {surveys?.map((survey) => (
-          <SurveyCard key={survey._id} survey={survey} />
-        ))}
-      </div>
+      {loading ? (
+        <div className='text-black/60 base'>Loading surveys...</div>
+      ) : error ? (
+        <div className='text-red-500 mb-4 bg-red-100 w-full p-2 border-2 border-red-400'>{error}</div>
+      ) : (
+        <div className='grid gap-3 max-lg:gap-2.5 max-md:gap-2 max-sm:grid-cols-1 grid-cols-3 max-lg:grid-cols-1 max-xl:grid-cols-2 mt-6'>
+          {surveys.length === 0 ? (
+            <div className='col-span-3 text-black/60 base'>No surveys found.</div>
+          ) : (
+            surveys.map((survey) => (
+              <SurveyCard key={survey._id} survey={survey} />
+            ))
+          )}
+        </div>
+      )}
     </div >
   )
 }

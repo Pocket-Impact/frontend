@@ -6,10 +6,10 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     return [
-      {
-        source: '/api/:path*',
-        destination: `http://localhost:5000/api/:path*`,
-      },
+      // {
+      //   source: '/api/:path*',
+      //   destination: `${process.env.BACKEND_URL}/api/:path*`,
+      // },
     ]
   }
 };

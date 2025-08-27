@@ -1,5 +1,4 @@
 import React from 'react';
-import { MdSentimentVerySatisfied } from 'react-icons/md';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 const chartData = [

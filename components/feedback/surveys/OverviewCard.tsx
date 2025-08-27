@@ -1,9 +1,8 @@
 import Link from 'next/link';
-import React, { useState } from 'react'
-import { MdOutlineArrowOutward } from 'react-icons/md';
+import React from 'react'
 
 const OverviewCard: React.FC<{ card: any, index: number, user?: boolean }> = ({ card, user }) => {
-    const [showTooltip, setShowTooltip] = useState(false);
+    // const [showTooltip, setShowTooltip] = useState(false);
 
     return (
         <div className='border bg-white border-stroke p-4 flex justify-between gap-5 rounded-lg'>
@@ -18,7 +17,7 @@ const OverviewCard: React.FC<{ card: any, index: number, user?: boolean }> = ({ 
                     <span className='text-black x3l'>
                         {(card.value || "0").toString().padStart(2, '0')}
                     </span>
-                    <Link href={`${card.link ? card.link : ''}`} className='flex items-center text-primary gap-2'>
+                    <Link href={`${card.link ? card.link : ''}`} className='flex items-center sm text-primary gap-2' prefetch>
                         {card.secondaryIcon}
                         {card.desc}
                     </Link>

@@ -1,8 +1,6 @@
 "use client"
-import { apiFetch } from '@/utils/apiFetch';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { MdOutlineArrowOutward } from 'react-icons/md';
-import { VscFeedback } from 'react-icons/vsc';
 
 import {
     ResponsiveContainer,
@@ -27,6 +25,26 @@ const data = [
 ];
 
 const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
+    // Use /api/dashboard format: dailyFeedbacks is array of { day, Feedbacks }
+    let percentChange = 0;
+    let todayCount = 0;
+    let diff = 0;
+    if (dailyFeedbacks && dailyFeedbacks.length > 1) {
+        // Find last two non-zero feedback days
+        const nonZeroDays = dailyFeedbacks.filter(d => typeof d.Feedbacks === 'number' && d.Feedbacks > 0);
+        const lastIdx = nonZeroDays.length - 1;
+        const last = nonZeroDays[lastIdx]?.Feedbacks ?? 0;
+        const prev = nonZeroDays[lastIdx - 1]?.Feedbacks ?? 0;
+        todayCount = last;
+        diff = last - prev;
+        if (prev !== 0) {
+            percentChange = ((last - prev) / prev) * 100;
+        } else {
+            percentChange = last === 0 ? 0 : 100;
+        }
+    }
+    const isDecline = diff < 0;
+
     return (
         <div className='bg-white border row-span-2 lg:col-span-2 flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 rounded-lg'>
             <div className='flex items-start justify-between'>
@@ -37,12 +55,12 @@ const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
                     <p className='sm -mt-1 text-black/60'>Feedback trend</p>
                 </div>
                 <div>
-                    <div className='flex flex-col items-center gap-1'>
-                        <div className={`bg-red-100 text-red-500 xs w-max px-1.5 p-1 rounded-sm flex items-center gap-1`}>
-                            <span>18.5 %</span>
-                            <MdOutlineArrowOutward className='text-red-600 rotate-90' />
+                    <div className='flex flex-col items-end gap-1'>
+                        <div className={`bg-${isDecline ? 'red' : 'lime'}-100 text-${isDecline ? 'red' : 'lime'}-500 xs w-max px-1.5 p-1 rounded-sm flex items-center gap-1`}>
+                            <span>{diff > 0 ? `+${diff}` : diff}</span>
+                            <MdOutlineArrowOutward className={`text-${isDecline ? 'red' : 'lime'}-600 ${isDecline ? 'rotate-90' : '-rotate-90'}`} />
                         </div>
-                        <span className='xs'> - 26 Today</span>
+                        <span className='xs'> {diff > 0 ? `+${diff}` : diff} today</span>
                     </div>
                 </div>
             </div>

@@ -57,17 +57,6 @@ const useSignin = () => {
                 clearMessage();
             }, 3000);
 
-            // Immediately refresh token after login
-            try {
-                const refreshRes = await apiFetch('/api/auth/refresh-token', {
-                    method: 'POST',
-                    credentials: 'include'
-                });
-                await refreshRes.json(); // Optionally handle response
-            } catch (err) {
-                // Optionally handle refresh error
-            }
-
             setIsLoading(false);
             if (json.data.user.isVerified) {
                 setErrors({ email: "", password: "" });

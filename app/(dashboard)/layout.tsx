@@ -7,6 +7,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import AlertComponent from "../../components/AlertComponent";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
+import { apiFetch } from "@/utils/apiFetch";
 
 const bricolageGrotesque = Bricolage_Grotesque({
     subsets: ["latin"],
@@ -25,13 +26,37 @@ export const metadata: Metadata = {
     },
 };
 
-export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+async function getValidAccessToken() {
     const cookieStore = await cookies();
-    const token = cookieStore.get('accessToken')?.value
+    const accessToken = cookieStore.get("accessToken")?.value;
+    const refreshToken = cookieStore.get("refreshToken")?.value;
 
+    if (!accessToken && !refreshToken) return false;
+
+    if (accessToken) return true;
+
+    if (!accessToken && refreshToken) {
+        const res = await apiFetch(`/api/auth/refresh-token`, {
+            method: "POST",
+        });
+
+        if (!res.ok) {
+            return false;
+        }
+        return true;
+    }
+
+    return false;
+}
+
+
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+    // Protect all dashboard pages
+    const token = await getValidAccessToken();
     if (!token) {
         redirect("/auth/signin");
     }
+    console.log(token);
 
     return (
         <html lang="en">

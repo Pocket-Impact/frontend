@@ -5,6 +5,7 @@ import { VscFeedback } from 'react-icons/vsc';
 import OverviewCard from './surveys/OverviewCard';
 import { CgAdd } from 'react-icons/cg';
 import { IoAdd } from 'react-icons/io5';
+import { HiOutlineEye } from 'react-icons/hi';
 
 const OverviewGrid = ({ dashboard }: { dashboard: any }) => {
     const overviewCards = [
@@ -13,7 +14,7 @@ const OverviewGrid = ({ dashboard }: { dashboard: any }) => {
             title: "Total Surveys",
             subtitle: "All surveys",
             desc: "Create a new survey",
-            link: "/feedbacks/surveys",
+            link: "/feedback/surveys/new",
             secondaryIcon: <IoAdd />,
             icon: RiSurveyLine,
         },
@@ -21,8 +22,9 @@ const OverviewGrid = ({ dashboard }: { dashboard: any }) => {
             value: dashboard?.totals?.feedbacks?.toString().padStart(2, '0'),
             title: "Total Feedback",
             subtitle: "All feedbacks",
-            desc: "Add survey",
-            secondaryIcon: <IoAdd />,
+            link: "/feedback/feedbacks",
+            desc: "View feedbacks",
+            secondaryIcon: <HiOutlineEye />,
             icon: VscFeedback,
         },
         {

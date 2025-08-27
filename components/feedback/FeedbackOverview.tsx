@@ -11,9 +11,10 @@ import {
     XAxis,
     Tooltip,
     CartesianGrid,
+    YAxis
 } from 'recharts';
 
-const dummyDailyFeedbacks = [
+const data = [
     { day: "Mon", Feedbacks: 2 },
     { day: "Tue", Feedbacks: 5 },
     { day: "Wed", Feedbacks: 3 },
@@ -25,30 +26,15 @@ const dummyDailyFeedbacks = [
     { day: "Sun", Feedbacks: 1 },
 ];
 
-const FeedbackChart = () => {
-    const [surveys, setSurveys] = useState<any[]>([]);
-    const [loading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchSurveys = async () => {
-            const surveyRes = await apiFetch('/api/surveys');
-            const surveyData = await surveyRes.json();
-            setSurveys(surveyData.data.surveys);
-            setIsLoading(false);
-        }
-        fetchSurveys();
-    }, []);
-
+const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
     return (
         <div className='bg-white border row-span-2 lg:col-span-2 flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 rounded-lg'>
             <div className='flex items-start justify-between'>
-                <div className='flex items-center gap-2'>
-                    <div className='bg-black/10 p-2 rounded-sm'>
-                        <VscFeedback className='w-3.5 h-auto' />
-                    </div>
-                    <h2 className='sm font-medium'>
+                <div className='flex flex-col'>
+                    <h2 className='lg font-semibold'>
                         Feedback Overview
                     </h2>
+                    <p className='sm -mt-1 text-black/60'>Feedback trend</p>
                 </div>
                 <div>
                     <div className='flex flex-col items-center gap-1'>
@@ -62,9 +48,15 @@ const FeedbackChart = () => {
             </div>
             <div className="w-full h-full min-h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={dummyDailyFeedbacks}>
+                    <AreaChart data={dailyFeedbacks}>
                         <XAxis
                             dataKey="day"
+                            axisLine={{ stroke: '#191C1F' }}
+                            tickLine={false}
+                            tick={{ fill: '#0A400C' }}
+                        />
+                        <YAxis
+                            dataKey="Feedbacks"
                             axisLine={{ stroke: '#191C1F' }}
                             tickLine={false}
                             tick={{ fill: '#0A400C' }}
@@ -83,7 +75,7 @@ const FeedbackChart = () => {
                 </ResponsiveContainer>
             </div>
         </div>
-    )
+    );
 }
 
-export default FeedbackChart
+export default FeedbackOverview

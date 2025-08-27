@@ -49,7 +49,7 @@ const dummyRecentFeedbacks = [
   },
 ];
 
-const RecentFeedback = () => {
+const RecentFeedback = ({ recentFeedbacks }: { recentFeedbacks: any[] }) => {
   return (
     <div className='bg-white border-stroke flex flex-col gap-2 border p4 rounded-lg lg:col-span-3 min-h-0 flex-1'>
       <div className='flex items-center gap-2'>
@@ -66,15 +66,15 @@ const RecentFeedback = () => {
         </div>
       </div>
       <div className='flex flex-col gap-2'>
-        {dummyRecentFeedbacks.map((feedback, index) => (
+        {recentFeedbacks?.map((feedback, index) => (
           <div key={index} className='p-2 rounded-sm border border-stroke cursor-default flex justify-between items-center'>
             <div className='flex items-center gap-2'>
               <div className='flex flex-col'>
-                <span className='sm'>{feedback.comment}</span>
-                <span className='xs text-black/60 '>{feedback.timeAgo}</span>
+                <span className='sm'>{feedback.message}</span>
+                <span className='xs text-black/60 '>{feedback.date ? new Date(feedback.date).toLocaleString() : ''}</span>
               </div>
             </div>
-            <div className={`bg-lime-100 p-1 px-1.5 mr-1 text-lime-500 w-max xs ${feedback.sentimentColor}`}>
+            <div className={`bg-lime-100 p-1 px-1.5 mr-1 text-lime-500 w-max xs`}>
               {feedback.sentiment}
             </div>
           </div>
@@ -84,7 +84,7 @@ const RecentFeedback = () => {
         </Link>
       </div>
     </div>
-  )
+  );
 }
 
 export default RecentFeedback

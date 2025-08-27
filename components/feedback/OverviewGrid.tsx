@@ -1,56 +1,45 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { RiSurveyLine } from 'react-icons/ri'
 import { VscFeedback } from 'react-icons/vsc';
 import OverviewCard from './surveys/OverviewCard';
-import { apiFetch } from '@/utils/apiFetch';
+import { CgAdd } from 'react-icons/cg';
+import { IoAdd } from 'react-icons/io5';
 
-const OverviewGrid = () => {
-    const [surveys, setSurveys] = useState<any[]>([]);
-    const [responses, setResponses] = useState<any[]>([]);
-
+const OverviewGrid = ({ dashboard }: { dashboard: any }) => {
     const overviewCards = [
         {
-            value: surveys?.length.toString().padStart(4, '0'),
-            title: "Surveys",
+            value: dashboard?.totals?.surveys?.toString().padStart(2, '0'),
+            title: "Total Surveys",
             subtitle: "All surveys",
+            desc: "Add survey",
+            secondaryIcon: <IoAdd />,
             icon: RiSurveyLine,
         },
         {
-            value: "0245",
-            title: "Feedback",
+            value: dashboard?.totals?.feedbacks?.toString().padStart(2, '0'),
+            title: "Total Feedback",
             subtitle: "All feedbacks",
+            desc: "Add survey",
+            secondaryIcon: <IoAdd />,
             icon: VscFeedback,
         },
         {
-            value: responses?.length.toString().padStart(4, '0'),
+            value: dashboard?.totals?.responses?.toString().padStart(2, '0'),
             title: "Responses",
             subtitle: "All responses",
+            desc: "Add survey",
+            secondaryIcon: <IoAdd />,
             icon: RiSurveyLine,
         },
     ];
-    useEffect(() => {
-        const fetchData = async () => {
-            const surveyRes = await apiFetch('/api/surveys');
-            const surveyData = await surveyRes.json();
-            setSurveys(surveyData?.data?.surveys);
-
-            const responsesRes = await apiFetch('/api/responses/organisation/');
-            const responsesData = await responsesRes.json();
-            setResponses(responsesData?.data);
-        }
-        
-        fetchData();
-    }, []);
-    
     return (
         <div className='grid gap-6 max-lg:gap-2.5 max-md:gap-2 grid-cols-3 max-lg:grid-cols-1'>
-            {/* Surveys Card */}
             <OverviewCard card={overviewCards[0]} index={0} />
             <OverviewCard card={overviewCards[1]} index={1} />
             <OverviewCard card={overviewCards[2]} index={2} />
         </div >
-    )
+    );
 }
 
 export default OverviewGrid

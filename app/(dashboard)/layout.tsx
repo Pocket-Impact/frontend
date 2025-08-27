@@ -35,13 +35,13 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
     return (
         <html lang="en">
-            <body className={`${bricolageGrotesque.variable} overflow-hidden bg-background h-screen ${inter.variable} antialiased flex`}>
+            <body className={`${bricolageGrotesque.variable} overflow-hidden bg-white h-screen ${inter.variable} antialiased flex`}>
                 <AlertComponent />
                 <div className="flex w-full h-screen">
                     <Sidebar />
                     <div className="flex-1 flex flex-col h-screen">
                         <DashboardNavbar />
-                        <div className="inter relative bg-clear p-6 max-lg:p-5 max-md:p-4 w-full flex-1 overflow-y-scroll scrolly">
+                        <div className="inter relative p-6 max-lg:p-5 max-md:p-4 w-full flex-1 overflow-y-scroll scrolly">
                             {children}
                         </div>
                     </div>

@@ -1,9 +1,36 @@
 "use client"
 import InfoGrid from '@/components/feedback/InfoGrid'
 import OverviewGrid from '@/components/feedback/OverviewGrid'
-import React from 'react'
+import { apiFetch } from '@/utils/apiFetch'
+import React, { useEffect, useState } from 'react'
 
 const page = () => {
+  const [dashboardData, setDashboardData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await apiFetch('/api/dashboard');
+        const data = await res.json();
+        if (res.ok && data.status === 'success') {
+          setDashboardData(data.data);
+        } else {
+          console.log(data);
+          setError(data.message || 'Failed to fetch dashboard data');
+        }
+      } catch (err: any) {
+        setError('Server error. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDashboard();
+  }, []);
+
   return (
     <div className='min-h-screen'>
       <div className='flex flex-col h-full gap-4'>
@@ -21,12 +48,20 @@ const page = () => {
           </div>
         </div>
         <div className='flex flex-col h-full gap-6'>
-          <OverviewGrid />
-          <InfoGrid />
+          {loading ? (
+            <div className='text-black/60 base'>Loading analytics...</div>
+          ) : error ? (
+            <div className='text-red-500 mb-4 bg-red-100 w-full p-2 border-2 border-red-400'>{error}</div>
+          ) : dashboardData ? (
+            <>
+              <OverviewGrid dashboard={dashboardData} />
+              <InfoGrid dashboard={dashboardData} />
+            </>
+          ) : null}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default page

@@ -67,7 +67,6 @@ const useOTP = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp: otp.join('') }),
-                credentials: 'include'
             });
 
             const json = await response.json();
@@ -104,9 +103,7 @@ const useOTP = () => {
     };
 
     const resendOTP = async () => {
-        const response = await apiFetch('/api/auth/resend-otp', {
-            credentials: 'include'
-        })
+        const response = await apiFetch('/api/auth/resend-otp')
 
         if (response.ok) {
             setMessage("OTP resent successfully");

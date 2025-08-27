@@ -28,7 +28,7 @@ const OtpForm = () => {
         </div>
         <form className='mt-5'>
           {error &&
-            <div className='mb-4 bg-orange-100 border-orange-400 border p-3 op-2 rounded-lg text-red-500 font-medium'>
+            <div className='mb-4 bg-orange-100 border-orange-400 border p-3 op-2 base rounded-lg text-red-500 font-medium'>
               {error}
             </div>
           }

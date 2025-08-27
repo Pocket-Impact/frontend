@@ -15,7 +15,7 @@ const OrgTab = () => {
                             {organisationName.slice(0, 2)}
                         </div>
                         <div className='flex flex-col max-md:hidden'>
-                            <span className='inter base font-semibold'>{organisationName}</span>
+                            <span className='inter base font-semibold line-clamp-1 max-w-[140px]'>{organisationName}</span>
                             <span className='inter sm text-black/70'>Go to your profile</span>
                         </div>
                     </div>

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { useState } from 'react'
 import { MdOutlineArrowOutward } from 'react-icons/md';
 
@@ -17,10 +18,10 @@ const OverviewCard: React.FC<{ card: any, index: number, user?: boolean }> = ({ 
                     <span className='text-black x3l'>
                         {(card.value || "0").toString().padStart(2, '0')}
                     </span>
-                    <div className='flex items-center gap-2'>
+                    <Link href={`${card.link ? card.link : ''}`} className='flex items-center text-primary gap-2'>
                         {card.secondaryIcon}
                         {card.desc}
-                    </div>
+                    </Link>
                 </div>
             </div>
             {/* <div

@@ -59,7 +59,7 @@ const useSignin = () => {
 
             // Immediately refresh token after login
             try {
-                const refreshRes = await apiFetch('/api/auth/refresh', {
+                const refreshRes = await apiFetch('/api/auth/refresh-token', {
                     method: 'POST',
                     credentials: 'include'
                 });

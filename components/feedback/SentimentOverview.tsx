@@ -20,7 +20,7 @@ const SentimentOverview = ({ sentimentAnalysis }: { sentimentAnalysis: any[] }) 
                 <ResponsiveContainer width="100%" height={220}>
                     <PieChart>
                         <Pie
-                            data={chartData}
+                            data={sentimentAnalysis}
                             dataKey="value"
                             startAngle={180}
                             endAngle={0}
@@ -31,7 +31,7 @@ const SentimentOverview = ({ sentimentAnalysis }: { sentimentAnalysis: any[] }) 
                             cornerRadius={10}
                             stroke="none"
                         >
-                            {chartData?.map((entry) => (
+                            {sentimentAnalysis?.map((entry) => (
                                 <Cell key={`cell-${entry.name}`} fill={entry.color} />
                             ))}
                         </Pie>

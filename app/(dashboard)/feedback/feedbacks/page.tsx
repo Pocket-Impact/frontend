@@ -1,10 +1,14 @@
 "use client"
 import FeedbackCard from '@/components/feedback/feedbacks/FeedbackCard'
 import { useAuthStore } from '@/stores/authStores'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BiCopy } from 'react-icons/bi'
 import { apiFetch } from '@/utils/apiFetch';
 import LoadingCard from '@/components/feedback/feedbacks/LoadingCard'
+import SecondaryButton from '@/components/ui/SecondaryButton'
+import { PiFlask } from 'react-icons/pi'
+import { useAlertStore } from '@/stores/alertStore'
+import { redirect, useRouter } from 'next/navigation'
 
 const page = () => {
   const [copied, setCopied] = useState(false);
@@ -12,8 +16,10 @@ const page = () => {
   const [feedbacks, setFeedbacks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { setMessage, clearMessage } = useAlertStore((state) => state);
+  const router = useRouter();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchFeedbacks = async () => {
       setLoading(true);
       setError(null);
@@ -47,14 +53,41 @@ const page = () => {
     }
   };
 
+  const handleAnalyzeFeedback = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await apiFetch('/api/feedbacks/analyze-sentiment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
+        console.log(data);
+        setMessage('Feedbacks analyzed successfully.');
+        setTimeout(() => {
+          clearMessage();
+          router.push('/feedback/feedbacks');
+        }, 3000);
+      }
+    } catch (err: any) {
+      setError('Server error. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className='inter flex flex-col gap-6'>
-      <div className='flex justify-between'>
+      <div className='flex max-md:flex-col gap-2 justify-between'>
         <div>
           <h1 className='x2l font-semibold'>Feedbacks</h1>
           <p className='text-black/60 base'>Review and manage feedbacks submitted to your organisation</p>
         </div>
-        <div>
+        <div className='flex items-center gap-2'>
           <button
             className='flex bg-primary/10 items-center gap-2 hover:bg-primary/20 p-2 rounded-sm hover:text-black transition duration-300 cursor-pointer base'
             onClick={handleCopy}
@@ -63,6 +96,9 @@ const page = () => {
             <BiCopy className='' />
             <span className='sm'>{copied ? 'Copied' : 'Organisation link'}</span>
           </button>
+          {!feedbacks.every((feedback) => feedback.sentiment) &&
+            <SecondaryButton icon={<PiFlask />} text='Analyze feedback' styles='p-2 base rounded-lg' onClick={handleAnalyzeFeedback} />
+          }
         </div>
       </div>
       {loading ? (

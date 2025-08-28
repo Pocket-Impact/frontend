@@ -1,6 +1,7 @@
 "use client"
 import Link from 'next/link';
 import React from 'react'
+import { formatDistanceToNow } from 'date-fns';
 
 const RecentFeedback = ({ recentFeedbacks }: { recentFeedbacks: any[] }) => {
   return (
@@ -17,11 +18,21 @@ const RecentFeedback = ({ recentFeedbacks }: { recentFeedbacks: any[] }) => {
             <div className='flex items-center gap-2'>
               <div className='flex flex-col'>
                 <span className='sm'>{feedback.message}</span>
-                <span className='xs text-black/60 '>{feedback.date ? new Date(feedback.date).toLocaleString() : ''}</span>
+                <span className='xs text-black/60 '>
+                  {feedback.date ? (formatDistanceToNow(new Date(feedback.date), { addSuffix: true })).charAt(0).toUpperCase() + (formatDistanceToNow(new Date(feedback.date), { addSuffix: true })).slice(1) : ''}
+                </span>
               </div>
             </div>
-            <div className={`bg-lime-100 p-1 px-1.5 mr-1 text-lime-500 w-max xs`}>
-              {feedback.sentiment}
+            <div
+              className={`
+                        ${!feedback.sentiment ? "bg-gray-100" : ""}
+                        ${feedback.sentiment && feedback.sentiment.toLowerCase() === 'positive' ? "bg-lime-200/70 text-lime-500" : ""}
+                        ${feedback.sentiment && feedback.sentiment.toLowerCase() === 'negative' ? "bg-orange-200/70 text-orange-500" : ""}
+                        ${feedback.sentiment && feedback.sentiment.toLowerCase() === 'neutral' ? "bg-yellow-200/70 text-yellow-500" : ""}
+                        xs px-1.5 p-1 rounded-sm font-semibold flex items-center gap-1 capitalize
+                    `}
+            >
+              <span>{feedback.sentiment || 'Not analyzed'}</span>
             </div>
           </div>
         ))}

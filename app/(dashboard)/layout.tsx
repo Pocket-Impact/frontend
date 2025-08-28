@@ -56,7 +56,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     if (!token) {
         redirect("/auth/signin");
     }
-    console.log(token);
 
     return (
         <html lang="en">

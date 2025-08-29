@@ -70,7 +70,7 @@ const renderActiveShape = ({
             />
             <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
             <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`PV ${(value !== undefined ? value.toString().padStart(2, '0') : '00')}`}</text>
+            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`PV ${(value !== undefined ? value?.toString().padStart(2, '0') : '00')}`}</text>
             <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
                 {`(${((percent ?? 1) * 100).toFixed(1)}%)`}
             </text>
@@ -99,14 +99,14 @@ const SentimentOverview = ({ sentimentAnalysis, analytics }: { sentimentAnalysis
                         <span className='xs border-l-3 border-green text-black/60 px-2'>Positive</span>
                         <div className='flex items-center gap-2'>
                             <VscFeedback className='w-4 text-black/70 max-lg:w-3.5  max-md:w-3 h-auto' />
-                            <span className='lg font-semibold'>{(sentimentAnalysis.find(entry => entry.name === 'Positive')?.value).toString().padStart(2, '0')}</span>
+                            <span className='lg font-semibold'>{(sentimentAnalysis.find(entry => entry.name === 'Positive')?.value || 0)?.toString().padStart(2, '0')}</span>
                         </div>
                     </div>
                     <div className='flex flex-col gap-1 relative min-h-6'>
                         <span className='xs border-l-3 border-red text-black/60 px-2'>Negative</span>
                         <div className='flex items-center gap-2'>
                             <VscFeedback className='w-4 text-black/70 max-lg:w-3.5  max-md:w-3 h-auto' />
-                            <span className='lg font-semibold'>{(sentimentAnalysis.find(entry => entry.name === 'Negative')?.value).toString().padStart(2, '0')}</span>
+                            <span className='lg font-semibold'>{(sentimentAnalysis.find(entry => entry.name === 'Negative')?.value || 0)?.toString().padStart(2, '0')}</span>
                         </div>
                     </div>
                     <div className='flex flex-col gap-1 relative min-h-6'>
@@ -117,24 +117,30 @@ const SentimentOverview = ({ sentimentAnalysis, analytics }: { sentimentAnalysis
                         </div>
                     </div>
                 </div>
-                <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                        <Pie
-                            activeShape={renderActiveShape}
-                            data={sentimentAnalysis}
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={60}
-                            outerRadius={100}
-                            fill="#8884d8"
-                            dataKey="value"
-                        >
-                            {sentimentAnalysis?.map((entry) => (
-                                <Cell key={`cell-${entry.name}`} fill={entry.color} />
-                            ))}
-                        </Pie>
-                    </PieChart>
-                </ResponsiveContainer>
+                {sentimentAnalysis.length > 0 ? (
+                    <ResponsiveContainer width="100%" height={300}>
+                        <PieChart>
+                            <Pie
+                                activeShape={renderActiveShape}
+                                data={sentimentAnalysis}
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={60}
+                                outerRadius={100}
+                                fill="#8884d8"
+                                dataKey="value"
+                            >
+                                {sentimentAnalysis?.map((entry) => (
+                                    <Cell key={`cell-${entry.name}`} fill={entry.color} />
+                                ))}
+                            </Pie>
+                        </PieChart>
+                    </ResponsiveContainer>
+                ) : (
+                    <div className="flex items-center justify-center h-full">
+                        <p className="text-black/60">No sentiment data available</p>
+                    </div>
+                )}
             </div>
         </div>
     );

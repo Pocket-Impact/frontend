@@ -11,7 +11,6 @@ const OverviewGrid = ({ dashboard }: { dashboard: any }) => {
     const overviewCards = [
         {
             value: dashboard?.totals?.surveys?.toString().padStart(2, '0'),
-            increase: 40,
             title: "Total Surveys",
             subtitle: "All surveys",
             desc: "Create a new survey",
@@ -21,7 +20,6 @@ const OverviewGrid = ({ dashboard }: { dashboard: any }) => {
         },
         {
             value: dashboard?.totals?.feedbacks?.toString().padStart(2, '0'),
-            increase: 50,
             title: "Total Feedback",
             subtitle: "All feedbacks",
             link: "/feedback/feedbacks",
@@ -31,7 +29,6 @@ const OverviewGrid = ({ dashboard }: { dashboard: any }) => {
         },
         {
             value: dashboard?.totals?.responses?.toString().padStart(2, '0'),
-            increase: 23.8,
             title: "Responses",
             subtitle: "All responses",
             desc: "View surveys",

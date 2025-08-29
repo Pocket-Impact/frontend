@@ -36,9 +36,16 @@ const RecentFeedback = ({ recentFeedbacks, analytics }: { recentFeedbacks: any[]
             </div>
           </div>
         ))}
-        <Link href='/feedback/feedbacks' className='p-2.5 flex justify-center rounded-sm border border-stroke hover:bg-cblack cursor-pointer hover:text-white duration-300 items-center'>
-          <span className='sm'>View all</span>
-        </Link>
+        {recentFeedbacks.length === 0 && (
+          <div className='p-2 rounded-sm border border-stroke cursor-default flex justify-center items-center'>
+            <span className='sm text-black/60'>No recent feedback available</span>
+          </div>
+        )}
+        {recentFeedbacks.length > 0 && (
+          <Link href='/feedback/feedbacks' className='p-2.5 flex justify-center rounded-sm border border-stroke hover:bg-cblack cursor-pointer hover:text-white duration-300 items-center'>
+            <span className='sm'>View all</span>
+          </Link>
+        )}
       </div>
     </div>
   );

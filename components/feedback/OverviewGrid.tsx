@@ -31,8 +31,9 @@ const OverviewGrid = ({ dashboard }: { dashboard: any }) => {
             value: dashboard?.totals?.responses?.toString().padStart(2, '0'),
             title: "Responses",
             subtitle: "All responses",
-            desc: "Add survey",
-            secondaryIcon: <IoAdd />,
+            desc: "View surveys",
+            link: "/feedback/surveys",
+            secondaryIcon: <HiOutlineEye />,
             icon: RiSurveyLine,
         },
     ];

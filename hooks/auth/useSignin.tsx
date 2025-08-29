@@ -58,6 +58,7 @@ const useSignin = () => {
             }, 3000);
 
             setIsLoading(false);
+            console.log(json);
             if (json.data.user.isVerified) {
                 setErrors({ email: "", password: "" });
                 router.push('/feedback/dashboard');
@@ -65,6 +66,7 @@ const useSignin = () => {
                 router.push('/auth/verify-otp');
             }
         } catch (error) {
+            console.log(error)
             setErrors({ email: "Network error", password: "" });
             setIsLoading(false);
         }

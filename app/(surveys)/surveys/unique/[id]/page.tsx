@@ -106,7 +106,7 @@ const FeedbackForm = () => {
     return (
         <div className="max-w-xl w-full bg-white scrolly h-full max-md:h-screen overflow-y-scroll border-stroke border p-6 inter flex flex-col items-start">
             <div className="flex justify-between">
-                <h3 className="x5l font-bold mb-8 text-primary">Survey Form</h3>
+                <h3 className="x2l font-bold mb-8 text-primary">Survey Form</h3>
             </div>
             {error && <div className="text-red-500 mt-2">{error}</div>}
             <h4 className="xl font-bold">{survey?.title}</h4>

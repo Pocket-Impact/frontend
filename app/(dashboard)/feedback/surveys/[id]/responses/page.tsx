@@ -30,6 +30,7 @@ const Page = () => {
             const res = await apiFetch(`/api/responses/survey/${id}`);
             if (res.ok) {
                 const data = await res.json();
+                console.log(data);
                 setResponses(data.data);
                 setLoading(false);
             } else {

@@ -67,7 +67,7 @@ const page = () => {
                 if (!res.ok || data.status !== 'success') {
                     setError(data.message || 'Could not fetch users.');
                 } else {
-                    setUsers(data.data.users.slice(0, 7));
+                    setUsers(data.data.users);
                 }
             } catch (err: any) {
                 setError('Server error. Please try again later.');
@@ -87,8 +87,9 @@ const page = () => {
                 </div>
                 <PrimaryButton
                     text={showForm ? 'Close' : 'Add user'}
+                    textStyles='line-clamp-1'
                     styles='p-3 effect base rounded-lg w-max'
-                    icon={<IoAdd className={`${showForm ? 'rotate-45' : ''} duration-300 transition w-5 h-auto`} />}
+                    icon={<IoAdd className={`${showForm ? 'rotate-45' : ''} duration-300 transition w-5 max-lg:w-4 h-auto`} />}
                     onClick={() => setShowForm(!showForm)}
                 />
             </div>

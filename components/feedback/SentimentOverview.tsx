@@ -2,8 +2,8 @@ import React from 'react';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 const chartData = [
-    { name: 'Positive', value: 2, color: '#7ccf00' },
-    { name: 'Negative', value: 3, color: '#ff6900' },
+    { name: 'Positive', value: 2, color: '#00FF00' },
+    { name: 'Negative', value: 3, color: '#FF0000' },
     { name: 'Neutral', value: 6, color: '#efb100' },
 ];
 

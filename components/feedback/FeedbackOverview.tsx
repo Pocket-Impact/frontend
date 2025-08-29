@@ -56,12 +56,11 @@ const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
                 </div>
                 <div>
                     <div className='flex flex-col items-end gap-1'>
-                        <div className={`${isDecline ? 'bg-orange-500' : 'bg-lime-100'} text-${isDecline ? 'red' : 'lime'}-500 xs w-max px-1.5 p-1 rounded-sm flex items-center gap-1`}>
-                            <span>{diff > 0 ? `+${diff}` : diff}</span>
+                        <div className={`${isDecline ? 'bg-orange-100' : 'bg-lime-100'} text-${isDecline ? 'red' : 'lime'}-500 xs w-max px-1.5 p-1 rounded-sm flex items-center gap-1`}>
+                            <span>{percentChange > 0 ? `+ ${percentChange.toFixed(1)}%` : `${percentChange.toFixed(1)}%`}</span>
                             <MdOutlineArrowOutward className={`text-${isDecline ? 'red' : 'lime'}-600 ${isDecline ? 'rotate-90' : '-rotate-90'}`} />
                         </div>
-                        <span className='xs'> {diff > 0 ? `+${diff}` : diff} today</span>
-                    </div>
+                        <span className='xs'> {diff > 0 ? `+ ${diff}` : diff} today</span>                    </div>
                 </div>
             </div>
             <div className="w-full h-full min-h-[300px]">

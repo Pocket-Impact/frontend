@@ -4,7 +4,7 @@ import { IoMdCheckmark } from 'react-icons/io'
 const Tool = ({ tool, index }: any) => {
     return (
         <div key={tool.name} className='flex gap-20 max-lg:gap-10 max-w-6xl max-md:flex-col w-full items-center justify-center'>
-            <div className={`bg-primary/7 ${index % 2 == 0 ? "bg-primary/20" : "lg:order-1 bg-secondary/20"}  min-h-[400px] lg:min-w-[400px] w-full rounded-3xl`}>
+            <div className={`bg-primary/7 ${index % 2 == 0 ? "bg-primary/40" : "lg:order-1 bg-secondary/50"}  min-h-[400px] lg:min-w-[400px] w-full rounded-3xl`}>
                 <span className='opacity-0'>a</span>
             </div>
             <div className='w-full'>

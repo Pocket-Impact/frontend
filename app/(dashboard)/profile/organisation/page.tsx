@@ -94,7 +94,7 @@ const page = () => {
                     <p className='text-black/60 base'>Manage organisation</p>
                 </div>
                 <div>
-                    <PrimaryButton onClick={handleClick} text='Log out' styles='p-3 effect rounded-lg' icon={<LuLogOut className='rotate-180' />} />
+                    <PrimaryButton onClick={handleClick} text='Log out' styles='p-3 effect base rounded-lg' icon={<LuLogOut className='rotate-180' />} />
                 </div>
             </div>
             <div className='grid h-[400px] gap-6 lg:grid-cols-5'>

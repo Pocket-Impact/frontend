@@ -2,9 +2,14 @@
 
 @theme {
   --color-background: #fcfcf8;
-  --color-clear: #f2fcf4;
+  --color-clear: #f0efdf;
   --color-primary: #0A400C;
   --color-secondary: #FED16A;
+  --color-tertiary: #848452;
+  --color-green: #47b89b;
+  --color-light-green: #dff4f1;
+  --color-red: #d25871;
+  --color-light-red: #feebef;
   --color-cblack: #191C1F;
   --color-error: #FFEDD4;
   --color-stroke: #CCCCCC;

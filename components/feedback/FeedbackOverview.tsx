@@ -1,11 +1,11 @@
-"use client"
 import React from 'react'
 import { MdOutlineArrowOutward } from 'react-icons/md';
+import { VscFeedback } from 'react-icons/vsc';
 
 import {
     ResponsiveContainer,
-    AreaChart,
-    Area,
+    BarChart,
+    Bar,
     XAxis,
     Tooltip,
     CartesianGrid,
@@ -46,17 +46,19 @@ const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
     const isDecline = diff < 0;
 
     return (
-        <div className='bg-white border row-span-2 lg:col-span-2 flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 rounded-lg'>
+        <div className='bg-white border lg:col-span-2 flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 rounded-lg'>
             <div className='flex items-start justify-between'>
-                <div className='flex flex-col'>
-                    <h2 className='lg font-semibold'>
+                <div className='flex items-center gap-2'>
+                    <div className='rounded-sm bg-gray-200 p-1.5'>
+                        <VscFeedback className='w-4 max-lg:w-3.5  max-md:w-3 h-auto' />
+                    </div>
+                    <h2 className='base font-semibold'>
                         Feedback Overview
                     </h2>
-                    <p className='sm -mt-1 text-black/60'>Feedback trend</p>
                 </div>
                 <div>
                     <div className='flex flex-col items-end gap-1'>
-                        <div className={`${isDecline ? 'bg-orange-100' : 'bg-lime-100'} text-${isDecline ? 'red' : 'lime'}-500 xs w-max px-1.5 p-1 rounded-sm flex items-center gap-1`}>
+                        <div className={`${isDecline ? 'bg-light-red' : 'bg-light-green'} ${isDecline ? 'text-[#d25871]' : 'text-green'} xs w-max px-1.5 p-1 rounded-lg flex items-center gap-1`}>
                             <span>{percentChange > 0 ? `+ ${percentChange.toFixed(1)}%` : `${percentChange.toFixed(1)}%`}</span>
                             <MdOutlineArrowOutward className={`text-${isDecline ? 'red' : 'lime'}-600 ${isDecline ? 'rotate-90' : '-rotate-90'}`} />
                         </div>
@@ -65,7 +67,13 @@ const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
             </div>
             <div className="w-full h-full min-h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={dailyFeedbacks}>
+                    <BarChart data={dailyFeedbacks}>
+                        <defs>
+                            <linearGradient id="primaryBarGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor="#0A400C" stopOpacity={0.8} />
+                                <stop offset="100%" stopColor="#0A400C" stopOpacity={0.6} />
+                            </linearGradient>
+                        </defs>
                         <XAxis
                             dataKey="day"
                             axisLine={{ stroke: '#191C1F' }}
@@ -79,16 +87,13 @@ const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
                             tick={{ fill: '#0A400C' }}
                         />
                         <Tooltip cursor={{ fill: 'rgba(10, 64, 12, 0.1)' }} />
-                        <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                        <Area
-                            type="monotone"
+                        <Bar
                             dataKey="Feedbacks"
-                            stroke="#212121"
-                            fill="#AAAAAA"
-                            strokeWidth={2}
+                            fill="url(#primaryBarGradient)"
+                            radius={[6, 6, 0, 0]}
                             isAnimationActive={true}
                         />
-                    </AreaChart>
+                    </BarChart>
                 </ResponsiveContainer>
             </div>
         </div>

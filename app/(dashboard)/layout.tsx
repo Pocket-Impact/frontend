@@ -59,7 +59,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
     return (
         <html lang="en">
-            <body className={`${bricolageGrotesque.variable} overflow-hidden bg-white h-screen ${inter.variable} antialiased flex`}>
+            <body className={`${bricolageGrotesque.variable} overflow-hidden bg-gray-50 h-screen ${inter.variable} antialiased flex`}>
                 <AlertComponent />
                 <div className="flex w-full h-screen">
                     <Sidebar />

@@ -1,4 +1,5 @@
 import { apiFetch } from '@/utils/apiFetch';
+import Link from 'next/link';
 import React from 'react'
 import { MdOutlineManageAccounts } from 'react-icons/md'
 
@@ -36,10 +37,10 @@ const UserDetails = () => {
                     <h3 className='font-semibold lg'>Users</h3>
                     <h3 className='text-black/60 sm'>View and edit organisation users</h3>
                 </div>
-                <button className='flex hover:border-stroke border border-white transition duration-300 cursor-pointer p-1 rounded-[3px] pr-2 items-center gap-2'>
+                <Link href='/profile/organisation/users' prefetch className='flex hover:border-stroke border border-white transition duration-300 cursor-pointer p-1 rounded-[3px] pr-2 items-center gap-2'>
                     <MdOutlineManageAccounts />
                     <span className='sm'>Manage users</span>
-                </button>
+                </Link>
             </div>
             <div>
                 <table className='w-full'>

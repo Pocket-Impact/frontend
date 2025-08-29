@@ -91,7 +91,7 @@ const page = () => {
             <div className='flex justify-between items-center'>
                 <div>
                     <h1 className='x2l font-semibold'>Organisation profile</h1>
-                    <p className='text-black/60 base'>Manage organisation.</p>
+                    <p className='text-black/60 base'>Manage organisation</p>
                 </div>
                 <div>
                     <PrimaryButton onClick={handleClick} text='Log out' styles='p-3 effect rounded-lg' icon={<LuLogOut className='rotate-180' />} />

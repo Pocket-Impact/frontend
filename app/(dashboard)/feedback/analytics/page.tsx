@@ -1,13 +1,68 @@
 "use client"
+import FeedbackOverview from '@/components/feedback/FeedbackOverview'
 import InfoGrid from '@/components/feedback/InfoGrid'
 import OverviewGrid from '@/components/feedback/OverviewGrid'
+import RecentFeedback from '@/components/feedback/RecentFeedback'
+import SentimentOverview from '@/components/feedback/SentimentOverview'
+import OverviewCard from '@/components/feedback/surveys/OverviewCard'
+import TopicAnalysis from '@/components/feedback/TopicAnalysis'
+import TopicOverview from '@/components/feedback/TopicOverview'
 import { apiFetch } from '@/utils/apiFetch'
 import React, { useEffect, useState } from 'react'
+import { HiOutlineEye } from 'react-icons/hi2'
+import { IoAdd } from 'react-icons/io5'
+import { RiSurveyLine } from 'react-icons/ri'
+import { VscFeedback } from 'react-icons/vsc'
 
 const page = () => {
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const overviewCards = [
+    {
+      value: dashboardData?.totals?.surveys?.toString().padStart(2, '0'),
+      increase: 80,
+      title: "Total Surveys",
+      subtitle: "All surveys",
+      desc: "Create a new survey",
+      link: "/feedback/surveys/new",
+      secondaryIcon: <IoAdd />,
+      icon: RiSurveyLine,
+    },
+    {
+      value: dashboardData?.totals?.feedbacks?.toString().padStart(2, '0'),
+      increase: 60,
+      title: "Total Feedback",
+      subtitle: "All feedbacks",
+      link: "/feedback/feedbacks",
+      desc: "View feedbacks",
+      secondaryIcon: <HiOutlineEye />,
+      icon: VscFeedback,
+    },
+    {
+      value: dashboardData?.totals?.responses?.toString().padStart(2, '0'),
+      increase: 20,
+      title: "Responses",
+      subtitle: "All responses",
+      desc: "View surveys",
+      link: "/feedback/surveys",
+      secondaryIcon: <HiOutlineEye />,
+      icon: RiSurveyLine,
+    },
+    {
+      value: (40).toFixed(2),
+      increase: 30,
+      percent: true,
+      title: "Positive sentiment",
+      subtitle: "All responses",
+      desc: "View surveys",
+      link: "/feedback/surveys",
+      secondaryIcon: <HiOutlineEye />,
+      icon: RiSurveyLine,
+    },
+  ];
+
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -37,7 +92,6 @@ const page = () => {
         <div className='flex items-start justify-between max-md:flex-col gap-4'>
           <div className=''>
             <h1 className='x2l font-semibold'>Analytics</h1>
-            <p className='text-black/60 base'>Welcome to the dashboard of your organisation.</p>
           </div>
           <div>
             <form action="" className='flex base items-center gap-3'>
@@ -54,8 +108,20 @@ const page = () => {
             <div className='text-red-500 mb-4 bg-red-100 w-full p-2 border-2 border-red-400'>{error}</div>
           ) : dashboardData ? (
             <>
-              <OverviewGrid dashboard={dashboardData} />
-              <InfoGrid dashboard={dashboardData} />
+              <div className='grid gap-6 max-lg:gap-2.5 max-md:gap-2 grid-cols-4 max-lg:grid-cols-1'>
+                {overviewCards.map((card, index) => (
+                  <OverviewCard analysis={true} key={index} card={card} index={index} />
+                ))}
+              </div >
+              <div className='grid lg:grid-cols-5 max-lg:grid-cols-1 gap-6 max-lg:gap-2.5 max-md:gap-2 max-md:grid-cols-1 min-h-0 flex-1'>
+                <TopicAnalysis />
+                <SentimentOverview analytics={true} sentimentAnalysis={dashboardData?.sentimentAnalysis} />
+                <div className='lg:col-span-5 grid lg:grid-cols-3 lg:gap-6'>
+                  <FeedbackOverview analytics={true} dailyFeedbacks={dashboardData?.dailyFeedbacks} />
+                  <TopicOverview topTopics={dashboardData?.topTopics} />
+                  <RecentFeedback analytics={true} recentFeedbacks={dashboardData?.recentFeedbacks} />
+                </div>
+              </div>
             </>
           ) : null}
         </div>

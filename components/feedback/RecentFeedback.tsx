@@ -3,9 +3,9 @@ import Link from 'next/link';
 import React from 'react'
 import { formatDistanceToNow } from 'date-fns';
 
-const RecentFeedback = ({ recentFeedbacks }: { recentFeedbacks: any[] }) => {
+const RecentFeedback = ({ recentFeedbacks, analytics }: { recentFeedbacks: any[], analytics?: boolean }) => {
   return (
-    <div className='bg-white border-stroke flex flex-col gap-2 border p4 rounded-lg lg:col-span-3 min-h-0 flex-1'>
+    <div className={`bg-white border-stroke flex flex-col ${analytics ? 'col-span-3' : 'col-span-2'} gap-2 border p4 rounded-lg min-h-0 flex-1`}>
       <div className='flex flex-col'>
         <h2 className='lg font-semibold'>
           Recent Feedback
@@ -13,11 +13,11 @@ const RecentFeedback = ({ recentFeedbacks }: { recentFeedbacks: any[] }) => {
         <p className='sm -mt-1 text-black/60'>Most recent feedback received</p>
       </div>
       <div className='flex flex-col gap-2'>
-        {recentFeedbacks?.map((feedback, index) => (
+        {recentFeedbacks?.slice(0, 5).map((feedback, index) => (
           <div key={index} className='p-2 rounded-sm border border-stroke cursor-default flex justify-between items-center'>
             <div className='flex items-center gap-2'>
               <div className='flex flex-col'>
-                <span className='sm'>{feedback.message}</span>
+                <span className='sm line-clamp-1'>{feedback.message}</span>
                 <span className='xs text-black/60 '>
                   {feedback.date ? (formatDistanceToNow(new Date(feedback.date), { addSuffix: true })).charAt(0).toUpperCase() + (formatDistanceToNow(new Date(feedback.date), { addSuffix: true })).slice(1) : ''}
                 </span>

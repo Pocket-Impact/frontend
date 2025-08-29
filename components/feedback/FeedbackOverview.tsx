@@ -1,15 +1,16 @@
-"use client"
 import React from 'react'
 import { MdOutlineArrowOutward } from 'react-icons/md';
 
 import {
     ResponsiveContainer,
-    AreaChart,
-    Area,
+    BarChart,
+    Bar,
     XAxis,
     Tooltip,
     CartesianGrid,
-    YAxis
+    YAxis,
+    Area,
+    AreaChart
 } from 'recharts';
 
 const data = [
@@ -24,7 +25,7 @@ const data = [
     { day: "Sun", Feedbacks: 1 },
 ];
 
-const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
+const FeedbackOverview = ({ dailyFeedbacks, analytics }: { dailyFeedbacks: any[], analytics?: boolean }) => {
     // Use /api/dashboard format: dailyFeedbacks is array of { day, Feedbacks }
     let percentChange = 0;
     let todayCount = 0;
@@ -46,7 +47,7 @@ const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
     const isDecline = diff < 0;
 
     return (
-        <div className='bg-white border row-span-2 lg:col-span-2 flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 rounded-lg'>
+        <div className={`bg-white border ${analytics ? 'lg:col-span-2' : 'lg:col-span-2'} flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 rounded-lg`}>
             <div className='flex items-start justify-between'>
                 <div className='flex flex-col'>
                     <h2 className='lg font-semibold'>
@@ -56,7 +57,7 @@ const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
                 </div>
                 <div>
                     <div className='flex flex-col items-end gap-1'>
-                        <div className={`${isDecline ? 'bg-orange-100' : 'bg-lime-100'} text-${isDecline ? 'red' : 'lime'}-500 xs w-max px-1.5 p-1 rounded-sm flex items-center gap-1`}>
+                        <div className={`${isDecline ? 'bg-light-red' : 'bg-light-green'} ${isDecline ? 'text-[#d25871]' : 'text-green'} xs w-max px-1.5 p-1 rounded-lg flex items-center gap-1`}>
                             <span>{percentChange > 0 ? `+ ${percentChange.toFixed(1)}%` : `${percentChange.toFixed(1)}%`}</span>
                             <MdOutlineArrowOutward className={`text-${isDecline ? 'red' : 'lime'}-600 ${isDecline ? 'rotate-90' : '-rotate-90'}`} />
                         </div>
@@ -65,30 +66,60 @@ const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
             </div>
             <div className="w-full h-full min-h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={dailyFeedbacks}>
-                        <XAxis
-                            dataKey="day"
-                            axisLine={{ stroke: '#191C1F' }}
-                            tickLine={false}
-                            tick={{ fill: '#0A400C' }}
-                        />
-                        <YAxis
-                            dataKey="Feedbacks"
-                            axisLine={{ stroke: '#191C1F' }}
-                            tickLine={false}
-                            tick={{ fill: '#0A400C' }}
-                        />
-                        <Tooltip cursor={{ fill: 'rgba(10, 64, 12, 0.1)' }} />
-                        <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                        <Area
-                            type="monotone"
-                            dataKey="Feedbacks"
-                            stroke="#212121"
-                            fill="#AAAAAA"
-                            strokeWidth={2}
-                            isAnimationActive={true}
-                        />
-                    </AreaChart>
+                    {analytics ? (
+                        <AreaChart data={dailyFeedbacks}>
+                            <XAxis
+                                dataKey="day"
+                                axisLine={{ stroke: '#191C1F' }}
+                                tickLine={false}
+                                tick={{ fill: '#0A400C' }}
+                            />
+                            <YAxis
+                                dataKey="Feedbacks"
+                                axisLine={{ stroke: '#191C1F' }}
+                                tickLine={false}
+                                tick={{ fill: '#0A400C' }}
+                            />
+                            <Tooltip cursor={{ fill: 'rgba(10, 64, 12, 0.1)' }} />
+                            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                            <Area
+                                type="monotone"
+                                dataKey="Feedbacks"
+                                stroke="#212121"
+                                fill="#AAAAAA"
+                                strokeWidth={2}
+                                isAnimationActive={true}
+                            />
+                        </AreaChart>
+                    ) : (
+                        <BarChart data={dailyFeedbacks}>
+                            <defs>
+                                <linearGradient id="primaryBarGradient" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#0A400C" stopOpacity={0.8} />
+                                    <stop offset="100%" stopColor="#0A400C" stopOpacity={0.6} />
+                                </linearGradient>
+                            </defs>
+                            <XAxis
+                                dataKey="day"
+                                axisLine={{ stroke: '#191C1F' }}
+                                tickLine={false}
+                                tick={{ fill: '#0A400C' }}
+                            />
+                            <YAxis
+                                dataKey="Feedbacks"
+                                axisLine={{ stroke: '#191C1F' }}
+                                tickLine={false}
+                                tick={{ fill: '#0A400C' }}
+                            />
+                            <Tooltip cursor={{ fill: 'rgba(10, 64, 12, 0.1)' }} />
+                            <Bar
+                                dataKey="Feedbacks"
+                                fill="url(#primaryBarGradient)"
+                                radius={[6, 6, 0, 0]}
+                                isAnimationActive={true}
+                            />
+                        </BarChart>
+                    )}
                 </ResponsiveContainer>
             </div>
         </div>

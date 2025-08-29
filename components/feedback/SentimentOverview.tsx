@@ -94,47 +94,53 @@ const SentimentOverview = ({ sentimentAnalysis, analytics }: { sentimentAnalysis
                 <p className='sm -mt-1 text-black/60'>Feedback sentiment analysis</p>
             </div>
             <div className="w-full h-full flex flex-col items-center">
-                <div className='flex items-center px-2 justify-between w-full my-4 gap-2'>
-                    <div className='flex flex-col gap-1 relative min-h-6'>
-                        <span className='xs border-l-3 border-green text-black/60 px-2'>Positive</span>
-                        <div className='flex items-center gap-2'>
-                            <VscFeedback className='w-4 text-black/70 max-lg:w-3.5  max-md:w-3 h-auto' />
-                            <span className='lg font-semibold'>{(sentimentAnalysis.find(entry => entry.name === 'Positive')?.value).toString().padStart(2, '0')}</span>
+                {sentimentAnalysis.length > 0 ? (
+                    <>
+                        <div className='flex items-center px-2 justify-between w-full my-4 gap-2'>
+                            <div className='flex flex-col gap-1 relative min-h-6'>
+                                <span className='xs border-l-3 border-green text-black/60 px-2'>Positive</span>
+                                <div className='flex items-center gap-2'>
+                                    <VscFeedback className='w-4 text-black/70 max-lg:w-3.5  max-md:w-3 h-auto' />
+                                    <span className='lg font-semibold'>{(sentimentAnalysis.find(entry => entry.name === 'Positive')?.value)?.toString().padStart(2, '0')}</span>
+                                </div>
+                            </div>
+                            <div className='flex flex-col gap-1 relative min-h-6'>
+                                <span className='xs border-l-3 border-red text-black/60 px-2'>Negative</span>
+                                <div className='flex items-center gap-2'>
+                                    <VscFeedback className='w-4 text-black/70 max-lg:w-3.5  max-md:w-3 h-auto' />
+                                    <span className='lg font-semibold'>{(sentimentAnalysis.find(entry => entry.name === 'Negative')?.value)?.toString().padStart(2, '0')}</span>
+                                </div>
+                            </div>
+                            <div className='flex flex-col gap-1 relative min-h-6'>
+                                <span className='xs border-l-3 border-yellow-600 text-black/60 px-2'>Neutral</span>
+                                <div className='flex items-center gap-2'>
+                                    <VscFeedback className='w-4 text-black/70 max-lg:w-3.5  max-md:w-3 h-auto' />
+                                    <span className='lg font-semibold'>{(0).toString().padStart(2, '0')}</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className='flex flex-col gap-1 relative min-h-6'>
-                        <span className='xs border-l-3 border-red text-black/60 px-2'>Negative</span>
-                        <div className='flex items-center gap-2'>
-                            <VscFeedback className='w-4 text-black/70 max-lg:w-3.5  max-md:w-3 h-auto' />
-                            <span className='lg font-semibold'>{(sentimentAnalysis.find(entry => entry.name === 'Negative')?.value).toString().padStart(2, '0')}</span>
-                        </div>
-                    </div>
-                    <div className='flex flex-col gap-1 relative min-h-6'>
-                        <span className='xs border-l-3 border-yellow-600 text-black/60 px-2'>Neutral</span>
-                        <div className='flex items-center gap-2'>
-                            <VscFeedback className='w-4 text-black/70 max-lg:w-3.5  max-md:w-3 h-auto' />
-                            <span className='lg font-semibold'>{(0).toString().padStart(2, '0')}</span>
-                        </div>
-                    </div>
-                </div>
-                <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                        <Pie
-                            activeShape={renderActiveShape}
-                            data={sentimentAnalysis}
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={60}
-                            outerRadius={100}
-                            fill="#8884d8"
-                            dataKey="value"
-                        >
-                            {sentimentAnalysis?.map((entry) => (
-                                <Cell key={`cell-${entry.name}`} fill={entry.color} />
-                            ))}
-                        </Pie>
-                    </PieChart>
-                </ResponsiveContainer>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <PieChart>
+                                <Pie
+                                    activeShape={renderActiveShape}
+                                    data={sentimentAnalysis}
+                                    cx="50%"
+                                    cy="50%"
+                                    innerRadius={60}
+                                    outerRadius={100}
+                                    fill="#8884d8"
+                                    dataKey="value"
+                                >
+                                    {sentimentAnalysis?.map((entry) => (
+                                        <Cell key={`cell-${entry.name}`} fill={entry.color} />
+                                    ))}
+                                </Pie>
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </>
+                ) : (
+                    <div className='w-full h-full mt-4 py-3 bg-black/5 text-black/80 rounded-sm flex items-center justify-center'>No sentimental data available</div>
+                )}
             </div>
         </div>
     );

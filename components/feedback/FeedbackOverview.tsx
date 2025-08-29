@@ -64,64 +64,68 @@ const FeedbackOverview = ({ dailyFeedbacks, analytics }: { dailyFeedbacks: any[]
                         <span className='xs'> {diff > 0 ? `+ ${diff}` : diff} today</span>                    </div>
                 </div>
             </div>
-            <div className="w-full h-full min-h-[300px]">
-                <ResponsiveContainer width="100%" height="100%">
-                    {analytics ? (
-                        <AreaChart data={dailyFeedbacks}>
-                            <XAxis
-                                dataKey="day"
-                                axisLine={{ stroke: '#191C1F' }}
-                                tickLine={false}
-                                tick={{ fill: '#0A400C' }}
-                            />
-                            <YAxis
-                                dataKey="Feedbacks"
-                                axisLine={{ stroke: '#191C1F' }}
-                                tickLine={false}
-                                tick={{ fill: '#0A400C' }}
-                            />
-                            <Tooltip cursor={{ fill: 'rgba(10, 64, 12, 0.1)' }} />
-                            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                            <Area
-                                type="monotone"
-                                dataKey="Feedbacks"
-                                stroke="#212121"
-                                fill="#AAAAAA"
-                                strokeWidth={2}
-                                isAnimationActive={true}
-                            />
-                        </AreaChart>
-                    ) : (
-                        <BarChart data={dailyFeedbacks}>
-                            <defs>
-                                <linearGradient id="primaryBarGradient" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stopColor="#0A400C" stopOpacity={0.8} />
-                                    <stop offset="100%" stopColor="#0A400C" stopOpacity={0.6} />
-                                </linearGradient>
-                            </defs>
-                            <XAxis
-                                dataKey="day"
-                                axisLine={{ stroke: '#191C1F' }}
-                                tickLine={false}
-                                tick={{ fill: '#0A400C' }}
-                            />
-                            <YAxis
-                                dataKey="Feedbacks"
-                                axisLine={{ stroke: '#191C1F' }}
-                                tickLine={false}
-                                tick={{ fill: '#0A400C' }}
-                            />
-                            <Tooltip cursor={{ fill: 'rgba(10, 64, 12, 0.1)' }} />
-                            <Bar
-                                dataKey="Feedbacks"
-                                fill="url(#primaryBarGradient)"
-                                radius={[6, 6, 0, 0]}
-                                isAnimationActive={true}
-                            />
-                        </BarChart>
-                    )}
-                </ResponsiveContainer>
-            </div>
+            {dailyFeedbacks && dailyFeedbacks.length === 0 ? (
+                <div className="w-full h-full min-h-[300px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                        {analytics ? (
+                            <AreaChart data={dailyFeedbacks}>
+                                <XAxis
+                                    dataKey="day"
+                                    axisLine={{ stroke: '#191C1F' }}
+                                    tickLine={false}
+                                    tick={{ fill: '#0A400C' }}
+                                />
+                                <YAxis
+                                    dataKey="Feedbacks"
+                                    axisLine={{ stroke: '#191C1F' }}
+                                    tickLine={false}
+                                    tick={{ fill: '#0A400C' }}
+                                />
+                                <Tooltip cursor={{ fill: 'rgba(10, 64, 12, 0.1)' }} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                                <Area
+                                    type="monotone"
+                                    dataKey="Feedbacks"
+                                    stroke="#212121"
+                                    fill="#AAAAAA"
+                                    strokeWidth={2}
+                                    isAnimationActive={true}
+                                />
+                            </AreaChart>
+                        ) : (
+                            <BarChart data={dailyFeedbacks}>
+                                <defs>
+                                    <linearGradient id="primaryBarGradient" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#0A400C" stopOpacity={0.8} />
+                                        <stop offset="100%" stopColor="#0A400C" stopOpacity={0.6} />
+                                    </linearGradient>
+                                </defs>
+                                <XAxis
+                                    dataKey="day"
+                                    axisLine={{ stroke: '#191C1F' }}
+                                    tickLine={false}
+                                    tick={{ fill: '#0A400C' }}
+                                />
+                                <YAxis
+                                    dataKey="Feedbacks"
+                                    axisLine={{ stroke: '#191C1F' }}
+                                    tickLine={false}
+                                    tick={{ fill: '#0A400C' }}
+                                />
+                                <Tooltip cursor={{ fill: 'rgba(10, 64, 12, 0.1)' }} />
+                                <Bar
+                                    dataKey="Feedbacks"
+                                    fill="url(#primaryBarGradient)"
+                                    radius={[6, 6, 0, 0]}
+                                    isAnimationActive={true}
+                                />
+                            </BarChart>
+                        )}
+                    </ResponsiveContainer>
+                </div>
+            ) : (
+                <div className='w-full h-full bg-black/5 text-black/80 rounded-lg flex items-center justify-center'>No feedback data available</div>
+            )}
         </div>
     );
 }

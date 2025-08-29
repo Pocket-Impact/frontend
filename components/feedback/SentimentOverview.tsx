@@ -1,8 +1,7 @@
 import React from 'react';
-import { FaRegSmile } from 'react-icons/fa';
-import { MdSentimentSatisfiedAlt } from 'react-icons/md';
 import { VscFeedback } from 'react-icons/vsc';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip, Sector, SectorProps } from 'recharts';
+
 type Coordinate = {
     x: number;
     y: number;
@@ -88,13 +87,11 @@ const chartData = [
 const SentimentOverview = ({ sentimentAnalysis, analytics }: { sentimentAnalysis: any[], analytics?: boolean }) => {
     return (
         <div className={`bg-white border p4 rounded-lg border-stroke flex flex-col min-h-0 flex-1 ${analytics ? 'lg:col-span-2' : ''}`}>
-            <div className='flex items-center gap-2'>
-                <div className='rounded-sm bg-gray-200 p-1.5'>
-                    <FaRegSmile className='w-4 max-lg:w-3.5 text-black/60  max-md:w-3 h-auto' />
-                </div>
-                <h2 className='base font-medium'>
-                    Sentimental Distribution
+            <div className='flex flex-col'>
+                <h2 className='lg font-semibold'>
+                    Sentimental distribution
                 </h2>
+                <p className='sm -mt-1 text-black/60'>Feedback sentiment analysis</p>
             </div>
             <div className="w-full h-full flex flex-col items-center">
                 <div className='flex items-center px-2 justify-between w-full my-4 gap-2'>

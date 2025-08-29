@@ -1,6 +1,4 @@
 import React from 'react'
-import { AiOutlineRise } from 'react-icons/ai'
-import { GoLightBulb } from 'react-icons/go'
 
 const TopicOverview = ({ topTopics }: { topTopics: any[] }) => {
     return (

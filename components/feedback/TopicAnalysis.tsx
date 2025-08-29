@@ -1,6 +1,4 @@
 import React from 'react'
-import { MdOutlineArrowOutward } from 'react-icons/md';
-import { VscFeedback } from 'react-icons/vsc';
 
 import {
     ResponsiveContainer,
@@ -34,13 +32,11 @@ const topicColors = {
 const TopicAnalysis = () => {
     return (
         <div className='bg-white border lg:col-span-3 flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 rounded-lg'>
-            <div className='flex items-center gap-2 mb-2'>
-                <div className='rounded-sm bg-gray-200 p-1.5'>
-                    <VscFeedback className='w-4 max-lg:w-3.5  max-md:w-3 h-auto' />
-                </div>
-                <h2 className='base font-semibold'>
-                    Category Overview
+            <div className='flex flex-col'>
+                <h2 className='lg font-semibold'>
+                    Category
                 </h2>
+                <p className='sm -mt-1 text-black/60'>Mentioned topics in feedback</p>
             </div>
             <div className="w-[calc(100%+36px)] h-full -ml-9.5 min-h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">

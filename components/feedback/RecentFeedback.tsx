@@ -3,9 +3,9 @@ import Link from 'next/link';
 import React from 'react'
 import { formatDistanceToNow } from 'date-fns';
 
-const RecentFeedback = ({ recentFeedbacks }: { recentFeedbacks: any[] }) => {
+const RecentFeedback = ({ recentFeedbacks, analytics }: { recentFeedbacks: any[], analytics?: boolean }) => {
   return (
-    <div className='bg-white border-stroke flex flex-col col-span-2 gap-2 border p4 rounded-lg min-h-0 flex-1'>
+    <div className={`bg-white border-stroke flex flex-col ${analytics ? 'col-span-3' : 'col-span-2'} gap-2 border p4 rounded-lg min-h-0 flex-1`}>
       <div className='flex flex-col'>
         <h2 className='lg font-semibold'>
           Recent Feedback

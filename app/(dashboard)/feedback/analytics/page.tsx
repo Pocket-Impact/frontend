@@ -6,6 +6,7 @@ import RecentFeedback from '@/components/feedback/RecentFeedback'
 import SentimentOverview from '@/components/feedback/SentimentOverview'
 import OverviewCard from '@/components/feedback/surveys/OverviewCard'
 import TopicAnalysis from '@/components/feedback/TopicAnalysis'
+import TopicOverview from '@/components/feedback/TopicOverview'
 import { apiFetch } from '@/utils/apiFetch'
 import React, { useEffect, useState } from 'react'
 import { HiOutlineEye } from 'react-icons/hi2'
@@ -91,7 +92,6 @@ const page = () => {
         <div className='flex items-start justify-between max-md:flex-col gap-4'>
           <div className=''>
             <h1 className='x2l font-semibold'>Analytics</h1>
-            <p className='text-black/60 base'>Welcome to the dashboard of your organisation.</p>
           </div>
           <div>
             <form action="" className='flex base items-center gap-3'>
@@ -118,8 +118,8 @@ const page = () => {
                 <SentimentOverview analytics={true} sentimentAnalysis={dashboardData?.sentimentAnalysis} />
                 <div className='lg:col-span-5 grid lg:grid-cols-3 lg:gap-6'>
                   <FeedbackOverview analytics={true} dailyFeedbacks={dashboardData?.dailyFeedbacks} />
-                  {/* <TopicOverview topTopics={dashboardData?.topTopics} /> */}
-                  <RecentFeedback recentFeedbacks={dashboardData?.recentFeedbacks} />
+                  <TopicOverview topTopics={dashboardData?.topTopics} />
+                  <RecentFeedback analytics={true} recentFeedbacks={dashboardData?.recentFeedbacks} />
                 </div>
               </div>
             </>

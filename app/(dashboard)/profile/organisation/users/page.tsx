@@ -52,6 +52,32 @@ const page = () => {
         }
     };
 
+    const [users, setUsers] = React.useState<any[]>([]);
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [userError, setUsersError] = React.useState<string | null>(null);
+
+    React.useEffect(() => {
+        const fetchUsers = async () => {
+            setIsLoading(true);
+            setError(null);
+            try {
+                const res = await apiFetch('/api/users/all-users')
+                const data = await res.json();
+                console.log(data);
+                if (!res.ok || data.status !== 'success') {
+                    setError(data.message || 'Could not fetch users.');
+                } else {
+                    setUsers(data.data.users.slice(0, 7));
+                }
+            } catch (err: any) {
+                setError('Server error. Please try again later.');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchUsers();
+    }, []);
+
     return (
         <div className='inter flex flex-col gap-6'>
             <div className='flex justify-between items-center'>
@@ -105,6 +131,39 @@ const page = () => {
                     <PrimaryButton text='Submit' isLoading={loading} styles='p-2.5 rounded-sm  flex justify-center' />
                 </form>
             )}
+            <div className='border border-stroke p4 rounded-lg'>
+                <h1 className='xl font-medium mb-4'>Users</h1>
+                <table className='w-full'>
+                    <thead className='bg-black/10'>
+                        <tr>
+                            <th className='font-medium px-3 py-2 sm text-start'>Full name</th>
+                            <th className='font-medium px-3 py-2 sm text-start'>Email</th>
+                            <th className='font-medium px-3 py-2 sm text-start'>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {isLoading ? (
+                            <tr className='animate-pulse'>
+                                <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'><div className='bg-black/20 rounded-sm'><span className='opacity-0'>test</span></div></td>
+                                <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'><div className='bg-black/20 rounded-sm'><span className='opacity-0'>test</span></div></td>
+                                <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'><div className='bg-black/20 rounded-sm'><span className='opacity-0'>test</span></div></td>
+                            </tr>
+                        ) : userError ? (
+                            <tr><td colSpan={3} className='base text-red-500 px-3 py-2'>{error}</td></tr>
+                        ) : users.length === 0 ? (
+                            <tr><td colSpan={3} className='base text-black/60 px-3 py-2'>No users yet.</td></tr>
+                        ) : (
+                            users.map((user, idx) => (
+                                <tr key={user._id || idx}>
+                                    <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'>{user.fullname}</td>
+                                    <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'>{user.email}</td>
+                                    <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'>{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
+                                </tr>
+                            ))
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }

@@ -56,7 +56,7 @@ const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
                 </div>
                 <div>
                     <div className='flex flex-col items-end gap-1'>
-                        <div className={`bg-${isDecline ? 'red' : 'lime'}-100 text-${isDecline ? 'red' : 'lime'}-500 xs w-max px-1.5 p-1 rounded-sm flex items-center gap-1`}>
+                        <div className={`${isDecline ? 'bg-orange-500' : 'bg-lime-100'} text-${isDecline ? 'red' : 'lime'}-500 xs w-max px-1.5 p-1 rounded-sm flex items-center gap-1`}>
                             <span>{diff > 0 ? `+${diff}` : diff}</span>
                             <MdOutlineArrowOutward className={`text-${isDecline ? 'red' : 'lime'}-600 ${isDecline ? 'rotate-90' : '-rotate-90'}`} />
                         </div>

@@ -1,7 +1,34 @@
+import { apiFetch } from '@/utils/apiFetch';
 import React from 'react'
 import { MdOutlineManageAccounts } from 'react-icons/md'
 
 const UserDetails = () => {
+    const [users, setUsers] = React.useState<any[]>([]);
+    const [loading, setLoading] = React.useState(true);
+    const [error, setError] = React.useState<string | null>(null);
+
+    React.useEffect(() => {
+        const fetchUsers = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const res = await apiFetch('/api/users/all-users')
+                const data = await res.json();
+                console.log(data);
+                if (!res.ok || data.status !== 'success') {
+                    setError(data.message || 'Could not fetch users.');
+                } else {
+                    setUsers(data.data.users.slice(0, 7));
+                }
+            } catch (err: any) {
+                setError('Server error. Please try again later.');
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchUsers();
+    }, []);
+
     return (
         <div className='bg-white lg:col-span-3 flex flex-col gap-4 p4 rounded-lg border border-stroke'>
             <div className='flex justify-between items-start'>
@@ -23,12 +50,26 @@ const UserDetails = () => {
                             <th className='font-medium px-3 py-2 sm text-start'>Role</th>
                         </tr>
                     </thead>
-                    <tbody className=''>
-                        <tr>
-                            <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'>Gutabarwa Chlomi Justifié</td>
-                            <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'>gutabarwaa@gmail.com</td>
-                            <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'>Admin</td>
-                        </tr>
+                    <tbody>
+                        {loading ? (
+                            <tr className='animate-pulse'>
+                                <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'><div className='bg-black/20 rounded-sm'><span className='opacity-0'>test</span></div></td>
+                                <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'><div className='bg-black/20 rounded-sm'><span className='opacity-0'>test</span></div></td>
+                                <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'><div className='bg-black/20 rounded-sm'><span className='opacity-0'>test</span></div></td>
+                            </tr>
+                        ) : error ? (
+                            <tr><td colSpan={3} className='base text-red-500 px-3 py-2'>{error}</td></tr>
+                        ) : users.length === 0 ? (
+                            <tr><td colSpan={3} className='base text-black/60 px-3 py-2'>No users yet.</td></tr>
+                        ) : (
+                            users.map((user, idx) => (
+                                <tr key={user._id || idx}>
+                                    <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'>{user.fullname}</td>
+                                    <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'>{user.email}</td>
+                                    <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'>{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>

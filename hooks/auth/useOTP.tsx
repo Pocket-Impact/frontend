@@ -60,7 +60,7 @@ const useOTP = () => {
 
     const verify = async () => {
         try {
-            const response = await apiFetch('http://localhost:5000/api/auth/verify-otp', {
+            const response = await apiFetch('/api/auth/verify-otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp: otp.join('') }),
@@ -97,7 +97,7 @@ const useOTP = () => {
 
     const resendOTP = async () => {
         setIsLoading(true);
-        const response = await fetch('http://localhost:5000/api/auth/resend-otp', {
+        const response = await fetch('/api/auth/resend-otp', {
             credentials: 'include'
         })
         setIsLoading(false);

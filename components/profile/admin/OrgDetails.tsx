@@ -8,7 +8,20 @@ const OrgDetails = ({ orgData, loading, error }: { orgData: any, loading: boolea
                 <h3 className='text-black/60 sm'>View and edit organisation information</h3>
             </div>
             {loading ? (
-                <div className='base text-black/60'>Loading...</div>
+                <div className='animate-pulse flex flex-col gap-4'>
+                    <div className='flex flex-col gap-1'>
+                        <span className='h-3 w-1/5 bg-black/15 rounded-sm'></span>
+                        <span className='h-6 w-2/5 bg-black/15 rounded-sm'></span>
+                    </div>
+                    <div className='flex flex-col gap-1'>
+                        <span className='h-3 w-1/5 bg-black/15 rounded-sm'></span>
+                        <span className='h-6 w-2/5 bg-black/15 rounded-sm'></span>
+                    </div>
+                    <div className='flex flex-col gap-1'>
+                        <span className='h-3 w-1/5 bg-black/15 rounded-sm'></span>
+                        <span className='h-6 w-2/5 bg-black/15 rounded-sm'></span>
+                    </div>
+                </div>
             ) : error ? (
                 <div className='base text-red-500'>{error}</div>
             ) : orgData ? (

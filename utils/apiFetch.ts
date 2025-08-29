@@ -11,7 +11,7 @@ export const apiFetch = async (url: string, options: RequestInit = {}) => {
     });
 
     if (response.status === 401) {
-        await fetch('/api/auth/refresh-token', {
+        await fetch('https://localhost:5000/api/auth/refresh-token', {
             method: 'POST',
             credentials: 'include',
         });

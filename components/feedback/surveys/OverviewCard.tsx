@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { IoMdInformationCircleOutline } from 'react-icons/io';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 
-const OverviewCard: React.FC<{ card: any, index: number, user?: boolean }> = ({ card, user }) => {
+const OverviewCard: React.FC<{ card: any, index: number, user?: boolean, analysis?: boolean }> = ({ card, user, analysis }) => {
     const [showTooltip, setShowTooltip] = useState(false);
 
     return (
@@ -15,14 +15,21 @@ const OverviewCard: React.FC<{ card: any, index: number, user?: boolean }> = ({ 
                     </div>
                     <span className='font-medium base'>{card.title}</span>
                 </div>
-                <div className='flex items-center gap-2'>
-                    <span className='text-black x3l'>
-                        {(card.value || "0").toString().padStart(2, '0')}
+                <div className={`flex ${analysis ? "flex-col" : "flex-row items-center gap-2"}`}>
+                    <span className={`text-black ${analysis ? 'x2l font-semibold' : 'x3l'}`}>
+                        {(card.value || "0").toString().padStart(2, '0')}{card.percent && "%"}
                     </span>
-                    <div className='flex items-center xs gap-1 bg-light-green text-green w-max p-1 rounded-lg px-2 pr-1'>
-                        <span>23.4%</span>
-                        <MdOutlineArrowOutward />
-                    </div>
+                    {analysis ? (
+                        <Link href={`${card.link ? card.link : ''}`} className='flex hover:bg-light-green w-max p-1 rounded-lg pr-2 transition duration-300 items-center sm text-primary gap-2' prefetch>
+                            {card.secondaryIcon}
+                            {card.desc}
+                        </Link>
+                    ) : (
+                        <div className='flex items-center xs gap-1 bg-light-green text-green w-max p-1 rounded-lg px-2 pr-1'>
+                            <span>{(card.increase)?.toFixed(2)}%</span>
+                            <MdOutlineArrowOutward />
+                        </div>
+                    )}
                 </div>
             </div>
             <div

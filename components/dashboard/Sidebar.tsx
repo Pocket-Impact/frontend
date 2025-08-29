@@ -8,6 +8,7 @@ import { VscFeedback, VscGraph } from 'react-icons/vsc'
 import { usePathname } from 'next/navigation'
 import { IoIosMore } from 'react-icons/io'
 import OrgTab from './OrgTab'
+import { RiSurveyLine } from 'react-icons/ri'
 
 const links = [
     {
@@ -18,7 +19,7 @@ const links = [
     {
         name: "Surveys",
         href: "/feedback/surveys",
-        icon: VscFeedback
+        icon: RiSurveyLine
     },
     {
         name: "Analytics",
@@ -39,14 +40,14 @@ const tools = [
         icon: FaCompass
     },
     {
-        name: "Donor Engagement Agent",
-        href: "/features",
-        icon: FaRegHeart
-    },
-    {
         name: "More",
         href: "/impact",
         icon: IoIosMore
+    },
+    {
+        name: "Donor Engagement Agent",
+        href: "/features",
+        icon: FaRegHeart
     },
 ]
 

@@ -24,7 +24,7 @@ const data = [
     { day: "Sun", Feedbacks: 1 },
 ];
 
-const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
+const FeedbackOverview = ({ dailyFeedbacks, analytics }: { dailyFeedbacks: any[], analytics?: boolean }) => {
     // Use /api/dashboard format: dailyFeedbacks is array of { day, Feedbacks }
     let percentChange = 0;
     let todayCount = 0;
@@ -46,7 +46,7 @@ const FeedbackOverview = ({ dailyFeedbacks }: { dailyFeedbacks: any[] }) => {
     const isDecline = diff < 0;
 
     return (
-        <div className='bg-white border lg:col-span-2 flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 rounded-lg'>
+        <div className={`bg-white border ${analytics ? '' : 'lg:col-span-2'} flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 rounded-lg`}>
             <div className='flex items-start justify-between'>
                 <div className='flex items-center gap-2'>
                     <div className='rounded-sm bg-gray-200 p-1.5'>

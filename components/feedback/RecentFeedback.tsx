@@ -5,7 +5,7 @@ import { formatDistanceToNow } from 'date-fns';
 
 const RecentFeedback = ({ recentFeedbacks }: { recentFeedbacks: any[] }) => {
   return (
-    <div className='bg-white border-stroke flex flex-col gap-2 border p4 rounded-lg min-h-0 flex-1'>
+    <div className='bg-white border-stroke flex flex-col col-span-2 gap-2 border p4 rounded-lg min-h-0 flex-1'>
       <div className='flex flex-col'>
         <h2 className='lg font-semibold'>
           Recent Feedback
@@ -13,7 +13,7 @@ const RecentFeedback = ({ recentFeedbacks }: { recentFeedbacks: any[] }) => {
         <p className='sm -mt-1 text-black/60'>Most recent feedback received</p>
       </div>
       <div className='flex flex-col gap-2'>
-        {recentFeedbacks.splice(0, 3)?.map((feedback, index) => (
+        {recentFeedbacks?.slice(0, 5).map((feedback, index) => (
           <div key={index} className='p-2 rounded-sm border border-stroke cursor-default flex justify-between items-center'>
             <div className='flex items-center gap-2'>
               <div className='flex flex-col'>

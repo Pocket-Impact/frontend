@@ -13,12 +13,15 @@ import {
     Legend
 } from 'recharts';
 
-// Dummy data: Total feedbacks per category (not daily)
+// Dummy data: Each topic has a count for each day
 const data = [
-    { category: "Service", Feedbacks: 12 },
-    { category: "Product", Feedbacks: 4 },
-    { category: "Support", Feedbacks: 9 },
-    { category: "Delivery", Feedbacks: 5 }
+    { day: "Mon", Service: 2, Product: 3, Support: 1, Delivery: 4 },
+    { day: "Tue", Service: 5, Product: 2, Support: 2, Delivery: 3 },
+    { day: "Wed", Service: 3, Product: 4, Support: 3, Delivery: 2 },
+    { day: "Thu", Service: 7, Product: 1, Support: 2, Delivery: 5 },
+    { day: "Fri", Service: 4, Product: 3, Support: 4, Delivery: 3 },
+    { day: "Sat", Service: 6, Product: 2, Support: 3, Delivery: 4 },
+    { day: "Sun", Service: 1, Product: 5, Support: 2, Delivery: 2 }
 ];
 
 const topicColors = {
@@ -28,7 +31,7 @@ const topicColors = {
     Delivery: '#D0A65B'
 };
 
-const TopicGraph = () => {
+const TopicAnalysis = () => {
     return (
         <div className='bg-white border lg:col-span-3 flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 rounded-lg'>
             <div className='flex items-center gap-2 mb-2'>
@@ -43,16 +46,14 @@ const TopicGraph = () => {
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis
-                            dataKey="category"
-                            axisLine={{ stroke: '#000000' }}
-                            tickLine={false}
-                            tick={{ fill: '#000000' }}
-                            padding={{ left: 0, right: 0 }}
-                        />
+                        <XAxis dataKey="day" axisLine={{ stroke: '#000000' }} tickLine={false} tick={{ fill: '#000000' }} />
                         <YAxis axisLine={{ stroke: '#000000' }} tickLine={false} tick={{ fill: '#000000' }} />
                         <Tooltip />
-                        <Line type="monotone" dataKey="Feedbacks" stroke="#848452" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                        <Legend />
+                        <Line type="monotone" dataKey="Service" stroke={topicColors.Service} strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                        <Line type="monotone" dataKey="Product" stroke={topicColors.Product} strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                        <Line type="monotone" dataKey="Support" stroke={topicColors.Support} strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                        <Line type="monotone" dataKey="Delivery" stroke={topicColors.Delivery} strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
                     </LineChart>
                 </ResponsiveContainer>
             </div>
@@ -60,4 +61,4 @@ const TopicGraph = () => {
     );
 }
 
-export default TopicGraph
+export default TopicAnalysis

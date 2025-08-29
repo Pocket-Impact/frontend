@@ -9,21 +9,21 @@ import React from 'react'
 import { BiSearch, BiUser } from 'react-icons/bi';
 import { LuLogOut } from 'react-icons/lu';
 
-const overviewCards: any = [
+const defaultOverviewCards: any = [
     {
-        value: "0245",
-        title: "Users",
-        subtitle: "All users",
+        value: "0",
+        title: "Researchers",
+        subtitle: "All researchers",
         icon: BiUser,
     },
     {
-        value: "0245",
+        value: "0",
         title: "Admins",
         subtitle: "All admins",
         icon: BiUser,
     },
     {
-        value: "0245",
+        value: "0",
         title: "Analysts",
         subtitle: "All analysts",
         icon: BiSearch,
@@ -32,14 +32,60 @@ const overviewCards: any = [
 
 
 const page = () => {
+    const [orgData, setOrgData] = React.useState<any>(null);
+    const [overviewCards, setOverviewCards] = React.useState<any[]>(defaultOverviewCards);
+    const [loading, setLoading] = React.useState(true);
+    const [error, setError] = React.useState<string | null>(null);
+
+    React.useEffect(() => {
+        const fetchOrgData = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const res = await apiFetch('/api/dashboard/organisation');
+                const data = await res.json();
+                if (!res.ok || data.status !== 'success') {
+                    setError(data.message || 'Could not fetch organisation data.');
+                } else {
+                    setOrgData(data.data);
+                    setOverviewCards([
+                        {
+                            value: data.data.researchers,
+                            title: 'Researchers',
+                            subtitle: 'All researchers',
+                            icon: BiUser,
+                        },
+                        {
+                            value: data.data.adminUsers,
+                            title: 'Admins',
+                            subtitle: 'All admins',
+                            icon: BiUser,
+                        },
+                        {
+                            value: data.data.analysts,
+                            title: 'Analysts',
+                            subtitle: 'All analysts',
+                            icon: BiSearch,
+                        },
+                    ]);
+                }
+            } catch (err: any) {
+                setError('Server error. Please try again later.');
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchOrgData();
+    }, []);
+
     const handleClick = () => {
         const logout = async () => {
-            const response = await apiFetch("/api/auth/logout")
+            await apiFetch("/api/auth/logout")
             redirect('/auth/signin')
         }
-
         logout()
     }
+
     return (
         <div className='inter flex flex-col gap-6'>
             <div className='flex justify-between items-center'>
@@ -52,7 +98,7 @@ const page = () => {
                 </div>
             </div>
             <div className='grid h-[400px] gap-6 lg:grid-cols-5'>
-                <OrgDetails />
+                <OrgDetails orgData={orgData} loading={loading} error={error} />
                 <UserDetails />
             </div>
             <div className='grid lg:grid-cols-3 gap-6'>

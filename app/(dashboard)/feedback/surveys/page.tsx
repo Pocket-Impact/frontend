@@ -51,7 +51,7 @@ const Page = () => {
 
 
   return (
-    <div>
+    <div className='flex flex-col gap-6'>
       <div className='flex justify-between'>
         <div className=''>
           <h1 className='x2l font-semibold'>Surveys</h1>
@@ -62,11 +62,13 @@ const Page = () => {
         </Link>
       </div>
       {loading ? (
-        <div className='grid gap-3 max-lg:gap-2.5 max-md:gap-2 max-sm:grid-cols-1 grid-cols-3 max-lg:grid-cols-1 max-xl:grid-cols-2 mt-6'>
-          <LoadingCard />
+        <div className='grid grid-cols-3 max-lg:grid-cols-1 gap-4 max-md:gap-4'>
+          {Array.from({ length: 3 }).map((_, index) => (
+            <LoadingCard key={index} />
+          ))}
         </div>
       ) : (
-        <div className='grid gap-3 max-lg:gap-2.5 max-md:gap-2 max-sm:grid-cols-1 grid-cols-3 max-lg:grid-cols-1 max-xl:grid-cols-2 mt-6'>
+        <div className='grid gap-3 max-lg:gap-2.5 max-md:gap-2 max-sm:grid-cols-1 grid-cols-3 max-lg:grid-cols-1 max-xl:grid-cols-2'>
           {surveys.length === 0 ? (
             <div className='col-span-3 text-black/60 base'>No surveys found.</div>
           ) : (

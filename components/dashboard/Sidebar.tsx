@@ -61,7 +61,7 @@ const Sidebar = () => {
                     <Image src={logo}
                         alt="Pocket Impact Logo"
                         width={logo.width} height={logo.height}
-                        className='w-8 max-lg:w-10 max-md:w-8 h-auto'
+                        className='w-8 max-[1023px]:w-10 max-md:w-8 h-auto'
                     />
                     <span className='inter lg font-semibold max-md:hidden'>Pocket Impact</span>
                 </div>

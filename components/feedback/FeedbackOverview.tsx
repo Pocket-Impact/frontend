@@ -64,7 +64,7 @@ const FeedbackOverview = ({ dailyFeedbacks, analytics }: { dailyFeedbacks: any[]
                         <span className='xs'> {diff > 0 ? `+ ${diff}` : diff} today</span>                    </div>
                 </div>
             </div>
-            {dailyFeedbacks && dailyFeedbacks.length === 0 ? (
+            {dailyFeedbacks.length > 0 ? (
                 <div className="w-full h-full min-h-[300px]">
                     <ResponsiveContainer width="100%" height="100%">
                         {analytics ? (
@@ -124,7 +124,7 @@ const FeedbackOverview = ({ dailyFeedbacks, analytics }: { dailyFeedbacks: any[]
                     </ResponsiveContainer>
                 </div>
             ) : (
-                <div className='w-full h-full bg-black/5 text-black/80 rounded-lg flex items-center justify-center'>No feedback data available</div>
+                <div className='w-full h-full bg-black/5 text-black/80 rounded-lg sm flex items-center justify-center'>No feedback data available</div>
             )}
         </div>
     );

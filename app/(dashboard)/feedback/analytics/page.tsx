@@ -108,7 +108,7 @@ const page = () => {
             <div className='text-red-500 mb-4 bg-red-100 w-full p-2 border-2 border-red-400'>{error}</div>
           ) : dashboardData ? (
             <>
-              <div className='grid gap-6 max-lg:gap-2.5 max-md:gap-2 grid-cols-4 max-lg:grid-cols-1'>
+              <div className='grid gap-6 max-lg:gap-2.5 max-md:gap-2 grid-cols-4 max-[1241px]:grid-cols-2 max-md:grid-cols-1'>
                 {overviewCards.map((card, index) => (
                   <OverviewCard analysis={true} key={index} card={card} index={index} />
                 ))}

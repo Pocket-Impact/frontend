@@ -65,7 +65,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                     <Sidebar />
                     <div className="flex-1 flex flex-col h-screen">
                         <DashboardNavbar />
-                        <div className="inter relative p-6 max-lg:p-5 max-md:p-4 w-full flex-1 overflow-y-scroll scrolly">
+                        <div className="inter relative p-6 max-lg:p-5 max-md:p-4 w-full flex-1 overflow-y-scroll overflow-x-hidden scrolly">
                             {children}
                         </div>
                     </div>

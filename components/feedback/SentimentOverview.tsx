@@ -86,7 +86,7 @@ const chartData = [
 
 const SentimentOverview = ({ sentimentAnalysis, analytics }: { sentimentAnalysis: any[], analytics?: boolean }) => {
     return (
-        <div className={`bg-white border p4 rounded-lg border-stroke flex flex-col min-h-0 flex-1 ${analytics ? 'lg:col-span-2' : ''}`}>
+        <div className={`bg-white border w-full p4 rounded-lg border-stroke flex flex-col min-h-0 flex-1 ${analytics ? 'lg:col-span-2' : ''}`}>
             <div className='flex flex-col'>
                 <h2 className='lg font-semibold'>
                     Sentimental distribution

@@ -174,7 +174,7 @@ export default function FormBuilder({
             <div className="grid grid-cols-5 flex-1 h-full min-h-0 max-lg:grid-cols-1 gap-4">
                 {/* Builder Section */}
                 <div className="flex-1 h-full min-h-0 lg:col-span-2 p-6 bg-white border border-stroke overflow-y-auto scrolly flex flex-col">
-                    <h2 className="text-xl font-medium mb-4 text-primary">Survey Editor</h2>
+                    <h2 className="xl font-medium mb-4 text-primary">Survey Editor</h2>
                     <input
                         className="w-full p-2 mb-2 border outline-0 bg-white border-stroke focus:border-primary rounded"
                         placeholder="Survey Title"
@@ -182,7 +182,7 @@ export default function FormBuilder({
                         onChange={e => setTitle(e.target.value)}
                     />
                     <textarea
-                        className="w-full p-2 mb-2 min-h-max outline-0 bg-white focus:border-primary border border-gray-300 rounded"
+                        className="w-full p-2 mb-4 min-h-max outline-0 bg-white focus:border-primary border border-gray-300 rounded"
                         placeholder="Survey Description"
                         rows={5}
                         value={description}
@@ -197,6 +197,7 @@ export default function FormBuilder({
                         />
                         <span>Survey Activation</span>
                     </label>
+                    <h4 className="font-semibold lg mb-4">Questions {questions.length.toString().padStart(2, '0')}</h4>
                     <DragDropContext onDragEnd={reorderQuestions}>
                         <Droppable droppableId="questions">
                             {(provided) => (

@@ -26,37 +26,7 @@ export const metadata: Metadata = {
     },
 };
 
-async function getValidAccessToken() {
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("accessToken")?.value;
-    const refreshToken = cookieStore.get("refreshToken")?.value;
-
-    if (!accessToken && !refreshToken) return false;
-
-    if (accessToken) return true;
-
-    if (!accessToken && refreshToken) {
-        const res = await apiFetch(`/api/auth/refresh-token`, {
-            method: "POST",
-        });
-
-        if (!res.ok) {
-            return false;
-        }
-        return true;
-    }
-
-    return false;
-}
-
-
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-    // Protect all dashboard pages
-    const token = await getValidAccessToken();
-    if (!token) {
-        redirect("/auth/signin");
-    }
-
     return (
         <html lang="en">
             <body className={`${bricolageGrotesque.variable} overflow-hidden bg-gray-50 h-screen ${inter.variable} antialiased flex`}>

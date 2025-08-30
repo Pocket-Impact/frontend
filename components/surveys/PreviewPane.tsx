@@ -62,7 +62,7 @@ export default function PreviewPane({ title, description, active, questions }: P
                                         />
                                         <label
                                             htmlFor={`q${q.id}_rating_${num}`}
-                                            className="cursor-pointer w-12 h-12 flex items-center justify-center rounded-lg border border-gray-300 bg-white transition-colors peer-checked:bg-primary/50 peer-checked:text-white peer-checked:border-primary"
+                                            className="cursor-pointer font-bold w-12 h-12 flex items-center justify-center rounded-lg border border-gray-300 bg-white transition-colors peer-checked:bg-primary/50 peer-checked:text-white peer-checked:border-primary"
                                         >
                                             {num}
                                         </label>

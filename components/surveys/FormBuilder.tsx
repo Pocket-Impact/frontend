@@ -175,19 +175,25 @@ export default function FormBuilder({
                 {/* Builder Section */}
                 <div className="flex-1 h-full min-h-0 lg:col-span-2 p-6 bg-white border border-stroke overflow-y-auto scrolly flex flex-col">
                     <h2 className="xl font-medium mb-4 text-primary">Survey Editor</h2>
-                    <input
-                        className="w-full p-2 mb-2 border outline-0 bg-white border-stroke focus:border-primary rounded"
-                        placeholder="Survey Title"
-                        value={title}
-                        onChange={e => setTitle(e.target.value)}
-                    />
-                    <textarea
-                        className="w-full p-2 mb-4 min-h-max outline-0 bg-white focus:border-primary border border-gray-300 rounded"
-                        placeholder="Survey Description"
-                        rows={5}
-                        value={description}
-                        onChange={e => setDescription(e.target.value)}
-                    />
+                    <div className="flex flex-col gap-2">
+                        <div className="mb-2">
+                            <h3 className="font-semibold">Survey Details</h3>
+                            <p className="sm text-gray-500">Provide the basic information for your survey.</p>
+                        </div>
+                        <input
+                            className="w-full p-2 border outline-0 bg-white border-stroke focus:border-primary rounded"
+                            placeholder="Survey Title"
+                            value={title}
+                            onChange={e => setTitle(e.target.value)}
+                        />
+                        <textarea
+                            className="w-full p-2 mb-4 min-h-max outline-0 bg-white focus:border-primary border border-gray-300 rounded"
+                            placeholder="Survey Description"
+                            rows={5}
+                            value={description}
+                            onChange={e => setDescription(e.target.value)}
+                        />
+                    </div>
                     {/* Survey activity if needed */}
                     <label className="hidden items-center gap-2 mb-4">
                         <input
@@ -197,7 +203,13 @@ export default function FormBuilder({
                         />
                         <span>Survey Activation</span>
                     </label>
-                    <h4 className="font-semibold lg mb-4">Questions {questions.length.toString().padStart(2, '0')}</h4>
+                    <div className="mb-4">
+                        <span className="base font-semibold mb-4">
+                            Questions
+                            <span className="bg-black/10 ml-2 p-1 rounded-lg font-normal px-1.5">{questions.length.toString().padStart(2, '0')}</span>
+                        </span>
+                        <p className="sm text-gray-500">Manage the questions for your survey.</p>
+                    </div>
                     <DragDropContext onDragEnd={reorderQuestions}>
                         <Droppable droppableId="questions">
                             {(provided) => (

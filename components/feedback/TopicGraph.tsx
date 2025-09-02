@@ -13,13 +13,7 @@ import {
     Legend
 } from 'recharts';
 
-// Dummy data: Total feedbacks per category (not daily)
-const data = [
-    { category: "Service", Feedbacks: 12 },
-    { category: "Product", Feedbacks: 4 },
-    { category: "Support", Feedbacks: 9 },
-    { category: "Delivery", Feedbacks: 5 }
-];
+
 
 const topicColors = {
     Service: '#5B4FD0',
@@ -28,7 +22,7 @@ const topicColors = {
     Delivery: '#D0A65B'
 };
 
-const TopicGraph = () => {
+const TopicGraph = ({ topicData }: { topicData: any[] }) => {
     return (
         <div className='bg-white border lg:col-span-3 flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 rounded-lg'>
             <div className='flex flex-col'>
@@ -39,7 +33,7 @@ const TopicGraph = () => {
             </div>
             <div className="w-[calc(100%+36px)] h-full -ml-9.5 min-h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={data}>
+                    <LineChart data={topicData}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis
                             dataKey="category"
@@ -50,7 +44,7 @@ const TopicGraph = () => {
                         />
                         <YAxis axisLine={{ stroke: '#000000' }} tickLine={false} tick={{ fill: '#000000' }} />
                         <Tooltip />
-                        <Line type="monotone" dataKey="Feedbacks" stroke="#848452" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                        <Line type="monotone" dataKey="percentage" stroke="#848452" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
                     </LineChart>
                 </ResponsiveContainer>
             </div>

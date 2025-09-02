@@ -34,7 +34,7 @@ const ReportsTable = ({ data, columns, onEdit, onDelete, loading }) => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
-          {data.map((row, rowIndex) => (
+          {data?.map((row, rowIndex) => (
             <tr key={rowIndex} className="hover:bg-gray-50 transition-colors">
               {columns.map((column, colIndex) => (
                 <td key={colIndex} className="px-4 py-3 text-sm text-gray-900">

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState, useEffect } from "react";
 import {
   BarChart3,
@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import EditModal from "@/components/report/EditModal";
 import ReportsTable from "@/components/report/ReportsTable";
+import TopicOverview from "@/components/report/TopicOverview";
 import { apiFetch } from "@/utils/apiFetch";
 
 const page = () => {
@@ -119,7 +120,7 @@ const page = () => {
     { key: "responses", label: "Response Reports", icon: MessageSquare },
     { key: "feedback", label: "Feedback Reports", icon: FileText },
     { key: "users", label: "User Activity", icon: Users },
-    { key: "executive", label: "Executive Summary", icon: TrendingUp },
+    { key: "executive-summary", label: "Executive Summary", icon: TrendingUp },
   ];
 
   const getColumns = (reportType) => {
@@ -147,20 +148,23 @@ const page = () => {
         ];
       case "responses":
         return [
-          { key: "_id", header: "Date" },
+          { key: "_id", header: "Survey ID" },
+          { key: "title", header: "Title" },
           { key: "count", header: "Response Count" },
           {
             key: "completionRate",
             header: "Completion Rate",
             render: (value) => `${value}%`,
           },
-          { key: "sentiment", header: "Sentiment" },
+          { key: "questionCount", header: "Questions" },
         ];
+
       case "feedback":
         return [
           { key: "_id", header: "Feedback ID" },
           { key: "category", header: "Category" },
           { key: "count", header: "Count" },
+          { key: "percentage", header: "Percentage" },
           {
             key: "sentiment",
             header: "Sentiment",
@@ -179,12 +183,12 @@ const page = () => {
             ),
           },
         ];
+
       case "users":
         return [
           { key: "totalUsers", header: "Total Users" },
           { key: "activeUsers", header: "Active Users" },
           { key: "activityRate", header: "Activity Rate" },
-          { key: "roles", header: "Roles" },
         ];
 
       default:
@@ -192,65 +196,112 @@ const page = () => {
     }
   };
 
-const fetchReportData = async (reportType) => {
-  setLoading(true);
-  try {
-    const response = await apiFetch(`/api/reports/${reportType}`);
-    const result = await response.json();
-    console.log(result);
+  const fetchReportData = async (reportType) => {
+    setLoading(true);
+    try {
+      const response = await apiFetch(`/api/reports/${reportType}`);
+      const result = await response.json();
+      console.log(result);
 
-    let mappedData = [];
+      let mappedData = [];
 
-    if (result.status === "success") {
-      switch (reportType) {
-        case "surveys":
-          mappedData = (result.data.topSurveys || []).map((survey) => ({
-            ...survey,
-            _id: `survey-${Math.floor(Math.random() * 1000000)}`, // 🔥 add fake ID
-          }));
-          break;
-        case "responses":
-          mappedData = result.data.responseTrends || [];
-          break;
-        case "feedback":
-          mappedData = result.data.feedbackTrends || [];
-          break;
-        case "users":
-          const stats = result.data.userStats || {};
-          const roles = result.data.roleDistribution || [];
+      if (result.status === "success") {
+        switch (reportType) {
+          case "surveys":
+            mappedData = (result.data.topSurveys || []).map((survey) => ({
+              ...survey,
+              _id: `survey - ${survey._id.slice(-5)}`, // 🔥 add fake ID
+            }));
+            break;
+          case "responses":
+            const completions = result.data.completionRates || [];
+            mappedData = completions.map((item) => ({
+              _id: `survey - ${item._id.slice(-4)}`,
+              title: item.title,
+              count: item.responseCount,
+              completionRate: item.completionRate,
+              questionCount: item.questionCount,
+            }));
+            break;
 
-          mappedData = [
-            {
-              totalUsers: stats.totalUsers ?? 0,
-              activeUsers: stats.activeUsers ?? 0,
-              activityRate: `${stats.activityRate ?? 0}%`,
-              roles: roles.map((r) => `${r.role} (${r.count})`).join(", "),
-            },
-          ];
-          break;
-        case "executive":
-          mappedData = result.data;
-          break;
-        default:
-          mappedData = [];
+          case "feedback":
+            const feedbackTrends = result.data.feedbackTrends || [];
+            const categories = result.data.categoryDistribution || [];
+            const sentimentTrends = result.data.sentimentTrends || [];
+            const totalFeedback = result.data.totalFeedbackCount || 0;
+
+            // Map each feedback row individually
+            mappedData = categories.map((cat, index) => {
+              // Find sentiment for this category (if exists)
+              // If sentimentTrends has multiple entries, find one matching this category or use index
+              const sentimentItem = sentimentTrends[index]; // fallback to index if no category info
+
+              return {
+                _id: `fb-${cat.category}-${index}`, // unique ID
+                category: cat.category,
+                count: cat.count,
+                percentage: cat.percentage,
+                sentiment: sentimentItem?._id?.sentiment || "neutral",
+              };
+            });
+
+            // Store summary info if needed
+            mappedData.summary = {
+              totalFeedback,
+              categories,
+              sentiments: sentimentTrends.map((s) => s._id?.sentiment),
+            };
+            break;
+
+          case "users":
+            const stats = result.data.userStats || {};
+            const roles = result.data.roleDistribution || [];
+
+            mappedData = [
+              {
+                totalUsers: stats.totalUsers ?? 0,
+                activeUsers: stats.activeUsers ?? 0,
+                activityRate: `${stats.activityRate ?? 0}%`,
+                roles: roles.map((r) => `${r.role} (${r.count})`).join(", "),
+              },
+            ];
+            break;
+          case "executive-summary":
+            const execData = result.data;
+
+            // Fix sentimentOverview: backend only has count, add default labels
+            const sentimentLabels = ["positive", "neutral", "negative"];
+            const fixedSentiments = execData.sentimentOverview?.map(
+              (item, index) => ({
+                _id: sentimentLabels[index] || "neutral",
+                count: item.count,
+              })
+            );
+
+            mappedData = {
+              ...execData,
+              sentimentOverview: fixedSentiments,
+            };
+            break;
+
+          default:
+            mappedData = [];
+        }
+      } else {
+        mappedData = staticData[reportType];
       }
-    } else {
-      mappedData = staticData[reportType];
+
+      setData((prev) => ({
+        ...prev,
+        [reportType]: mappedData,
+      }));
+    } catch (error) {
+      console.error("Error fetching report data:", error);
+      setData((prev) => ({ ...prev, [reportType]: staticData[reportType] }));
+    } finally {
+      setLoading(false);
     }
-
-    setData((prev) => ({
-      ...prev,
-      [reportType]: mappedData,
-    }));
-  } catch (error) {
-    console.error("Error fetching report data:", error);
-    setData((prev) => ({ ...prev, [reportType]: staticData[reportType] }));
-  } finally {
-    setLoading(false);
-  }
-};
-
-
+  };
 
   useEffect(() => {
     fetchReportData(selectedReport);
@@ -299,7 +350,7 @@ const fetchReportData = async (reportType) => {
   };
 
   const renderExecutiveSummary = () => {
-    const execData = data.executive;
+    const execData = data["executive-summary"] || data.executive;
     if (!execData) return null;
 
     return (
@@ -340,25 +391,20 @@ const fetchReportData = async (reportType) => {
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Sentiment Overview
           </h3>
-          <div className="space-y-3">
-            {execData.sentimentOverview?.map((item, index) => (
-              <div key={index} className="flex justify-between items-center">
-                <span className="capitalize text-gray-700">{item._id}</span>
-                <div className="flex items-center space-x-2">
-                  <div
-                    className={`w-20 h-2 rounded-full ${
-                      item._id === "positive"
-                        ? "bg-green-500"
-                        : item._id === "negative"
-                        ? "bg-red-500"
-                        : "bg-gray-500"
-                    }`}
-                  ></div>
-                  <span className="text-sm font-medium">{item.count}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+          {/* Use TopicOverview for sentiment overview */}
+          <TopicOverview
+            identifier={"executive-report"}
+            topTopics={(() => {
+              const sentiments = execData.sentimentOverview || [];
+              const total =
+                sentiments.reduce((sum, s) => sum + (s.count || 0), 0) || 1;
+              return sentiments.map((s) => ({
+                category: s._id,
+                percentage: Math.round(((s.count || 0) / total) * 100),
+                count: s.count || 0,
+              }));
+            })()}
+          />
         </div>
       </div>
     );
@@ -401,7 +447,7 @@ const fetchReportData = async (reportType) => {
         </div>
 
         {/* Filters */}
-        {selectedReport !== "executive" && (
+        {selectedReport !== "executive-summary" && (
           <div className="bg-white p-4 rounded-lg shadow-sm border border-green-700/40 mb-6">
             <div className="flex items-center space-x-2 mb-4">
               <Filter size={20} className="text-gray-600" />
@@ -500,27 +546,33 @@ const fetchReportData = async (reportType) => {
 
         {/* Report Content */}
         <div className="bg-white rounded-lg shadow-sm border border-green-700/40">
-          {selectedReport === "executive" ? (
-            <div className="p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                Executive Summary
-              </h2>
-              {renderExecutiveSummary()}
-            </div>
-          ) : (
-            <div className="p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                {reportTypes.find((r) => r.key === selectedReport)?.label}
-              </h2>
-              <ReportsTable
-                data={filteredData}
-                columns={getColumns(selectedReport)}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                loading={loading}
-              />
-            </div>
-          )}
+          <div className="bg-white rounded-lg shadow-sm border border-green-700/40">
+            {selectedReport === "executive-summary" ? (
+              <div className="p-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-6">
+                  Executive Summary
+                </h2>
+                {renderExecutiveSummary()}
+              </div>
+            ) : (
+              <div className="p-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-6">
+                  {reportTypes.find((r) => r.key === selectedReport)?.label}
+                </h2>
+                {Array.isArray(filteredData) ? (
+                  <ReportsTable
+                    data={filteredData}
+                    columns={getColumns(selectedReport)}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                    loading={loading}
+                  />
+                ) : (
+                  <div className="text-gray-500">No data available.</div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Edit Modal */}

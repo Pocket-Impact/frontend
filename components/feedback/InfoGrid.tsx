@@ -12,7 +12,6 @@ const InfoGrid = ({ dashboard }: { dashboard: any }) => {
       <FeedbackOverview dailyFeedbacks={dashboard?.dailyFeedbacks} />
       <div className='lg:col-span-5 grid lg:grid-cols-3 gap-6 max-lg:gap-5 max-md:gap-4'>
         <SentimentOverview sentimentAnalysis={dashboard?.sentimentAnalysis} />
-        {/* <TopicOverview topTopics={dashboard?.topTopics} /> */}
         <RecentFeedback recentFeedbacks={dashboard?.recentFeedbacks} />
       </div>
     </div>

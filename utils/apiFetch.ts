@@ -1,5 +1,5 @@
 export const apiFetch = async (url: string, options: RequestInit = {}) => {
-    // const isServer = typeof window === 'undefined';
+    const isServer = typeof window === 'undefined';
 
     let response = await fetch(url, {
         ...options,

@@ -1,0 +1,215 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #fcfcf8;
+  --color-clear: #f0efdf;
+  --color-primary: #0A400C;
+  --color-secondary: #FED16A;
+  --color-tertiary: #848452;
+  --color-green: #47b89b;
+  --color-light-green: #dff4f1;
+  --color-red: #d25871;
+  --color-light-red: #feebef;
+  --color-cblack: #191C1F;
+  --color-error: #FFEDD4;
+  --color-stroke: #CCCCCC;
+}
+
+.bricolage {
+  font-family: var(--font-bricolage-grotesque);
+}
+
+.fade-up {
+  animation: fadeUp 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes op {
+  from {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.op {
+  animation: op 0.5s ease-in-out;
+}
+
+.op-2 {
+  animation: op .3s ease-in-out;
+}
+
+.fade-down {
+  animation: fadeDown 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inter {
+  font-family: var(--font-inter);
+}
+
+/* texts styles */
+.x7l {
+  @apply text-7xl max-lg:text-6xl max-md:text-5xl max-sm:text-3xl;
+}
+
+.x5l {
+  @apply text-5xl max-lg:text-4xl max-md:text-3xl max-sm:text-xl;
+}
+  
+.x2l {
+  @apply text-2xl max-lg:text-xl max-md:text-lg max-sm:text-base;
+}
+
+.lg {
+  @apply text-lg max-lg:text-base max-md:text-sm max-sm:text-xs;
+}
+
+.x3l {
+  @apply text-3xl max-lg:text-2xl max-md:text-xl max-sm:text-lg;
+}
+
+.x4l {
+  @apply text-4xl max-lg:text-3xl max-md:text-2xl max-sm:text-lg;
+}
+
+.base {
+  @apply text-base max-lg:text-sm max-md:text-xs max-sm:text-[11px];
+}
+
+.p2 {
+  @apply p-2 max-lg:p-1.5 max-md:p-1;
+}
+
+.p3 {
+  @apply p-3 max-lg:p-2.5 max-md:p-2.5 max-sm:p-2
+}
+
+.p4 {
+  @apply p-4 max-lg:p-3.5 max-md:p-3 max-sm:p-2.5;
+}
+
+.sm {
+  @apply text-sm max-lg:text-xs max-md:text-[11px] max-sm:text-[10px];
+}
+
+.xs {
+  @apply text-xs max-lg:text-[10px] max-md:text-[9px] max-sm:text-[8px];
+}
+
+.xl {
+  @apply text-xl max-lg:text-lg max-md:text-base max-sm:text-sm;
+}
+
+.effect {
+  z-index: 1;
+  transition: .5s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.effect::after {
+  content: "";
+  color: white;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 100%;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-secondary);
+  height: 150px;
+  width: 150px;
+  border-radius: 500px;
+  transition: .5s ease;
+}
+
+.text {
+  position: relative;
+  z-index: 3;
+}
+
+.effect:hover::after {
+  top: -30%;
+  height: 300px;
+  width: 300px;
+}
+
+.effect:hover {
+  background: var(--color-secondary);
+  color: black;
+  transition: background 1.5s ease;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.scrolly::-webkit-scrollbar {
+  width: 8px;
+  display: block;
+  @apply bg-stroke;
+}
+
+.scrolly::-webkit-scrollbar-thumb {
+  background: #0A400CBB;
+}
+
+.input {
+  @apply bg-white pl-3 border focus:border-primary text-base border-gray-300 rounded-lg p-2 w-full outline-4;
+}
+
+.input-2 {
+  @apply bg-white pl-3 border focus:border-primary text-base border-gray-300 rounded-lg p-2 w-full outline-0;
+}
+
+.rounded-x2l {
+  @apply rounded-2xl max-lg:rounded-xl max-md:rounded-lg
+}
+
+.rounded-t-x2l {
+  @apply rounded-t-2xl max-lg:rounded-t-xl max-md:rounded-t-lg
+}
+
+.rounded-x3l {
+  @apply rounded-3xl max-lg:rounded-2xl max-md:rounded-xl
+}
+
+.rounded-gl {
+  @apply rounded-lg max-lg:rounded-md max-md:rounded-sm
+}
+
+.rounded-dm {
+  @apply rounded-md max-lg:rounded-sm max-md:rounded-[0px]
+}
+
+.rounded-t-dm {
+  @apply rounded-t-md max-lg:rounded-t-sm max-md:rounded-t-[0px]
+}

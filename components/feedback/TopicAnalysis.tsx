@@ -67,34 +67,39 @@ const TopicAnalysis = () => {
                 </h2>
                 <p className='sm -mt-1 text-black/60'>Mentioned topics in feedback</p>
             </div>
-            <div className="w-[calc(100%+36px)] h-full -ml-8 min-h-[300px]">
-                {loading ? (
-                    <div className="flex items-center justify-center h-full text-gray-500">Loading...</div>
-                ) : error ? (
-                    <div className="flex items-center justify-center h-full text-red-500">{error}</div>
-                ) : (
-                    <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={data}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="day" axisLine={{ stroke: '#000000' }} tickLine={false} tick={{ fill: '#000000' }} />
-                            <YAxis axisLine={{ stroke: '#000000' }} tickLine={false} tick={{ fill: '#000000' }} />
-                            <Tooltip />
-                            <Legend />
-                            {categories.map(category => (
-                                <Line
-                                    key={category}
-                                    type="monotone"
-                                    dataKey={category}
-                                    stroke={topicColors[category]}
-                                    strokeWidth={3}
-                                    dot={{ r: 4 }}
-                                    activeDot={{ r: 6 }}
-                                />
-                            ))}
-                        </LineChart>
-                    </ResponsiveContainer>
-                )}
-            </div>
+            {data.length > 0 ? (
+
+                <div className="w-[calc(100%+36px)] h-full -ml-8 min-h-[300px]">
+                    {loading ? (
+                        <div className="flex items-center justify-center h-full text-gray-500">Loading...</div>
+                    ) : error ? (
+                        <div className="flex items-center justify-center h-full text-red-500">{error}</div>
+                    ) : (
+                        <ResponsiveContainer width="100%" height="100%">
+                            <LineChart data={data}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="day" axisLine={{ stroke: '#000000' }} tickLine={false} tick={{ fill: '#000000' }} />
+                                <YAxis axisLine={{ stroke: '#000000' }} tickLine={false} tick={{ fill: '#000000' }} />
+                                <Tooltip />
+                                <Legend />
+                                {categories.map(category => (
+                                    <Line
+                                        key={category}
+                                        type="monotone"
+                                        dataKey={category}
+                                        stroke={topicColors[category]}
+                                        strokeWidth={3}
+                                        dot={{ r: 4 }}
+                                        activeDot={{ r: 6 }}
+                                    />
+                                ))}
+                            </LineChart>
+                        </ResponsiveContainer>
+                    )}
+                </div>
+            ) : (
+                <div className='w-full h-full bg-black/5 text-black/80 rounded-lg sm flex items-center justify-center'>No topic data available</div>
+            )}
         </div>
     );
 }

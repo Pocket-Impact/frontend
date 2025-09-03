@@ -10,7 +10,6 @@ import {
     Tooltip,
     CartesianGrid,
     YAxis,
-    Legend
 } from 'recharts';
 
 

@@ -41,10 +41,10 @@ const RecentFeedback = ({ recentFeedbacks, analytics }: { recentFeedbacks: any[]
             <Link href='/feedback/feedbacks' className='p-2.5 flex justify-center rounded-sm border border-stroke hover:bg-cblack cursor-pointer hover:text-white duration-300 items-center'>
               <span className='sm'>View all</span>
             </Link>
-          )}  
+          )}
         </div>
       ) : (
-        <div className='w-full h-full bg-black/5 text-black/80 rounded-sm flex items-center justify-center'>No feedback data available</div>
+        <div className='w-full h-full bg-black/5 text-black/80 rounded-sm min-h-80 flex items-center justify-center'>No feedback data available</div>
       )}
     </div>
   );

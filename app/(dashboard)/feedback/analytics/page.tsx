@@ -82,7 +82,7 @@ const page = () => {
           console.log(data);
           setDashboardData(data.data);
         } else {
-          console.log(data);
+          console.log(data.data.dailyFeedbacks);
           setError(data.message || 'Failed to fetch dashboard data');
         }
       } catch (err: any) {

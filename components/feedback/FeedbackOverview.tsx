@@ -64,7 +64,7 @@ const FeedbackOverview = ({ dailyFeedbacks, analytics }: { dailyFeedbacks: any[]
                         <span className='xs'> {diff > 0 ? `+ ${diff}` : diff} today</span>                    </div>
                 </div>
             </div>
-            {dailyFeedbacks ? (
+            {dailyFeedbacks.length > 0 ? (
                 <div className="w-full h-full min-h-[300px]">
                     <ResponsiveContainer width="100%" height="100%">
                         {analytics ? (

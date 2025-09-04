@@ -1,6 +1,14 @@
 import { Edit, Trash2 } from "lucide-react";
 
-const ReportsTable = ({ data, columns, onEdit, onDelete, loading }) => {
+interface ReportsTableProps {
+  data: any[];
+  columns: any[];
+  onEdit: (row: any) => void;
+  onDelete: (row: any) => void;
+  loading: boolean;
+}
+
+const ReportsTable = ({ data, columns, onEdit, onDelete, loading }: ReportsTableProps) => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-32">
@@ -20,7 +28,7 @@ const ReportsTable = ({ data, columns, onEdit, onDelete, loading }) => {
       <table className="min-w-full bg-white">
         <thead className="bg-gray-800/20 text-white">
           <tr>
-            {columns.map((column, index) => (
+            {columns.map((column: any, index: number) => (
               <th
                 key={index}
                 className="px-4 py-3 text-left text-sm font-semibold text-black"
@@ -34,9 +42,9 @@ const ReportsTable = ({ data, columns, onEdit, onDelete, loading }) => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
-          {data?.map((row, rowIndex) => (
+          {data?.map((row: any, rowIndex: number) => (
             <tr key={rowIndex} className="hover:bg-gray-50 transition-colors">
-              {columns.map((column, colIndex) => (
+              {columns.map((column: any, colIndex: number) => (
                 <td key={colIndex} className="px-4 py-3 text-sm text-gray-900">
                   {column.render
                     ? column.render(row[column.key], row)

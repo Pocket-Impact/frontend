@@ -2,7 +2,15 @@
 import { Save, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const EditModal = ({ isOpen, onClose, data, reportType, onSave }) => {
+interface EditModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  data: any;
+  reportType: string;
+  onSave: (data: any) => void;
+}
+
+const EditModal = ({ isOpen, onClose, data, reportType, onSave }: EditModalProps) => {
   const [editData, setEditData] = useState(data || {});
 
   useEffect(() => {
@@ -102,7 +110,7 @@ const EditModal = ({ isOpen, onClose, data, reportType, onSave }) => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 >
                   <option value="">Select {field.label}</option>
-                  {field.options.map((option) => (
+                  {field.options?.map((option: any) => (
                     <option key={option} value={option}>
                       {option}
                     </option>

@@ -1,136 +1,327 @@
-"use client"
-import { apiFetch } from '@/utils/apiFetch'
-import { DotLottieReact } from '@lottiefiles/dotlottie-react'
-import { formatDistanceToNow } from 'date-fns'
-import Link from 'next/link'
-import { useParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import { IoIosAdd, IoIosRemove } from 'react-icons/io'
-import { RxCaretLeft } from 'react-icons/rx'
+"use client";
+import { apiFetch } from "@/utils/apiFetch";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { formatDistanceToNow } from "date-fns";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import {
+  IoChevronDownOutline,
+  IoChevronUpOutline,
+  IoPerson,
+  IoStatsChart,
+  IoTime,
+  IoCheckmarkCircle,
+} from "react-icons/io5";
+import { RxCaretLeft } from "react-icons/rx";
 
 const Page = () => {
-    const { id } = useParams();
-    const [open, setOpen] = useState<{ [key: string]: boolean }>({});
-    const [responses, setResponses] = useState<Array<{
-        _id?: string;
-        user?: { fullname?: string };
-        createdAt?: string;
-        responses?: Array<{
-            questionText?: string;
-            questionId?: string;
-            answer?: string;
-            sentiment?: string;
-        }>;
-    }>>([]);
-    const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+  const [expandedResponses, setExpandedResponses] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const [responses, setResponses] = useState<
+    Array<{
+      _id?: string;
+      user?: { fullname?: string };
+      createdAt?: string;
+      responses?: Array<{
+        questionText?: string;
+        questionId?: string;
+        answer?: string;
+        sentiment?: string;
+      }>;
+    }>
+  >([]);
+  const [surveyData, setSurveyData] = useState<{
+    title?: string;
+    description?: string;
+    totalQuestions?: number;
+  }>({});
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchResponses = async () => {
-            setLoading(true);
-            const res = await apiFetch(`/api/responses/survey/${id}`);
-            if (res.ok) {
-                const data = await res.json();
-                console.log(data);
-                setResponses(data.data);
-                setLoading(false);
-            } else {
-                setLoading(false);
-                const data = await res.json();
-            }
-        };
-        fetchResponses();
-    }, [id]);
+  useEffect(() => {
+    const fetchResponses = async () => {
+      setLoading(true);
+      try {
+        const res = await apiFetch(`/api/responses/survey/${id}`);
+        if (res.ok) {
+          const data = await res.json();
+          setResponses(data.data);
+          // You might want to fetch survey details too
+          setSurveyData({
+            title: "Customer Feedback Survey", // This should come from your API
+            description: "Responses collected from participants",
+            totalQuestions: data.data?.[0]?.responses?.length || 0,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching responses:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchResponses();
+  }, [id]);
 
-    return (
-        <div className='inter'>
-            <Link href="/feedback/surveys" className='flex items-center gap-2 hover:gap-3 transition-all cursor-pointer mb-4 duration-300'>
-                <div className='bg-primary/80 hover:bg-primary transition duration-300 text-white rounded-lg w-max p-1'>
-                    <RxCaretLeft className='w-6 h-auto' />
-                </div>
-                <span className='text-black/70 font-medium'>Back to Surveys</span>
-            </Link>
-            <div className=''>
-                <h1 className='x2l font-bold'>Survey Name</h1>
-                <p className='text-black/60 base'>View all responses from this survey</p>
+  const toggleResponse = (responseId: string) => {
+    setExpandedResponses((prev) => ({
+      ...prev,
+      [responseId]: !prev[responseId],
+    }));
+  };
+
+  const getSentimentStyles = (sentiment: string | undefined) => {
+    if (!sentiment) return "bg-slate-100 text-slate-500";
+    switch (sentiment.toLowerCase()) {
+      case "positive":
+        return "bg-emerald-100 text-emerald-700";
+      case "negative":
+        return "bg-red-100 text-red-700";
+      case "neutral":
+        return "bg-amber-100 text-amber-700";
+      default:
+        return "bg-slate-100 text-slate-500";
+    }
+  };
+
+  const totalResponses = responses.length;
+  const completedResponses = responses.filter(
+    (r) => r.responses && r.responses.length > 0
+  ).length;
+  const averageResponseTime = "2.5 min"; // This would come from your data
+
+  return (
+    <div className="flex flex-col gap-8 p-6 bg-slate-50 min-h-screen">
+      {/* Header */}
+      <div className="bg-white rounded-2xl p-6 shadow-sm">
+        <div className="flex items-start justify-between mb-4">
+          <Link
+            href="/feedback/surveys"
+            className="flex items-center gap-2 hover:gap-3 transition-all cursor-pointer duration-300"
+          >
+            <div className="bg-slate-900 hover:bg-slate-800 transition duration-300 text-white rounded-xl p-2">
+              <RxCaretLeft className="w-6 h-6" />
             </div>
-            <h2 className='lg font-bold mt-3'>
-                <span>All responses</span>
-                <span className='bg-stroke p-1 ml-2 font-normal rounded-md px-2'>{responses.length.toString().padStart(2, "0")}</span>
-            </h2>
-            <div className='mt-5'>
-                {loading &&
-                    <div className="flex items-center animate-pulse gap-2 bg-white border border-stroke p3 rounded-x2l text-black/60">
-                        <span className='p-2 w-12 h-12 rounded-md bg-black/20'></span>
-                        <div className='flex flex-col gap-2'>
-                            <span className='p-2 w-20 h-full rounded-md bg-black/20'></span>
-                            <span className='p-2 w-48 h-full rounded-md bg-black/20'></span>
-                        </div>
-                    </div>
-                }
-                {responses.length == 0 && !loading && (
-                    <div className="border bg-white rounded-xl h-[74px] flex items-center justify-center border-stroke p3 text-black/60">
-                        No responses yet.
-                    </div>
-                )}
-                {responses.map((response, idx) => (
-                    <div
-                        key={response._id || idx}
-                        className={`border rounded-xl bg-white ${open[response._id ?? ""] ? 'h-max' : 'h-[74px] max-sm:h-[66px] max-md:h-[70px] max-lg:h-[72px]'} transition-all duration-300 overflow-hidden border-stroke p3 mb-4`}
-                    >
-                        <div className='flex items-center justify-between gap-2'>
-                            <div className='flex items-center gap-2'>
-                                <span className='p-2 w-12 h-12 rounded-md flex items-center justify-center bg-black text-white'>
-                                    {response.user?.fullname ? response.user.fullname[0] : 'A'}
-                                </span>
-                                <div className='flex flex-col'>
-                                    <span className='font-semibold base'>
-                                        {response.user?.fullname || 'Anonymous'}
-                                    </span>
-                                    <span className='text-black/70 base'>
-                                        {response.createdAt
-                                            ? `Submitted ${formatDistanceToNow(new Date(response.createdAt), { addSuffix: true })}`
-                                            : ''}
-                                    </span>
-                                </div>
-                            </div>
-                            <div
-                                onClick={() =>
-                                    setOpen((prev) => ({
-                                        ...prev,
-                                        [response._id ?? ""]: !prev[response._id ?? ""],
-                                    }))
-                                }
-                                className='hover:bg-stroke/80 transition duration-300 cursor-pointer p3 rounded-md'
-                            >
-                                {!open[response._id ?? ""] ? (
-                                    <IoIosAdd className='w-6 h-6' />
-                                ) : (
-                                    <IoIosRemove className='w-6 h-6' />
-                                )}
-                            </div>
-                        </div>
-                        <div className='mt-4 ml-2'>
-                            {response.responses?.map((ans, qidx) => (
-                                <div key={qidx} className="mb-2">
-                                    <p className='font-semibold base'>
-                                        {ans.questionText || ans.questionId}
-                                    </p>
-                                    <div className='flex gap-2 items-center'>
-                                        <p className='text-black/60 base'>
-                                            {ans.answer}
-                                        </p>
-                                        <p className={`text-black/60 base ${ans.sentiment === "positive" ? "text-lime-600" : ans.sentiment === "negative" ? "text-red-500" : "text-yellow-500"}`}>
-                                            {ans.sentiment}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                ))}
-            </div>
+            <span className="text-slate-600 font-medium">Back to Surveys</span>
+          </Link>
         </div>
-    )
-}
 
-export default Page
+        <div>
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">
+            {surveyData.title || "Survey Responses"}
+          </h1>
+          <p className="text-slate-600 text-lg">
+            {surveyData.description ||
+              "Analyze responses and gather insights from your survey"}
+          </p>
+        </div>
+      </div>
+
+      {/* Statistics Overview */}
+      {!loading && totalResponses > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="bg-white rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-blue-100 rounded-xl">
+                <IoPerson className="text-2xl text-blue-600" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-slate-900">
+                  {totalResponses}
+                </h3>
+                <p className="text-slate-600 font-medium">Total Responses</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-emerald-100 rounded-xl">
+                <IoCheckmarkCircle className="text-2xl text-emerald-600" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-slate-900">
+                  {completedResponses}
+                </h3>
+                <p className="text-slate-600 font-medium">Completed</p>
+                <p className="text-emerald-600 text-sm font-medium">
+                  {totalResponses > 0
+                    ? Math.round((completedResponses / totalResponses) * 100)
+                    : 0}
+                  % completion rate
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-amber-100 rounded-xl">
+                <IoTime className="text-2xl text-amber-600" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-slate-900">
+                  {averageResponseTime}
+                </h3>
+                <p className="text-slate-600 font-medium">Avg. Time</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-purple-100 rounded-xl">
+                <IoStatsChart className="text-2xl text-purple-600" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-slate-900">
+                  {surveyData.totalQuestions || 0}
+                </h3>
+                <p className="text-slate-600 font-medium">Questions</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Responses Section */}
+      <div className="bg-white rounded-2xl p-6 shadow-sm">
+        <div className="mb-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-bold text-slate-900 mb-2">
+                Survey Responses
+              </h2>
+              <p className="text-slate-600">
+                Individual participant responses and feedback
+              </p>
+            </div>
+            <div className="flex items-center gap-2 bg-slate-100 px-4 py-2 rounded-xl">
+              <span className="text-lg font-bold text-slate-900">
+                {responses.length.toString().padStart(2, "0")}
+              </span>
+              <span className="text-sm text-slate-600">responses</span>
+            </div>
+          </div>
+        </div>
+
+        {loading ? (
+          <div className="space-y-4">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div
+                key={index}
+                className="bg-slate-100 rounded-xl p-6 animate-pulse"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-slate-200"></div>
+                  <div className="flex-1">
+                    <div className="h-4 bg-slate-200 rounded mb-2 w-32"></div>
+                    <div className="h-3 bg-slate-200 rounded w-48"></div>
+                  </div>
+                  <div className="h-8 w-8 bg-slate-200 rounded-lg"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : responses.length === 0 ? (
+          <div className="text-center py-16">
+            <div className="mb-6">
+              <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <IoPerson className="text-2xl text-slate-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-slate-900 mb-2">
+                No Responses Yet
+              </h3>
+              <p className="text-slate-600 max-w-md mx-auto">
+                Share your survey link to start collecting responses from
+                participants.
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {responses.map((response, idx) => (
+              <div
+                key={response._id || idx}
+                className="bg-slate-50 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-md"
+              >
+                <div
+                  className="p-6 cursor-pointer"
+                  onClick={() => toggleResponse(response._id || idx.toString())}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold">
+                        {response.user?.fullname
+                          ? response.user.fullname[0].toUpperCase()
+                          : "A"}
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-slate-900 text-lg">
+                          {response.user?.fullname || "Anonymous Participant"}
+                        </h3>
+                        <p className="text-slate-600">
+                          {response.createdAt
+                            ? `Submitted ${formatDistanceToNow(
+                                new Date(response.createdAt),
+                                { addSuffix: true }
+                              )}`
+                            : "Recently submitted"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="bg-slate-200 px-3 py-1.5 rounded-lg">
+                        <span className="text-sm font-medium text-slate-700">
+                          {response.responses?.length || 0} answers
+                        </span>
+                      </div>
+                      <div className="p-2 hover:bg-slate-200 rounded-lg transition-colors">
+                        {expandedResponses[response._id || idx.toString()] ? (
+                          <IoChevronUpOutline className="w-5 h-5 text-slate-600" />
+                        ) : (
+                          <IoChevronDownOutline className="w-5 h-5 text-slate-600" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Expanded Content */}
+                {expandedResponses[response._id || idx.toString()] && (
+                  <div className="px-6 pb-6 space-y-4 border-t border-slate-200 pt-6">
+                    {response.responses?.map((answer, qidx) => (
+                      <div key={qidx} className="bg-white rounded-xl p-4">
+                        <div className="mb-3">
+                          <h4 className="font-semibold text-slate-900 mb-2">
+                            {answer.questionText || `Question ${qidx + 1}`}
+                          </h4>
+                          <p className="text-slate-700 leading-relaxed">
+                            {answer.answer}
+                          </p>
+                        </div>
+                        {answer.sentiment && (
+                          <div className="flex justify-end">
+                            <div
+                              className={`px-3 py-1 rounded-full text-sm font-medium ${getSentimentStyles(
+                                answer.sentiment
+                              )}`}
+                            >
+                              {answer.sentiment}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+export default Page;

@@ -201,7 +201,7 @@ const ReportsTable = ({ data, columns, onEdit, onDelete, loading }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200/80 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden">
       {/* Header Controls */}
       <div className="bg-gradient-to-r from-gray-50 to-gray-100/50 px-6 py-4 border-b border-gray-200">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">

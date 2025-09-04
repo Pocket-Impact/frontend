@@ -1,40 +1,73 @@
 import React from 'react'
 import { VscFeedback } from 'react-icons/vsc'
+import { formatDistanceToNow } from 'date-fns'
 import FeedbackDetails from './FeedbackDetails'
 
 const FeedbackCard: React.FC<{ feedback: any }> = ({ feedback }) => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false)
+    
+    const getSentimentStyles = (sentiment: string | undefined) => {
+        if (!sentiment) return 'bg-slate-100 text-slate-500'
+        switch (sentiment.toLowerCase()) {
+            case 'positive':
+                return 'bg-emerald-100 text-emerald-700'
+            case 'negative':
+                return 'bg-red-100 text-red-700'
+            case 'neutral':
+                return 'bg-amber-100 text-amber-700'
+            default:
+                return 'bg-slate-100 text-slate-500'
+        }
+    }
+
     return (
-        <div onClick={() => setOpen(!open)} className='bg-white inter cursor-pointer border flex flex-col gap-4 border-stroke p4 rounded-lg'>
+        <>
+        <div 
+            onClick={() => setOpen(!open)} 
+            className='shadow-md inter cursor-pointer hover:shadow-md transition-all duration-300 hover:-translate-y-1 rounded-2xl p-6 group'
+        >
             <FeedbackDetails feedback={feedback} open={open} close={() => setOpen(false)} />
-            <div className='flex justify-between items-start'>
-                <div className='flex gap-2 items-center'>
-                    <div className='bg-primary p-2 rounded-sm w-max text-white'>
-                        <VscFeedback className='w-4 h-auto max-lg:w-3.5 max-md:w-3 max-sm:w-2.5' />
+                
+                {/* Header */}
+                <div className='flex justify-between items-start mb-4'>
+                    <div className='flex gap-3 items-center'>
+                        <div className='bg-slate-900 p-3 rounded-xl text-white group-hover:bg-slate-800 transition-colors'>
+                            <VscFeedback className='w-5 h-5' />
+                        </div>
+                        <div>
+                            <div className='font-bold text-slate-900 uppercase tracking-wide text-sm'>
+                                {feedback.category}
+                            </div>
+                            <div className='text-slate-500 text-sm'>
+                                {feedback.createdAt ? formatDistanceToNow(new Date(feedback.createdAt), { addSuffix: true }) : 'Recent'}
+                            </div>
+                        </div>
                     </div>
-                    <div className='font-semibold base uppercase'>{feedback.category}</div>
+                    
+                    <div className={`px-3 py-1.5 rounded-full text-sm font-semibold ${getSentimentStyles(feedback.sentiment)}`}>
+                        {feedback.sentiment || 'Analyzing...'}
+                    </div>
                 </div>
-                <div
-                    className={`
-                        ${!feedback.sentiment ? "bg-gray-100" : ""}
-                        ${feedback.sentiment && feedback.sentiment.toLowerCase() === 'positive' ? "bg-lime-200/70 text-lime-500" : ""}
-                        ${feedback.sentiment && feedback.sentiment.toLowerCase() === 'negative' ? "bg-orange-200/70 text-orange-500" : ""}
-                        ${feedback.sentiment && feedback.sentiment.toLowerCase() === 'neutral' ? "bg-yellow-200/70 text-yellow-500" : ""}
-                        xs px-1.5 p-1 rounded-sm font-semibold flex items-center gap-1 capitalize
-                    `}
-                >
-                    <span>{feedback.sentiment || 'Not analyzed'}</span>
+
+                {/* Content */}
+                <div className='space-y-4'>
+                    <p className='text-slate-700 leading-relaxed line-clamp-3'>
+                        {feedback.message}
+                    </p>
+                    
+                    {/* Metadata */}
+                    <div className='flex justify-between items-center pt-2'>
+                        <div className='text-sm text-slate-500'>
+                            {feedback.user?.name || 'Anonymous'}
+                        </div>
+                        <div className='text-sm text-slate-400 group-hover:text-slate-600 transition-colors flex items-center gap-2'>
+                            <div className='w-2 h-2 bg-slate-300 rounded-full group-hover:bg-slate-400 transition-colors'></div>
+                            Click to expand
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className='h-full flex flex-col justify-between gap-4'>
-                <p className='base text-black/80 line-clamp-3'>
-                    {feedback.message}
-                </p>
-                <div className='flex gap-2 justify-end sm font-semibold text-black/60'>
-                    Click to view details
-                </div>
-            </div>
-        </div>
+        </>
     )
 }
 

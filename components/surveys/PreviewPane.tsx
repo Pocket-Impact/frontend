@@ -16,7 +16,7 @@ export default function PreviewPane({
   questions,
 }: Props) {
   return (
-    <div className="bg-slate-50 flex-1 h-full min-h-0 overflow-y-auto text-start p-6 flex flex-col">
+    <div className="bg-slate-50s h-full min-h-0 overflow-y-auto text-start p-6 flex flex-col">
       {/* Header Section */}
       <div className="bg-white rounded-2xl p-6 mb-6 shadow-sm">
         <div className="flex justify-between items-start mb-4">
@@ -35,7 +35,7 @@ export default function PreviewPane({
       </div>
 
       {/* Form Section */}
-      <div className="bg-white rounded-2xl p-6 shadow-sm flex-1">
+      <div className="bg-white rounded-2xl p-6 shadow-sm">
         <form className="space-y-8">
           {questions.map((q, index) => (
             <div key={q.id} className="space-y-4">
@@ -129,7 +129,7 @@ export default function PreviewPane({
           {/* Submit Button */}
           {questions.length > 0 && (
             <div className="pt-4">
-              <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 shadow-sm hover:shadow-md">
+              <button className="w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 shadow-sm hover:shadow-md">
                 Submit Answer
               </button>
             </div>

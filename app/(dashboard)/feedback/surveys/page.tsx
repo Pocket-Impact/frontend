@@ -65,7 +65,7 @@ const Page = () => {
   );
 
   return (
-    <div className="flex flex-col gap-8 p-6 bg-slate-50 min-h-screen">
+    <div className="flex flex-col gap-8 min-h-screen">
       {/* Header Section */}
       <div className="bg-white rounded-2xl p-6 shadow-sm">
         <div className="flex justify-between items-start">

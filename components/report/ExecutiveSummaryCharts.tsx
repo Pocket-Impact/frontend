@@ -12,10 +12,11 @@ export interface ExecutiveSummaryChartsProps {
   sentimentOverview: Array<{ _id: string; count: number }>;
 }
 
+// Use blue and green for sentiment colors
 const sentimentColors: Record<string, string> = {
-  positive: "#22c55e",
-  neutral: "#64748b",
-  negative: "#ef4444",
+  positive: "#22c55e", // green
+  neutral: "#3b82f6", // blue
+  negative: "#3b82f6", // blue
 };
 
 const ExecutiveSummaryCharts: React.FC<ExecutiveSummaryChartsProps> = ({
@@ -24,47 +25,87 @@ const ExecutiveSummaryCharts: React.FC<ExecutiveSummaryChartsProps> = ({
 }) => {
   // Donut chart for sentiment
   const sentimentOption = {
-    tooltip: { trigger: "item" },
-    legend: { top: "5%", left: "center" },
+    tooltip: {
+      trigger: "item",
+      backgroundColor: "#1f2937",
+      borderColor: "transparent",
+      textStyle: { color: "#ffffff" },
+    },
+    legend: {
+      show: false,
+    },
     series: [
       {
         name: "Sentiment",
         type: "pie",
-        radius: ["50%", "70%"],
+        radius: ["60%", "85%"],
+        center: ["50%", "50%"],
         avoidLabelOverlap: false,
         itemStyle: {
-          borderRadius: 10,
-          borderColor: "#fff",
-          borderWidth: 2,
+          borderRadius: 8,
+          borderColor: "#ffffff",
+          borderWidth: 3,
         },
-        label: { show: false, position: "center" },
+        label: { show: false },
         emphasis: {
-          label: { show: true, fontSize: 18, fontWeight: "bold" },
+          scale: true,
+          scaleSize: 5,
         },
         labelLine: { show: false },
-        data: sentimentOverview.map((s) => ({
-          value: s.count,
-          name: s._id.charAt(0).toUpperCase() + s._id.slice(1),
-          itemStyle: { color: sentimentColors[s._id] || "#64748b" },
-        })),
+        data: sentimentOverview.map((s, i) => {
+          // If _id is missing, fallback to label
+          const labels = ["positive", "neutral", "negative"];
+          const label = s._id ? s._id : labels[i] || `sentiment${i + 1}`;
+          return {
+            value: s.count,
+            name: label.charAt(0).toUpperCase() + label.slice(1),
+            itemStyle: { color: sentimentColors[label] || "#3b82f6" },
+          };
+        }),
       },
     ],
   };
 
   // Bar chart for key metrics
   const metricsOption = {
-    tooltip: {},
+    tooltip: {
+      backgroundColor: "#1f2937",
+      borderColor: "transparent",
+      textStyle: { color: "#ffffff" },
+    },
     xAxis: {
       type: "category",
       data: ["Surveys", "Responses", "Feedbacks", "Users"],
-      axisLabel: { fontWeight: "bold", color: "#64748b" },
+      axisLabel: {
+        fontWeight: "600",
+        color: "#64748b",
+        fontSize: 12,
+      },
+      axisLine: { show: false },
+      axisTick: { show: false },
     },
     yAxis: {
       type: "value",
-      axisLabel: { color: "#64748b" },
-      splitLine: { show: false },
+      axisLabel: {
+        color: "#94a3b8",
+        fontSize: 11,
+      },
+      splitLine: {
+        lineStyle: {
+          color: "#f1f5f9",
+          width: 1,
+        },
+      },
+      axisLine: { show: false },
+      axisTick: { show: false },
     },
-    grid: { left: 30, right: 30, top: 40, bottom: 30 },
+    grid: {
+      left: 40,
+      right: 40,
+      top: 30,
+      bottom: 50,
+      containLabel: true,
+    },
     series: [
       {
         data: [
@@ -75,76 +116,128 @@ const ExecutiveSummaryCharts: React.FC<ExecutiveSummaryChartsProps> = ({
         ],
         type: "bar",
         itemStyle: {
-          borderRadius: [8, 8, 0, 0],
+          borderRadius: [12, 12, 0, 0],
           color: function (params: any) {
-            const palette = ["#22c55e", "#3b82f6", "#a855f7", "#f59e42"];
+            const palette = ["#10b981", "#3b82f6", "#8b5cf6", "#f59e0b"];
             return palette[params.dataIndex] || "#64748b";
           },
         },
-        barWidth: 40,
+        barWidth: "60%",
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowOffsetY: 0,
+            shadowColor: "rgba(0, 0, 0, 0.1)",
+          },
+        },
       },
     ],
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      {/* Key Metrics Bar Chart */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border flex flex-col items-center justify-center">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
-          Key Metrics
-        </h3>
-        <ReactECharts
-          option={metricsOption}
-          style={{ height: 320, width: "100%" }}
-        />
-        <div className="flex justify-center gap-6 mt-4">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-green-700">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Key Metrics Card */}
+      <div className="bg-white rounded-2xl p-6 shadow-sm">
+        <div className="mb-6">
+          <h3 className="text-xl font-semibold text-slate-800 mb-2">
+            Key Metrics Overview
+          </h3>
+          <p className="text-sm text-slate-500">
+            Total platform activity summary
+          </p>
+        </div>
+
+        <div className="mb-6">
+          <ReactECharts
+            option={metricsOption}
+            style={{ height: 280, width: "100%" }}
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-emerald-50 rounded-xl p-4 text-center">
+            <div className="text-2xl font-bold text-emerald-600 mb-1">
               {keyMetrics.totalSurveys}
             </div>
-            <div className="text-sm text-gray-600">Surveys</div>
+            <div className="text-sm font-medium text-emerald-700">Surveys</div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-blue-700">
+          <div className="bg-blue-50 rounded-xl p-4 text-center">
+            <div className="text-2xl font-bold text-blue-600 mb-1">
               {keyMetrics.totalResponses}
             </div>
-            <div className="text-sm text-gray-600">Responses</div>
+            <div className="text-sm font-medium text-blue-700">Responses</div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-purple-700">
+          <div className="bg-violet-50 rounded-xl p-4 text-center">
+            <div className="text-2xl font-bold text-violet-600 mb-1">
               {keyMetrics.totalFeedbacks}
             </div>
-            <div className="text-sm text-gray-600">Feedbacks</div>
+            <div className="text-sm font-medium text-violet-700">Feedbacks</div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-orange-700">
+          <div className="bg-amber-50 rounded-xl p-4 text-center">
+            <div className="text-2xl font-bold text-amber-600 mb-1">
               {keyMetrics.totalUsers}
             </div>
-            <div className="text-sm text-gray-600">Users</div>
+            <div className="text-sm font-medium text-amber-700">Users</div>
           </div>
         </div>
       </div>
-      {/* Sentiment Donut Chart */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border flex flex-col items-center justify-center">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
-          Sentiment Overview
-        </h3>
-        <ReactECharts
-          option={sentimentOption}
-          style={{ height: 320, width: "100%" }}
-        />
-        <div className="flex justify-center gap-6 mt-4">
-          {sentimentOverview.map((s) => (
-            <div key={s._id} className="text-center">
+
+      {/* Sentiment Overview Card */}
+      <div className="bg-white rounded-2xl p-6 shadow-sm">
+        <div className="mb-6">
+          <h3 className="text-xl font-semibold text-slate-800 mb-2">
+            Sentiment Analysis
+          </h3>
+          <p className="text-sm text-slate-500">
+            Feedback sentiment distribution
+          </p>
+        </div>
+
+        <div className="mb-6">
+          <ReactECharts
+            option={sentimentOption}
+            style={{ height: 280, width: "100%" }}
+          />
+        </div>
+
+        <div className="grid grid-cols-3 gap-3">
+          {sentimentOverview.map((s, i) => {
+            const labels = ["positive", "neutral", "negative"];
+            const label = s._id ? s._id : labels[i] || `sentiment${i + 1}`;
+            const colorMap: Record<string, { bg: string; text: string }> = {
+              positive: { bg: "bg-emerald-50", text: "text-emerald-600" },
+              neutral: { bg: "bg-blue-50", text: "text-blue-600" },
+              negative: { bg: "bg-blue-50", text: "text-blue-600" },
+            };
+            const colors = colorMap[label] || {
+              bg: "bg-blue-50",
+              text: "text-blue-600",
+            };
+            return (
               <div
-                className="text-lg font-bold"
-                style={{ color: sentimentColors[s._id] || "#64748b" }}
+                key={label}
+                className={`${colors.bg} rounded-xl p-4 text-center`}
               >
-                {s.count}
+                <div className={`text-xl font-bold ${colors.text} mb-1`}>
+                  {s.count}
+                </div>
+                <div
+                  className={`text-sm font-medium ${colors.text} capitalize`}
+                >
+                  {label}
+                </div>
               </div>
-              <div className="text-sm text-gray-600 capitalize">{s._id}</div>
-            </div>
-          ))}
+            );
+          })}
+        </div>
+
+        {/* Total Sentiment Count */}
+        <div className="mt-4 text-center">
+          <div className="text-xs text-slate-400">
+            Total Analyzed:{" "}
+            {sentimentOverview.reduce((sum, s) => sum + s.count, 0)} feedbacks
+          </div>
         </div>
       </div>
     </div>

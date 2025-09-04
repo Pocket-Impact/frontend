@@ -344,7 +344,7 @@ export default function FormBuilder({
             </div>
           </div>
 
-          <div className="bg-slate-50 rounded-2xl p-6 h-full overflow-y-auto">
+          <div className="rounded-2xl p-6 h-full overflow-y-auto">
             <PreviewPane
               title={title}
               description={description}

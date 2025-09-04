@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import EditModal from "@/components/report/EditModal";
 import ReportsTable from "@/components/report/ReportsTable";
-import TopicOverview from "@/components/report/TopicOverview";
 import ExecutiveSummaryCharts from "@/components/report/ExecutiveSummaryCharts";
 import { apiFetch } from "@/utils/apiFetch";
 import { usePathname } from "next/navigation";
@@ -28,7 +27,6 @@ const page = () => {
     category: "",
     role: "",
   });
-  const pathname = usePathname();
 
   const staticData = {
     surveys: [
@@ -473,6 +471,14 @@ const page = () => {
               )
             : 0;
           break;
+        case "users":
+          value = Array.isArray(reportData)
+            ? reportData.reduce(
+                (sum: number, item: any) => sum + (item.count || 0),
+                0
+              )
+            : 0;
+          break;
         case "executive-summary":
           value = reportData?.keyMetrics?.totalSurveys || 0;
           break;
@@ -511,19 +517,69 @@ const page = () => {
         </div>
 
         {/* Overview Cards (replacing report type selection) */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
-          {getOverviewCardsData().map((card) => (
-            <OverviewCard
-              key={card.index}
-              card={card}
-              index={card.index}
-              onClick={handleCardClick}
-            />
-          ))}
-        </div>
+        {/* Overview Cards with Date/Time Panel */}
+<div className="flex flex-col lg:flex-row gap-6 mb-8">
+  {/* Cards Section - Left Side */}
+  <div className="flex-1">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+      {getOverviewCardsData().map((card) => (
+        <OverviewCard
+          key={card.index}
+          card={card}
+          index={card.index}
+          onClick={handleCardClick}
+        />
+      ))}
+    </div>
+  </div>
 
+  {/* Date/Time Panel - Right Side */}
+  <div className="w-full lg:w-80 xl:w-96">
+    <div className="bg-white rounded-2xl p-6 shadow-sm h-full">
+      {/* Current Time Display */}
+      <div className="mb-6">
+        <div className="text-3xl font-bold text-slate-800 mb-1">
+          {new Date().toLocaleTimeString([], { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            hour12: false 
+          })}
+        </div>
+        <div className="text-sm text-slate-500">
+          Current Time
+        </div>
+      </div>
+
+      {/* Date Information */}
+      <div className="bg-slate-50 rounded-xl p-4 mb-6">
+        <div className="text-lg font-semibold text-slate-800 mb-2">
+          {new Date().toLocaleDateString('en-US', { 
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </div>
+        <div className="flex items-center gap-2 text-sm text-slate-600">
+          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+          <span>Today</span>
+        </div>
+      </div>
+
+      {/* Time Zone Info */}
+      <div className="mt-6 pt-4 border-t border-slate-100">
+        <div className="flex items-center justify-between text-xs text-slate-500">
+          <span>Time Zone</span>
+          <span>{Intl.DateTimeFormat().resolvedOptions().timeZone}</span>
+        </div>
+      </div>
+    </div>
+  {/* );
+}; */}
+  </div>
+</div>
         {/* Report Content */}
-        <div className="bg-white rounded-lg shadow-sm border border-green-700/40">
+        <div className="bg-white rounded-xl shadow-sm">
           {selectedReport === "executive-summary" ? (
             <div className="p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-6">

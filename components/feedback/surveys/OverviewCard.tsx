@@ -21,18 +21,18 @@ const handleClick = () => {
 
   return (
     <div
-      className="bg-white p-4 flex flex-col justify-between gap-2 rounded-xl cursor-pointer"
+      className="bg-white shadow-sm p-4 flex flex-col justify-between gap-2 rounded-xl cursor-pointer"
       onClick={handleClick}
     >
       <div className="flex items-center justify-between gap-2">
         <span className="font-medium sm">{card.title}</span>
-        <div className="rounded-full h-max bg-[#f8f4f9] text-[#9457ca] p-2">
-          <card.icon className="w-4 max-lg:w-3.5 max-md:w-3 h-auto" />
+        <div className="rounded-full h-max bg-[#f8f4f9] p-2">
+          <card.icon className="w-4 max-lg:w-3.5 max-md:w-3 h-auto text-blue-600" />
         </div>
       </div>
       <div className="flex flex-col gap-1">
         <span className="text-black font-medium lg">
-          {(card.value || "0").toString().padStart(2, "0")}
+          <span className="font-bold text-2xl">{(card.value || "0").toString().padStart(2, "0")}</span>
           {card.percent && "%"}{" "}
           {card.title.split(" ").length > 1
             ? card.title.split(" ")[1].toLowerCase()

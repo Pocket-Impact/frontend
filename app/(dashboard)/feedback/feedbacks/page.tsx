@@ -102,9 +102,9 @@ const page = () => {
       : 0;
 
   return (
-    <div className="inter flex flex-col gap-8 p-6 min-h-screen">
+    <div className="inter flex flex-col gap-8 px-6 py-1 min-h-screen">
       {/* Header Section */}
-      <div className="rounded-2xl p-3 shadow-sm">
+      <div className="rounded-2xl p-6 shadow-sm bg-white">
         <div className="flex max-md:flex-col gap-4 justify-between items-start">
           <div className="flex-1">
             <h1 className="text-3xl font-bold text-slate-900 mb-2">

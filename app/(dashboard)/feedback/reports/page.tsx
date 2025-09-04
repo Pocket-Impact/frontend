@@ -13,17 +13,13 @@ import ReportsTable from "@/components/report/ReportsTable";
 import TopicOverview from "@/components/report/TopicOverview";
 import { apiFetch } from "@/utils/apiFetch";
 
-type ReportType = "surveys" | "responses" | "feedback" | "users" | "executive-summary";
-type EditModalType = { isOpen: boolean; data: any };
-type FiltersType = { startDate: string; endDate: string; category: string; role: string };
-
 const page = () => {
-  const [selectedReport, setSelectedReport] = useState<ReportType>("surveys");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<Record<string, any>>({});
-  const [filteredData, setFilteredData] = useState<any[]>([]);
-  const [editModal, setEditModal] = useState<EditModalType>({ isOpen: false, data: null });
-  const [filters, setFilters] = useState<FiltersType>({
+  const [selectedReport, setSelectedReport] = useState("surveys");
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState({});
+  const [filteredData, setFilteredData] = useState([]);
+  const [editModal, setEditModal] = useState({ isOpen: false, data: null });
+  const [filters, setFilters] = useState({
     startDate: "",
     endDate: "",
     category: "",
@@ -127,7 +123,7 @@ const page = () => {
     { key: "executive-summary", label: "Executive Summary", icon: TrendingUp },
   ];
 
-  const getColumns = (reportType: ReportType): any[] => {
+  const getColumns = (reportType: string) => {
     switch (reportType) {
       case "surveys":
         return [
@@ -199,7 +195,7 @@ const page = () => {
     }
   };
 
-  const fetchReportData = async (reportType: ReportType) => {
+  const fetchReportData = async (reportType: string) => {
     setLoading(true);
     try {
       const response = await apiFetch(`/api/reports/${reportType}`);
@@ -291,11 +287,7 @@ const page = () => {
             mappedData = [];
         }
       } else {
-        if (reportType === "executive-summary") {
-          mappedData = [staticData.executive];
-        } else {
-          mappedData = Array.isArray(staticData[reportType as keyof typeof staticData]) ? staticData[reportType as keyof typeof staticData] : [];
-        }
+        mappedData = (staticData as any)[reportType];
       }
 
       setData((prev) => ({
@@ -304,11 +296,7 @@ const page = () => {
       }));
     } catch (error) {
       console.error("Error fetching report data:", error);
-      if (reportType === "executive-summary") {
-        setData((prev) => ({ ...prev, [reportType]: [staticData.executive] }));
-      } else {
-        setData((prev) => ({ ...prev, [reportType]: Array.isArray(staticData[reportType as keyof typeof staticData]) ? staticData[reportType as keyof typeof staticData] : [] }));
-      }
+      setData((prev) => ({ ...prev, [reportType]: (staticData as any)[reportType] }));
     } finally {
       setLoading(false);
     }
@@ -319,7 +307,7 @@ const page = () => {
   }, [selectedReport]);
 
   useEffect(() => {
-    let filtered = data[selectedReport] || [];
+    let filtered = (data as any)[selectedReport] || [];
 
     // Apply filters
     if (filters.startDate && filters.endDate) {
@@ -346,7 +334,7 @@ const page = () => {
 
   const handleDelete = (rowData: any) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
-      const updated = data[selectedReport].filter(
+      const updated = (data as any)[selectedReport].filter(
         (item: any) => item._id !== rowData._id
       );
       setData((prev) => ({ ...prev, [selectedReport]: updated }));
@@ -354,14 +342,14 @@ const page = () => {
   };
 
   const handleSave = (updatedData: any) => {
-    const updated = data[selectedReport].map((item: any) =>
+    const updated = (data as any)[selectedReport].map((item: any) =>
       item._id === updatedData._id ? updatedData : item
     );
     setData((prev) => ({ ...prev, [selectedReport]: updated }));
   };
 
   const renderExecutiveSummary = () => {
-    const execData = data["executive-summary"] || staticData.executive;
+    const execData = (data as any)["executive-summary"] || (data as any).executive;
     if (!execData) return null;
 
     return (
@@ -404,7 +392,6 @@ const page = () => {
           </h3>
           {/* Use TopicOverview for sentiment overview */}
           <TopicOverview
-            // identifier prop removed, not needed
             topTopics={(() => {
               const sentiments = execData.sentimentOverview || [];
               const total =
@@ -441,7 +428,7 @@ const page = () => {
             return (
               <button
                 key={report.key}
-                onClick={() => setSelectedReport(report.key as ReportType)}
+                onClick={() => setSelectedReport(report.key)}
                 className={`p-4 rounded-lg border-2 transition-all duration-200 ${selectedReport === report.key
                     ? "border-green-700 bg-green-50 text-green-700"
                     : "border-gray-200 bg-white text-gray-700 hover:border-green-300 hover:bg-green-25"

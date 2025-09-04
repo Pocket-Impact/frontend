@@ -2,7 +2,7 @@ import React from 'react'
 
 const TopicOverview = ({ topTopics }: { topTopics: any[] }) => {
     return (
-        <div className='bg-white border flex flex-col gap-3 border-stroke p4 rounded-lg'>
+        <div className='bg-white flex flex-col h-full gap-3 p4 rounded-xl'>
             <div className='flex flex-col'>
                 <h2 className='lg font-semibold'>
                     Trending topics
@@ -10,7 +10,6 @@ const TopicOverview = ({ topTopics }: { topTopics: any[] }) => {
                 <p className='sm -mt-1 text-black/60'>Most mentioned topics in feedback</p>
             </div>
             {topTopics.length > 0 ? (
-
                 <div className='flex flex-col gap-2'>
                     {topTopics?.map((topic, idx) => (
                         <div key={topic.category || topic.name} className='flex items-center w-full gap-2'>

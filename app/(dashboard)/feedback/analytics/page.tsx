@@ -11,14 +11,14 @@ import { apiFetch } from '@/utils/apiFetch'
 import React, { useEffect, useState } from 'react'
 import { HiOutlineEye } from 'react-icons/hi2'
 import { IoAdd } from 'react-icons/io5'
-import { RiSurveyLine } from 'react-icons/ri'
+import { MdFeedback } from 'react-icons/md'
+import { RiSurveyFill, RiSurveyLine } from 'react-icons/ri'
 import { VscFeedback } from 'react-icons/vsc'
 
 const page = () => {
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
   const overviewCards = [
     {
       value: dashboardData?.totals?.surveys?.toString().padStart(2, '0'),
@@ -26,28 +26,22 @@ const page = () => {
       title: "Total Surveys",
       subtitle: "All surveys",
       desc: "Create a new survey",
-      link: "/feedback/surveys/new",
-      secondaryIcon: <IoAdd />,
-      icon: RiSurveyLine,
+      icon: RiSurveyFill,
     },
     {
       value: dashboardData?.totals?.feedbacks?.toString().padStart(2, '0'),
-      increase: 60,
+      increase: 60.5,
       title: "Total Feedback",
       subtitle: "All feedbacks",
-      link: "/feedback/feedbacks",
       desc: "View feedbacks",
-      secondaryIcon: <HiOutlineEye />,
-      icon: VscFeedback,
+      icon: MdFeedback,
     },
     {
       value: dashboardData?.totals?.responses?.toString().padStart(2, '0'),
-      increase: 20,
-      title: "Responses",
+      increase: -20,
+      title: "Survey Responses",
       subtitle: "All responses",
       desc: "View surveys",
-      link: "/feedback/surveys",
-      secondaryIcon: <HiOutlineEye />,
       icon: RiSurveyLine,
     },
     {
@@ -64,12 +58,9 @@ const page = () => {
       title: "Positive sentiment",
       subtitle: "All responses",
       desc: "View surveys",
-      link: "/feedback/surveys",
-      secondaryIcon: <HiOutlineEye />,
-      icon: RiSurveyLine,
+      icon: RiSurveyFill
     },
   ];
-
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -116,9 +107,15 @@ const page = () => {
                 <TopicAnalysis />
                 <SentimentOverview analytics={true} sentimentAnalysis={dashboardData?.sentimentAnalysis} />
                 <div className='lg:col-span-5 grid lg:grid-cols-3 lg:gap-6'>
-                  <FeedbackOverview analytics={true} dailyFeedbacks={dashboardData?.dailyFeedbacks} />
-                  <TopicOverview topTopics={dashboardData?.topTopics} />
-                  <RecentFeedback analytics={true} recentFeedbacks={dashboardData?.recentFeedbacks} />
+                  <div className='lg:col-span-3'>
+                    <FeedbackOverview analytics={true} dailyFeedbacks={dashboardData?.dailyFeedbacks} />
+                  </div>
+                  <div className='lg:col-span-2'>
+                    <TopicOverview topTopics={dashboardData?.topTopics} />
+                  </div>
+                  <div className='lg:col-span-5'>
+                    <RecentFeedback analytics={true} recentFeedbacks={dashboardData?.recentFeedbacks} />
+                  </div>
                 </div>
               </div>
             </>

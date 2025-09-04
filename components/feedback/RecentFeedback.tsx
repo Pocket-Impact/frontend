@@ -5,7 +5,7 @@ import { formatDistanceToNow } from 'date-fns';
 
 const RecentFeedback = ({ recentFeedbacks, analytics }: { recentFeedbacks: any[], analytics?: boolean }) => {
   return (
-    <div className={`bg-white border-stroke flex flex-col ${analytics ? 'lg:col-span-3' : 'lg:col-span-2'} gap-2 border p4 rounded-lg min-h-0 flex-1`}>
+    <div className={`bg-white flex flex-col gap-2 p4 rounded-xl min-h-0 flex-1`}>
       <div className='flex flex-col'>
         <h2 className='lg font-semibold'>
           Recent Feedback
@@ -13,9 +13,12 @@ const RecentFeedback = ({ recentFeedbacks, analytics }: { recentFeedbacks: any[]
         <p className='sm -mt-1 text-black/60'>Most recent feedback received</p>
       </div>
       {recentFeedbacks.length > 0 ? (
-        <div className='flex flex-col gap-2'>
-          {recentFeedbacks?.slice(0, 5).map((feedback, index) => (
-            <div key={index} className='p-2 rounded-sm border border-stroke cursor-default flex justify-between items-center'>
+        <div className='flex flex-col'>
+          {recentFeedbacks?.slice(0, 5).map((feedback, index, arr) => (
+            <div
+              key={index}
+              className={`p-2 border-stroke cursor-default flex justify-between items-center ${index !== arr.length - 1 ? 'border-b' : 'mb-1'}`}
+            >
               <div className='flex items-center gap-2'>
                 <div className='flex flex-col'>
                   <span className='sm line-clamp-1'>{feedback.message}</span>

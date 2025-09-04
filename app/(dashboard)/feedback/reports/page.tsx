@@ -123,7 +123,7 @@ const page = () => {
     { key: "executive-summary", label: "Executive Summary", icon: TrendingUp },
   ];
 
-  const getColumns = (reportType) => {
+  const getColumns = (reportType: string) => {
     switch (reportType) {
       case "surveys":
         return [
@@ -154,7 +154,7 @@ const page = () => {
           {
             key: "completionRate",
             header: "Completion Rate",
-            render: (value) => `${value}%`,
+            render: (value: number) => `${value}%`,
           },
           { key: "questionCount", header: "Questions" },
         ];
@@ -168,15 +168,14 @@ const page = () => {
           {
             key: "sentiment",
             header: "Sentiment",
-            render: (value) => (
+            render: (value: string) => (
               <span
-                className={`px-2 py-1 rounded-full text-xs ${
-                  value === "positive"
+                className={`px-2 py-1 rounded-full text-xs ${value === "positive"
                     ? "bg-green-100 text-green-800"
                     : value === "negative"
-                    ? "bg-red-100 text-red-800"
-                    : "bg-gray-100 text-gray-800"
-                }`}
+                      ? "bg-red-100 text-red-800"
+                      : "bg-gray-100 text-gray-800"
+                  }`}
               >
                 {value}
               </span>
@@ -196,7 +195,7 @@ const page = () => {
     }
   };
 
-  const fetchReportData = async (reportType) => {
+  const fetchReportData = async (reportType: string) => {
     setLoading(true);
     try {
       const response = await apiFetch(`/api/reports/${reportType}`);
@@ -208,14 +207,14 @@ const page = () => {
       if (result.status === "success") {
         switch (reportType) {
           case "surveys":
-            mappedData = (result.data.topSurveys || []).map((survey) => ({
+            mappedData = (result.data.topSurveys || []).map((survey: any) => ({
               ...survey,
               _id: `survey - ${survey._id.slice(-5)}`, // 🔥 add fake ID
             }));
             break;
           case "responses":
             const completions = result.data.completionRates || [];
-            mappedData = completions.map((item) => ({
+            mappedData = completions.map((item: any) => ({
               _id: `survey - ${item._id.slice(-4)}`,
               title: item.title,
               count: item.responseCount,
@@ -231,7 +230,7 @@ const page = () => {
             const totalFeedback = result.data.totalFeedbackCount || 0;
 
             // Map each feedback row individually
-            mappedData = categories.map((cat, index) => {
+            mappedData = categories.map((cat: any, index: number) => {
               // Find sentiment for this category (if exists)
               // If sentimentTrends has multiple entries, find one matching this category or use index
               const sentimentItem = sentimentTrends[index]; // fallback to index if no category info
@@ -249,7 +248,7 @@ const page = () => {
             mappedData.summary = {
               totalFeedback,
               categories,
-              sentiments: sentimentTrends.map((s) => s._id?.sentiment),
+              sentiments: sentimentTrends.map((s: any) => s._id?.sentiment),
             };
             break;
 
@@ -262,7 +261,7 @@ const page = () => {
                 totalUsers: stats.totalUsers ?? 0,
                 activeUsers: stats.activeUsers ?? 0,
                 activityRate: `${stats.activityRate ?? 0}%`,
-                roles: roles.map((r) => `${r.role} (${r.count})`).join(", "),
+                roles: roles.map((r: any) => `${r.role} (${r.count})`).join(", "),
               },
             ];
             break;
@@ -272,7 +271,7 @@ const page = () => {
             // Fix sentimentOverview: backend only has count, add default labels
             const sentimentLabels = ["positive", "neutral", "negative"];
             const fixedSentiments = execData.sentimentOverview?.map(
-              (item, index) => ({
+              (item: any, index: number) => ({
                 _id: sentimentLabels[index] || "neutral",
                 count: item.count,
               })
@@ -288,7 +287,7 @@ const page = () => {
             mappedData = [];
         }
       } else {
-        mappedData = staticData[reportType];
+        mappedData = (staticData as any)[reportType];
       }
 
       setData((prev) => ({
@@ -297,7 +296,7 @@ const page = () => {
       }));
     } catch (error) {
       console.error("Error fetching report data:", error);
-      setData((prev) => ({ ...prev, [reportType]: staticData[reportType] }));
+      setData((prev) => ({ ...prev, [reportType]: (staticData as any)[reportType] }));
     } finally {
       setLoading(false);
     }
@@ -308,49 +307,49 @@ const page = () => {
   }, [selectedReport]);
 
   useEffect(() => {
-    let filtered = data[selectedReport] || [];
+    let filtered = (data as any)[selectedReport] || [];
 
     // Apply filters
     if (filters.startDate && filters.endDate) {
-      filtered = filtered.filter((item) => {
+      filtered = filtered.filter((item: any) => {
         const itemDate = item.date || item.createdAt || item._id;
         return itemDate >= filters.startDate && itemDate <= filters.endDate;
       });
     }
 
     if (filters.category) {
-      filtered = filtered.filter((item) => item.category === filters.category);
+      filtered = filtered.filter((item: any) => item.category === filters.category);
     }
 
     if (filters.role) {
-      filtered = filtered.filter((item) => item.role === filters.role);
+      filtered = filtered.filter((item: any) => item.role === filters.role);
     }
 
     setFilteredData(filtered);
   }, [data, selectedReport, filters]);
 
-  const handleEdit = (rowData) => {
+  const handleEdit = (rowData: any) => {
     setEditModal({ isOpen: true, data: rowData });
   };
 
-  const handleDelete = (rowData) => {
+  const handleDelete = (rowData: any) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
-      const updated = data[selectedReport].filter(
-        (item) => item._id !== rowData._id
+      const updated = (data as any)[selectedReport].filter(
+        (item: any) => item._id !== rowData._id
       );
       setData((prev) => ({ ...prev, [selectedReport]: updated }));
     }
   };
 
-  const handleSave = (updatedData) => {
-    const updated = data[selectedReport].map((item) =>
+  const handleSave = (updatedData: any) => {
+    const updated = (data as any)[selectedReport].map((item: any) =>
       item._id === updatedData._id ? updatedData : item
     );
     setData((prev) => ({ ...prev, [selectedReport]: updated }));
   };
 
   const renderExecutiveSummary = () => {
-    const execData = data["executive-summary"] || data.executive;
+    const execData = (data as any)["executive-summary"] || (data as any).executive;
     if (!execData) return null;
 
     return (
@@ -393,12 +392,11 @@ const page = () => {
           </h3>
           {/* Use TopicOverview for sentiment overview */}
           <TopicOverview
-            identifier={"executive-report"}
             topTopics={(() => {
               const sentiments = execData.sentimentOverview || [];
               const total =
-                sentiments.reduce((sum, s) => sum + (s.count || 0), 0) || 1;
-              return sentiments.map((s) => ({
+                sentiments.reduce((sum: number, s: any) => sum + (s.count || 0), 0) || 1;
+              return sentiments.map((s: any) => ({
                 category: s._id,
                 percentage: Math.round(((s.count || 0) / total) * 100),
                 count: s.count || 0,
@@ -431,11 +429,10 @@ const page = () => {
               <button
                 key={report.key}
                 onClick={() => setSelectedReport(report.key)}
-                className={`p-4 rounded-lg border-2 transition-all duration-200 ${
-                  selectedReport === report.key
+                className={`p-4 rounded-lg border-2 transition-all duration-200 ${selectedReport === report.key
                     ? "border-green-700 bg-green-50 text-green-700"
                     : "border-gray-200 bg-white text-gray-700 hover:border-green-300 hover:bg-green-25"
-                }`}
+                  }`}
               >
                 <Icon className="mx-auto mb-2" size={24} />
                 <div className="text-sm font-medium text-center">

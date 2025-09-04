@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="en">
-            <body className={`${bricolageGrotesque.variable} overflow-hidden bg-gray-50 h-screen ${inter.variable} antialiased flex`}>
+            <body className={`${bricolageGrotesque.variable} overflow-hidden bg-background h-screen ${inter.variable} antialiased flex`}>
                 <AlertComponent />
                 <div className="flex w-full h-screen">
                     <Sidebar />

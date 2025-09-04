@@ -11,14 +11,14 @@ import { apiFetch } from '@/utils/apiFetch'
 import React, { useEffect, useState } from 'react'
 import { HiOutlineEye } from 'react-icons/hi2'
 import { IoAdd } from 'react-icons/io5'
-import { RiSurveyLine } from 'react-icons/ri'
+import { MdFeedback } from 'react-icons/md'
+import { RiSurveyFill, RiSurveyLine } from 'react-icons/ri'
 import { VscFeedback } from 'react-icons/vsc'
 
 const page = () => {
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
   const overviewCards = [
     {
       value: dashboardData?.totals?.surveys?.toString().padStart(2, '0'),
@@ -26,43 +26,41 @@ const page = () => {
       title: "Total Surveys",
       subtitle: "All surveys",
       desc: "Create a new survey",
-      link: "/feedback/surveys/new",
-      secondaryIcon: <IoAdd />,
-      icon: RiSurveyLine,
+      icon: RiSurveyFill,
     },
     {
       value: dashboardData?.totals?.feedbacks?.toString().padStart(2, '0'),
-      increase: 60,
+      increase: 60.5,
       title: "Total Feedback",
       subtitle: "All feedbacks",
-      link: "/feedback/feedbacks",
       desc: "View feedbacks",
-      secondaryIcon: <HiOutlineEye />,
-      icon: VscFeedback,
+      icon: MdFeedback,
     },
     {
       value: dashboardData?.totals?.responses?.toString().padStart(2, '0'),
-      increase: 20,
-      title: "Responses",
+      increase: -20,
+      title: "Survey Responses",
       subtitle: "All responses",
       desc: "View surveys",
-      link: "/feedback/surveys",
-      secondaryIcon: <HiOutlineEye />,
       icon: RiSurveyLine,
     },
     {
-      value: (40).toFixed(2),
+      value: dashboardData?.sentimentAnalysis
+        ? (
+          (
+            (dashboardData.sentimentAnalysis.find((s: any) => s.name === 'Positive')?.value ?? 0) /
+            (dashboardData.sentimentAnalysis.reduce((acc: number, s: any) => acc + (s.value ?? 0), 0) || 1)
+          ) * 100
+        ).toFixed(2)
+        : '0.00',
       increase: 30,
       percent: true,
       title: "Positive sentiment",
       subtitle: "All responses",
       desc: "View surveys",
-      link: "/feedback/surveys",
-      secondaryIcon: <HiOutlineEye />,
-      icon: RiSurveyLine,
+      icon: RiSurveyFill
     },
   ];
-
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -72,9 +70,10 @@ const page = () => {
         const res = await apiFetch('/api/dashboard');
         const data = await res.json();
         if (res.ok && data.status === 'success') {
+          console.log(data);
           setDashboardData(data.data);
         } else {
-          console.log(data);
+          console.log(data.data.dailyFeedbacks);
           setError(data.message || 'Failed to fetch dashboard data');
         }
       } catch (err: any) {
@@ -89,17 +88,8 @@ const page = () => {
   return (
     <div className='min-h-screen'>
       <div className='flex flex-col h-full gap-4'>
-        <div className='flex items-start justify-between max-md:flex-col gap-4'>
-          <div className=''>
-            <h1 className='x2l font-semibold'>Analytics</h1>
-          </div>
-          <div>
-            <form action="" className='flex base items-center gap-3'>
-              <input type="date" className='bg-white base p-2 border outline-0 rounded-lg focus:border-primary border-stroke' name="" id="" />
-              <span>to</span>
-              <input type="date" className='bg-white base p-2 border outline-0 rounded-lg focus:border-primary border-stroke' name="" id="" />
-            </form>
-          </div>
+        <div className=''>
+          <h1 className='x2l font-semibold'>Analytics</h1>
         </div>
         <div className='flex flex-col h-full gap-6'>
           {loading ? (
@@ -117,9 +107,15 @@ const page = () => {
                 <TopicAnalysis />
                 <SentimentOverview analytics={true} sentimentAnalysis={dashboardData?.sentimentAnalysis} />
                 <div className='lg:col-span-5 grid lg:grid-cols-3 lg:gap-6'>
-                  <FeedbackOverview analytics={true} dailyFeedbacks={dashboardData?.dailyFeedbacks} />
-                  <TopicOverview topTopics={dashboardData?.topTopics} />
-                  <RecentFeedback analytics={true} recentFeedbacks={dashboardData?.recentFeedbacks} />
+                  <div className='lg:col-span-3'>
+                    <FeedbackOverview analytics={true} dailyFeedbacks={dashboardData?.dailyFeedbacks} />
+                  </div>
+                  <div className='lg:col-span-2'>
+                    <TopicOverview topTopics={dashboardData?.topTopics} />
+                  </div>
+                  <div className='lg:col-span-5'>
+                    <RecentFeedback analytics={true} recentFeedbacks={dashboardData?.recentFeedbacks} />
+                  </div>
                 </div>
               </div>
             </>

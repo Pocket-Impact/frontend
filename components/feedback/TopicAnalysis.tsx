@@ -1,5 +1,5 @@
-import React from 'react'
-
+import React, { useEffect, useState } from 'react'
+import ReactECharts from 'echarts-for-react';
 import {
     ResponsiveContainer,
     LineChart,
@@ -10,49 +10,115 @@ import {
     YAxis,
     Legend
 } from 'recharts';
+import { apiFetch } from '@/utils/apiFetch';
 
-// Dummy data: Each topic has a count for each day
-const data = [
-    { day: "Mon", Service: 2, Product: 3, Support: 1, Delivery: 4 },
-    { day: "Tue", Service: 5, Product: 2, Support: 2, Delivery: 3 },
-    { day: "Wed", Service: 3, Product: 4, Support: 3, Delivery: 2 },
-    { day: "Thu", Service: 7, Product: 1, Support: 2, Delivery: 5 },
-    { day: "Fri", Service: 4, Product: 3, Support: 4, Delivery: 3 },
-    { day: "Sat", Service: 6, Product: 2, Support: 3, Delivery: 4 },
-    { day: "Sun", Service: 1, Product: 5, Support: 2, Delivery: 2 }
-];
-
-const topicColors = {
-    Service: '#5B4FD0',
-    Product: '#D05B8B',
-    Support: '#5BD0A6',
-    Delivery: '#D0A65B'
+type DailyCategoryData = {
+    day: string;
+    [category: string]: string | number;
 };
 
+const topicColors: Record<string, string> = {
+    Product: '#D05B8B',
+    Ux: '#5B4FD0',
+    Support: '#5BD0A6',
+    Pricing: '#D0A65B',
+    Features: '#A65BD0',
+    Performance: '#5BD0D0',
+    Other: '#D05B5B',
+};
+
+
 const TopicAnalysis = () => {
+    const [data, setData] = useState<DailyCategoryData[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
+    // Prepare dynamic chart option from fetched data
+    const days = data.map(d => d.day);
+    const categories = Object.keys(topicColors).filter(cat =>
+        data.some(d => Object.keys(d).includes(cat))
+    );
+    const series = categories.map(category => ({
+        name: category,
+        type: 'line',
+        stack: 'Total',
+        emphasis: { focus: 'series' },
+        lineStyle: { color: topicColors[category] },
+        itemStyle: { color: topicColors[category] },
+        data: data.map(d => typeof d[category] === 'number' ? d[category] : 0)
+    }));
+
+    const option = {
+        grid: { left: 70, right: 12, top: 40, bottom: 20 },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                data: days
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        legend: {
+            orient: 'horizontal',
+            data: categories
+        },
+        series: series
+    };
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const response = await apiFetch('/api/dashboard/daily-categories');
+                const result = await response.json();
+                if (result.status === 'success') {
+                    setData(result.data);
+                } else {
+                    setError(result.message || 'Failed to fetch data');
+                }
+            } catch (err) {
+                setError('Error fetching data');
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
+
+
     return (
-        <div className='bg-white border lg:col-span-3 flex flex-col gap-4 border-stroke min-h-0 flex-1 p-4 rounded-lg'>
+        <div className='bg-white lg:col-span-3 flex flex-col gap-4 min-h-0 flex-1 p-4 rounded-lg'>
             <div className='flex flex-col'>
                 <h2 className='lg font-semibold'>
                     Category
                 </h2>
                 <p className='sm -mt-1 text-black/60'>Mentioned topics in feedback</p>
             </div>
-            <div className="w-[calc(100%+36px)] h-full -ml-9.5 min-h-[300px]">
-                <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={data}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="day" axisLine={{ stroke: '#000000' }} tickLine={false} tick={{ fill: '#000000' }} />
-                        <YAxis axisLine={{ stroke: '#000000' }} tickLine={false} tick={{ fill: '#000000' }} />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="Service" stroke={topicColors.Service} strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
-                        <Line type="monotone" dataKey="Product" stroke={topicColors.Product} strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
-                        <Line type="monotone" dataKey="Support" stroke={topicColors.Support} strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
-                        <Line type="monotone" dataKey="Delivery" stroke={topicColors.Delivery} strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
-                    </LineChart>
-                </ResponsiveContainer>
-            </div>
+            {data.length > 0 ? (
+                <div className="w-[calc(100%+36px)] h-full -ml-8 min-h-[300px]">
+                    {loading ? (
+                        <div className="flex items-center justify-center h-full text-gray-500">Loading...</div>
+                    ) : error ? (
+                        <div className="flex items-center justify-center h-full text-red-500">{error}</div>
+                    ) : (
+                        <ReactECharts option={option} style={{ width: '100%', height: '100%' }} />
+                    )}
+                </div>
+            ) : (
+                <div className='w-full h-full bg-black/5 text-black/80 rounded-lg sm flex items-center justify-center'>No topic data available</div>
+            )}
         </div>
     );
 }

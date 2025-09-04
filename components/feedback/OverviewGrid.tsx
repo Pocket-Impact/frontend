@@ -41,11 +41,11 @@ const OverviewGrid = ({ dashboard }: { dashboard: any }) => {
         },
     ];
     return (
-        <div className='grid gap-6 max-lg:gap-5 max-md:gap-4 grid-cols-3 max-lg:grid-cols-1'>
+        <div className='grid gap-6 max-lg:gap-5 max-md:gap-4 grid-cols-2 grid-rows-2 max-lg:grid-cols-1'>
             <OverviewCard card={overviewCards[0]} index={0} />
             <OverviewCard card={overviewCards[1]} index={1} />
             <OverviewCard card={overviewCards[2]} index={2} />
-        </div >
+        </div>
     );
 }
 

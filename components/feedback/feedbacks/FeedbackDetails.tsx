@@ -7,12 +7,10 @@ const FeedbackDetails: React.FC<{
   open: boolean;
   close: Function;
 }> = ({ feedback, open, close }) => {
+  if (!open) return null; // Only render when open
+
   return (
-    <div
-      className={`fixed inset-0 bg-slate-900/20 backdrop-blur-sm flex items-center justify-center p-4 ${
-        open ? "block" : "hidden"
-      }`}
-    >
+    <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="w-full max-w-2xl">
         {/* Close Button */}
         <div className="flex justify-end mb-3">
@@ -43,27 +41,19 @@ const FeedbackDetails: React.FC<{
               {/* Sentiment Badge */}
               <div
                 className={`
-                px-3 py-1.5 rounded-full text-sm font-medium
-                ${!feedback.sentiment ? "bg-slate-100 text-slate-600" : ""}
-                ${
-                  feedback.sentiment &&
-                  feedback.sentiment.toLowerCase() === "positive"
-                    ? "bg-emerald-100 text-emerald-700"
-                    : ""
-                }
-                ${
-                  feedback.sentiment &&
-                  feedback.sentiment.toLowerCase() === "negative"
-                    ? "bg-red-100 text-red-700"
-                    : ""
-                }
-                ${
-                  feedback.sentiment &&
-                  feedback.sentiment.toLowerCase() === "neutral"
-                    ? "bg-amber-100 text-amber-700"
-                    : ""
-                }
-              `}
+                  px-3 py-1.5 rounded-full text-sm font-medium
+                  ${
+                    !feedback.sentiment
+                      ? "bg-slate-100 text-slate-600"
+                      : feedback.sentiment.toLowerCase() === "positive"
+                      ? "bg-emerald-100 text-emerald-700"
+                      : feedback.sentiment.toLowerCase() === "negative"
+                      ? "bg-red-100 text-red-700"
+                      : feedback.sentiment.toLowerCase() === "neutral"
+                      ? "bg-amber-100 text-amber-700"
+                      : ""
+                  }
+                `}
               >
                 <span className="capitalize">
                   {feedback.sentiment || "Not analyzed"}

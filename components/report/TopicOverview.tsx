@@ -1,10 +1,18 @@
 import React from "react";
 
-interface TopicOverviewProps {
-  topTopics: any[];
+interface Topic {
+  category?: string;
+  name?: string;
+  percentage?: number;
+  color?: string;
+  count?: number;
 }
 
-const TopicOverview = ({ topTopics }: TopicOverviewProps) => {
+interface TopicOverviewProps {
+  topTopics: Topic[];
+}
+
+const TopicOverview: React.FC<TopicOverviewProps> = ({ topTopics }) => {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-row gap-2">
@@ -12,14 +20,12 @@ const TopicOverview = ({ topTopics }: TopicOverviewProps) => {
           <div key={idx} className="flex flex-col items-center">
             <span
               className="w-3 h-3 rounded-full mb-1"
-              style={{ background: topic.color || '#D05B8B' }}
+              style={{ background: topic.color || "#D05B8B" }}
             ></span>
             <span className="text-xs font-medium text-black/70">
               {topic.category}
             </span>
-            <span className="text-xs text-black/50">
-              {topic.percentage}%
-            </span>
+            <span className="text-xs text-black/50">{topic.percentage}%</span>
           </div>
         ))}
       </div>

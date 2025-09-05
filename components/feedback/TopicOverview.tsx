@@ -1,7 +1,19 @@
 import React from "react";
 import ReactECharts from "echarts-for-react";
 
-const TopicOverview = ({ topTopics }: { topTopics: any[] }) => {
+interface Topic {
+  category?: string;
+  name?: string;
+  percentage?: number;
+  color?: string;
+  count?: number;
+}
+
+interface TopicOverviewProps {
+  topTopics: Topic[];
+}
+
+const TopicOverview: React.FC<TopicOverviewProps> = ({ topTopics }) => {
   return (
     <div className="bg-white flex flex-col h-full gap-3 p-4 rounded-xl">
       <div className="flex flex-col">
@@ -17,8 +29,12 @@ const TopicOverview = ({ topTopics }: { topTopics: any[] }) => {
               tooltip: {
                 trigger: "axis",
                 axisPointer: { type: "shadow" },
-                formatter: function (params: any) {
-                  const p = params[0];
+                formatter: function (
+                  params:
+                    | { name: string; value: number }[]
+                    | { name: string; value: number }
+                ) {
+                  const p = Array.isArray(params) ? params[0] : params;
                   return `<b>${p.name}</b>: ${p.value}%`;
                 },
               },

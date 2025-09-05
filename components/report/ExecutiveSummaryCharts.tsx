@@ -117,7 +117,7 @@ const ExecutiveSummaryCharts: React.FC<ExecutiveSummaryChartsProps> = ({
         type: "bar",
         itemStyle: {
           borderRadius: [12, 12, 0, 0],
-          color: function (params: any) {
+          color: function (params: { dataIndex: number }) {
             const palette = ["#10b981", "#3b82f6", "#8b5cf6", "#f59e0b"];
             return palette[params.dataIndex] || "#64748b";
           },

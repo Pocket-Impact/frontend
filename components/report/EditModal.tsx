@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 interface EditModalProps {
   isOpen: boolean;
   onClose: () => void;
-  data: any;
+  data: Record<string, unknown>;
   reportType: string;
-  onSave: (data: any) => void;
+  onSave: (data: Record<string, unknown>) => void;
 }
 
 const EditModal = ({
@@ -17,7 +17,7 @@ const EditModal = ({
   reportType,
   onSave,
 }: EditModalProps) => {
-  const [editData, setEditData] = useState(data || {});
+  const [editData, setEditData] = useState<Record<string, unknown>>(data || {});
 
   useEffect(() => {
     setEditData(data || {});
@@ -126,7 +126,7 @@ const EditModal = ({
                     className="w-full px-4 py-3 bg-slate-50 rounded-xl text-slate-800 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all duration-200"
                   >
                     <option value="">Select {field.label}</option>
-                    {field.options?.map((option: any) => (
+                    {field.options?.map((option: string) => (
                       <option
                         key={option}
                         value={option}

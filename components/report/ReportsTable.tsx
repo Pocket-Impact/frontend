@@ -19,7 +19,25 @@ import {
   MessageSquare,
 } from "lucide-react";
 
-const ReportsTable = ({ data, columns, onEdit, onDelete, loading }) => {
+interface ReportsTableProps {
+  data: Record<string, any>[];
+  columns: Array<{
+    key: string;
+    header: string;
+    render?: (value: any, row: Record<string, any>) => React.ReactNode;
+  }>;
+  onEdit: (row: Record<string, any>) => void;
+  onDelete: (row: Record<string, any>) => void;
+  loading: boolean;
+}
+
+const ReportsTable: React.FC<ReportsTableProps> = ({
+  data,
+  columns,
+  onEdit,
+  onDelete,
+  loading,
+}) => {
   // Define all hooks first
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -134,12 +152,12 @@ const ReportsTable = ({ data, columns, onEdit, onDelete, loading }) => {
   }
 
   // Get unique values for filters
-  const getUniqueValues = (key) => {
+  const getUniqueValues = (key: string) => {
     return [...new Set(data.map((item) => item[key]).filter(Boolean))];
   };
 
   // Sort handler
-  const handleSort = (field) => {
+  const handleSort = (field: string) => {
     if (sortField === field) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
@@ -190,7 +208,7 @@ const ReportsTable = ({ data, columns, onEdit, onDelete, loading }) => {
   };
 
   // Row selection handler
-  const handleRowSelect = (index) => {
+  const handleRowSelect = (index: number) => {
     const newSelectedRows = new Set(selectedRows);
     if (newSelectedRows.has(index)) {
       newSelectedRows.delete(index);

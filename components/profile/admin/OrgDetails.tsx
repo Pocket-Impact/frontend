@@ -2,7 +2,7 @@ import React from 'react'
 
 const OrgDetails = ({ orgData, loading, error }: { orgData: any, loading: boolean, error: string | null }) => {
     return (
-        <div className='bg-white w-full lg:col-span-2 flex flex-col gap-4 border rounded-lg p4 border-stroke'>
+        <div className='bg-white w-full lg:col-span-2 flex flex-col gap-4 rounded-lg p4'>
             <div>
                 <h3 className='font-semibold lg'>Organisation details</h3>
                 <h3 className='text-black/60 sm'>View and edit organisation information</h3>

@@ -288,7 +288,7 @@ export default function FormBuilder({
                             <div
                               ref={provided.innerRef}
                               {...provided.draggableProps}
-                              className="bg-white rounded-xl overflow-hidden"
+                              className="bg-white rounded-xl"
                             >
                               <QuestionCard
                                 question={q}

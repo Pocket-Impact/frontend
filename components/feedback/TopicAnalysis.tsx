@@ -99,7 +99,7 @@ const TopicAnalysis = () => {
 
 
     return (
-        <div className='bg-white lg:col-span-3 flex flex-col gap-4 min-h-0 flex-1 p-4 rounded-lg'>
+        <div className='bg-white h-full lg:col-span-3 flex flex-col gap-4 min-h-0 flex-1 p-4 rounded-lg'>
             <div className='flex flex-col'>
                 <h2 className='lg font-semibold'>
                     Category

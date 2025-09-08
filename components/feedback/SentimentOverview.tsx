@@ -47,7 +47,7 @@ const SentimentOverview = ({
 
   return (
     <div
-      className={`bg-white w-full lg:col-span-2 p5 rounded-xl flex flex-col min-h-0 flex-1 ${
+      className={`bg-white w-full h-full lg:col-span-2 p5 rounded-xl flex flex-col min-h-0 flex-1 ${
         analytics ? "lg:col-span-2" : ""
       }`}
     >

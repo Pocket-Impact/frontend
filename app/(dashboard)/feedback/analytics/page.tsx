@@ -104,8 +104,12 @@ const page = () => {
                 ))}
               </div >
               <div className='grid lg:grid-cols-5 max-lg:grid-cols-1 gap-6 max-lg:gap-2.5 max-md:gap-2 max-md:grid-cols-1 min-h-0 flex-1'>
-                <TopicAnalysis />
-                <SentimentOverview analytics={true} sentimentAnalysis={dashboardData?.sentimentAnalysis} />
+                <div className='lg:col-span-3'>
+                  <TopicAnalysis />
+                </div>
+                <div className='lg:col-span-2'>
+                  <SentimentOverview analytics={true} sentimentAnalysis={dashboardData?.sentimentAnalysis} />
+                </div>
                 <div className='lg:col-span-5 grid lg:grid-cols-3 lg:gap-6'>
                   <div className='lg:col-span-3'>
                     <FeedbackOverview analytics={true} dailyFeedbacks={dashboardData?.dailyFeedbacks} />

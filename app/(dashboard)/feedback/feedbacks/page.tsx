@@ -19,29 +19,30 @@ const page = () => {
   const { setMessage, clearMessage } = useAlertStore((state) => state);
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchFeedbacks = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        if (!organisationId) {
-          setError('Organisation ID is required.');
-          setLoading(false);
-          return;
-        }
-        const res = await apiFetch(`/api/feedbacks?organisationId=${organisationId}`);
-        const data = await res.json();
-        if (!res.ok || data.status === 'fail') {
-          setError(data.message || 'Could not fetch feedbacks.');
-        } else {
-          setFeedbacks(data.data || []);
-        }
-      } catch (err: any) {
-        setError('Server error. Please try again later.');
-      } finally {
+  const fetchFeedbacks = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      if (!organisationId) {
+        setError('Organisation ID is required.');
         setLoading(false);
+        return;
       }
-    };
+      const res = await apiFetch(`/api/feedbacks?organisationId=${organisationId}`);
+      const data = await res.json();
+      if (!res.ok || data.status === 'fail') {
+        setError(data.message || 'Could not fetch feedbacks.');
+      } else {
+        setFeedbacks(data.data || []);
+      }
+    } catch (err: any) {
+      setError('Server error. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchFeedbacks();
   }, [organisationId]);
 
@@ -66,11 +67,10 @@ const page = () => {
       const data = await res.json();
       console.log(data);
       if (res.ok) {
-        console.log(data);
         setMessage('Feedbacks analyzed successfully.');
+        fetchFeedbacks();
         setTimeout(() => {
           clearMessage();
-          router.push('/feedback/feedbacks');
         }, 3000);
       }
     } catch (err: any) {
@@ -102,11 +102,13 @@ const page = () => {
         </div>
       </div>
       {loading ? (
-        <div className='grid grid-cols-3 max-lg:grid-cols-1 gap-6 max-md:gap-4'>
-          <LoadingCard />
+        <div className='grid grid-cols-3 max-lg:grid-cols-1 gap-4 max-md:gap-4'>
+          {Array.from({ length: 3 }).map((_, index) => (
+            <LoadingCard key={index} />
+          ))}
         </div>
       ) : (
-        <div className='grid grid-cols-3 max-lg:grid-cols-1 gap-6 max-md:gap-4'>
+        <div className='grid grid-cols-3 max-lg:grid-cols-1 gap-4 max-md:gap-4'>
           {feedbacks.length === 0 ? (
             <div className='col-span-3 text-black/60 base'>No feedback found for this organisation.</div>
           ) : (

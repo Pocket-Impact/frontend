@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #fcfcf8;
+  --color-background: #f5f6f8;
   --color-clear: #f0efdf;
   --color-primary: #0A400C;
   --color-secondary: #FED16A;
@@ -112,6 +112,10 @@
 
 .p4 {
   @apply p-4 max-lg:p-3.5 max-md:p-3 max-sm:p-2.5;
+}
+
+.p5 {
+  @apply p-5 max-lg:p-4 max-md:p-3 max-sm:p-2;
 }
 
 .sm {

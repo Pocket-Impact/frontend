@@ -12,18 +12,21 @@ import { LuLogOut } from 'react-icons/lu';
 const defaultOverviewCards: any = [
     {
         value: "0",
+        increase: 40,
         title: "Researchers",
         subtitle: "All researchers",
         icon: BiUser,
     },
     {
         value: "0",
+        increase: 40,
         title: "Admins",
         subtitle: "All admins",
         icon: BiUser,
     },
     {
         value: "0",
+        increase: 40,
         title: "Analysts",
         subtitle: "All analysts",
         icon: BiSearch,

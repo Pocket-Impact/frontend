@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation'
 import { IoIosMore } from 'react-icons/io'
 import OrgTab from './OrgTab'
 import { RiSurveyLine } from 'react-icons/ri'
+import { TbReport } from 'react-icons/tb'
 
 const links = [
     {
@@ -31,23 +32,23 @@ const links = [
         href: "/feedback/feedbacks",
         icon: VscFeedback
     },
+    {
+        name: "Reports",
+        href: "/feedback/reports",
+        icon: TbReport
+    },
 ]
 
 const tools = [
     {
-        name: "Virtual Program Assistant",
+        name: "Donor Engagement Agent",
         href: "/features",
-        icon: FaCompass
+        icon: FaRegHeart
     },
     {
         name: "More",
         href: "/impact",
         icon: IoIosMore
-    },
-    {
-        name: "Donor Engagement Agent",
-        href: "/features",
-        icon: FaRegHeart
     },
 ]
 
@@ -61,7 +62,7 @@ const Sidebar = () => {
                     <Image src={logo}
                         alt="Pocket Impact Logo"
                         width={logo.width} height={logo.height}
-                        className='w-8 max-lg:w-10 max-md:w-8 h-auto'
+                        className='w-8 max-[1023px]:w-10 max-md:w-8 h-auto'
                     />
                     <span className='inter lg font-semibold max-md:hidden'>Pocket Impact</span>
                 </div>

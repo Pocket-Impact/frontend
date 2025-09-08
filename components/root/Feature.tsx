@@ -3,14 +3,14 @@ import React from 'react'
 
 const Feature: React.FC<{ feature: Feature; index: number }> = ({ feature, index }) => {
     return (
-        <div className={`bg-primary/7 ${index == 0 ? "lg:col-span-2" : ""} ${index == 2 ? "lg:col-span-3" : ""} border border-primary/20 gap-5 rounded-2xl flex flex-col justify-between overflow-hidden backdrop-blur-sm inter`} key={feature.name}>
-            <div className='flex items-center gap-2 mb-2 bg-primary/30 border-r border-b border-primary/10 w-max p-4 rounded-br-2xl'>
+        <div className={`flex flex-col items-center w-full`} key={feature.name}>
+            <div className='bg-primary/7  w-full flex items-center justify-center min-h-80 border border-primary/20 gap-5 rounded-2xl'>
                 <feature.icon className='text-primary w-8 h-8' />
             </div>
-            <div className='p-5'>
+            <div className='p-5 flex flex-col items-center text-center'>
                 <span className='font-bold xl'>{feature.name}</span>
                 <div className='flex gap-2 items-start'>
-                    <p className='text-black/70 font-light base inter mt-1 flex gap-2'>{feature.points.join(", ")}.</p>
+                    <p className='text-black/70 font-light base inter mt-1 flex gap-2'>{feature.points[0]}.</p>
                 </div>
             </div>
         </div>

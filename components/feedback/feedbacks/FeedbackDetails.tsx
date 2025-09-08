@@ -4,7 +4,7 @@ import { VscFeedback } from 'react-icons/vsc'
 
 const FeedbackDetails: React.FC<{ feedback: any, open: boolean, close: Function }> = ({ feedback, open, close }) => {
     return (
-        <div className={`absolute bg-black/0 backdrop-blur-sm px-4 -mt-20 op flex items-center justify-center w-full cursor-default h-full top-0 left-0 ${open ? "block" : "hidden"}`}>
+        <div className={`fixed bg-black/0 backdrop-blur-sm px-4 op flex items-center justify-center w-full cursor-default h-full top-0 left-0 ${open ? "block" : "hidden"}`}>
             <div className="w-full flex flex-col gap-4 max-w-3xl">
                 <div className='bg-white mr-3 w-max rounded-lg self-end hover:bg-orange-300 transition duration-300 border p-1 right-3 cursor-pointer' onClick={() => { close(true); }}>
                     <IoClose className='w-5 h-auto max-lg:w-4' />
@@ -26,7 +26,7 @@ const FeedbackDetails: React.FC<{ feedback: any, open: boolean, close: Function 
                                         xs px-1.5 p-1 rounded-sm font-semibold flex items-center gap-1
                                         `}
                         >
-                            <span>{feedback.sentiment || 'Unknown'}</span>
+                            <span className='capitalize'>{feedback.sentiment || 'Not analyzed'}</span>
                         </div>
                     </div>
                     <div className='h-full flex flex-col justify-between gap-4'>

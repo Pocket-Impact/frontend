@@ -1,5 +1,4 @@
 import React from 'react';
-import { VscFeedback } from 'react-icons/vsc';
 import ReactECharts from 'echarts-for-react';
 
 const SentimentOverview = ({ sentimentAnalysis, analytics }: { sentimentAnalysis: any[], analytics?: boolean }) => {
@@ -33,7 +32,7 @@ const SentimentOverview = ({ sentimentAnalysis, analytics }: { sentimentAnalysis
     };
 
     return (
-        <div className={`bg-white w-full lg:col-span-2 p5 rounded-xl h-full flex flex-col min-h-0 flex-1 ${analytics ? 'lg:col-span-2' : ''}`}>
+        <div className={`bg-white w-full lg:col-span-2 p5 rounded-xl h-full flex flex-col min-h-0 ${analytics ? 'lg:col-span-2' : ''}`}>
             <div className='flex flex-col'>
                 <h2 className='lg font-semibold'>
                     Sentimental distribution
@@ -43,22 +42,22 @@ const SentimentOverview = ({ sentimentAnalysis, analytics }: { sentimentAnalysis
             <div className="w-full h-full flex flex-col items-center">
                 {sentimentAnalysis.length > 0 ? (
                     <div className='grid grid-cols-2 h-full gap-2 w-full'>
-                        <ReactECharts option={option} className='w-full h-full' />
+                        <ReactECharts className='col-span-1' option={option} style={!analytics ? { width: '100%', height: '100%' } : {}} />
                         <div className='flex justify-center items-center'>
                             <div className='flex flex-col items-start px-2 w-max justify-center my-4 gap-2'>
                                 <div className='flex items-center gap-2 font-medium relative min-h-6'>
                                     <div className='bg-green rounded-full h-2 w-2'></div>
-                                    <span className='sm'>Positive - {(sentimentAnalysis.find(entry => entry.name === 'Positive')?.value || 0)?.toString().padStart(2, '0')} feedbacks</span>
+                                    <span className='sm'>Positive - {(sentimentAnalysis.find(entry => entry.name === 'Positive')?.value)?.toString().padStart(2, '0')} feedbacks</span>
                                 </div>
                                 {/* Neutral */}
                                 <div className='flex items-center gap-2 font-medium relative min-h-6'>
                                     <div className='bg-yellow-600 rounded-full h-2 w-2'></div>
-                                    <span className='sm'>Neutral - {(sentimentAnalysis.find(entry => entry.name === 'Neutral')?.value || 0)?.toString().padStart(2, '0')} feedbacks</span>
+                                    <span className='sm'>Neutral - {(sentimentAnalysis.find(entry => entry.name === 'Neutral')?.value)?.toString().padStart(2, '0')} feedbacks</span>
                                 </div>
                                 {/* Negative */}
                                 <div className='flex items-center gap-2 font-medium relative min-h-6'>
                                     <div className='bg-red rounded-full h-2 w-2'></div>
-                                    <span className='sm'>Negative - {(sentimentAnalysis.find(entry => entry.name === 'Negative')?.value || 0)?.toString().padStart(2, '0')} feedbacks</span>
+                                    <span className='sm'>Negative - {(sentimentAnalysis.find(entry => entry.name === 'Negative')?.value)?.toString().padStart(2, '0')} feedbacks</span>
                                 </div>
                             </div>
                         </div>

@@ -15,6 +15,10 @@ import {
 } from 'recharts';
 
 const FeedbackOverview = ({ dailyFeedbacks, analytics }: { dailyFeedbacks: any[], analytics?: boolean }) => {
+    // Prepare chart data from dailyFeedbacks
+    const xLabels = dailyFeedbacks.map(d => d.day);
+    const yValues = dailyFeedbacks.map(d => typeof d.Feedbacks === 'number' ? d.Feedbacks : 0);
+
     const option = {
         grid: { left: 30, right: 2, top: 20, bottom: 20 },
         tooltip: {
@@ -25,7 +29,7 @@ const FeedbackOverview = ({ dailyFeedbacks, analytics }: { dailyFeedbacks: any[]
         },
         xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: xLabels
         },
         yAxis: {
             type: 'value'
@@ -38,13 +42,13 @@ const FeedbackOverview = ({ dailyFeedbacks, analytics }: { dailyFeedbacks: any[]
                         { offset: 0.4, color: 'rgba(0, 200, 0, 0)' }
                     ])
                 },
-                data: [120, 200, 150, 80, 70, 110, 130],
+                data: yValues,
                 type: 'bar'
             }
         ]
     };
 
-    const data = {
+    const lineOption = {
         grid: { left: 30, right: 12, top: 20, bottom: 20 },
         tooltip: {
             trigger: 'axis'
@@ -52,14 +56,14 @@ const FeedbackOverview = ({ dailyFeedbacks, analytics }: { dailyFeedbacks: any[]
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: xLabels
         },
         yAxis: {
             type: 'value'
         },
         series: [
             {
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                data: yValues,
                 type: 'line',
                 areaStyle: {}
             }
@@ -69,7 +73,6 @@ const FeedbackOverview = ({ dailyFeedbacks, analytics }: { dailyFeedbacks: any[]
     let todayCount = 0;
     let diff = 0;
     if (dailyFeedbacks && dailyFeedbacks.length > 1) {
-        // Find last two non-zero feedback days
         const nonZeroDays = dailyFeedbacks.filter(d => typeof d.Feedbacks === 'number' && d.Feedbacks > 0);
         const lastIdx = nonZeroDays.length - 1;
         const last = nonZeroDays[lastIdx]?.Feedbacks ?? 0;
@@ -105,7 +108,7 @@ const FeedbackOverview = ({ dailyFeedbacks, analytics }: { dailyFeedbacks: any[]
             {dailyFeedbacks.length > 0 ? (
                 <div className="w-full h-full min-h-[200px]">
                     {analytics ? (
-                        <ReactECharts option={data} className='w-full h-full' />
+                        <ReactECharts option={lineOption} className='w-full h-full' />
                     ) : (
                         <ReactECharts option={option} className='w-full h-full' />
                     )}

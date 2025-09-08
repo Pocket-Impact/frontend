@@ -94,7 +94,7 @@ const page = () => {
                 />
             </div>
             {showForm && (
-                <form className='flex p4 op-2 border border-stroke rounded-lg flex-col gap-4' onSubmit={handleSubmit}>
+                <form className='flex p4 op-2 bg-white rounded-lg flex-col gap-4' onSubmit={handleSubmit}>
                     <div>
                         <h1 className='xl font-semibold'>Add a new user</h1>
                         <p className='text-black/60 sm'>Enter user details below</p>
@@ -132,7 +132,7 @@ const page = () => {
                     <PrimaryButton text='Submit' isLoading={loading} styles='p-2.5 rounded-sm  flex justify-center' />
                 </form>
             )}
-            <div className='border border-stroke p4 rounded-lg'>
+            <div className='bg-white p4 rounded-lg'>
                 <h1 className='xl font-medium mb-4'>Users</h1>
                 <table className='w-full'>
                     <thead className='bg-black/10'>

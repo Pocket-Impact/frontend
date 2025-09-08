@@ -1,8 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import { useAlertStore } from "@/stores/alertStore";
-import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
-import QuestionCard, { Question, QuestionType } from "@/components/surveys/QuestionCard";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "@hello-pangea/dnd";
+import QuestionCard, {
+  Question,
+  QuestionType,
+} from "@/components/surveys/QuestionCard";
 import PreviewPane from "@/components/surveys/PreviewPane";
 import PrimaryButton from "../ui/PrimaryButton";
 import { apiFetch } from "@/utils/apiFetch";
@@ -11,249 +19,341 @@ import { useRouter } from "next/navigation";
 import { RxCaretLeft } from "react-icons/rx";
 import Link from "next/link";
 import SecondaryButton from "../ui/SecondaryButton";
-import { FiSend } from "react-icons/fi";
+import { FiSend, FiPlus, FiEye, FiEdit } from "react-icons/fi";
 import SendSurvey from "../feedback/surveys/SendSurvey";
 import { VscFeedback } from "react-icons/vsc";
 
 type FormBuilderProps = {
-    initialId?: string;
-    initialTitle?: string;
-    initialDescription?: string;
-    initialQuestions?: Question[];
-    onSave?: (data: { title: string; description: string; questions: Question[] }) => Promise<void> | void;
-    loading?: boolean;
-    error?: string | null;
-    success?: boolean;
-    edit?: boolean;
-    uniqueLink?: string;
+  initialId?: string;
+  initialTitle?: string;
+  initialDescription?: string;
+  initialQuestions?: Question[];
+  onSave?: (data: {
+    title: string;
+    description: string;
+    questions: Question[];
+  }) => Promise<void> | void;
+  loading?: boolean;
+  error?: string | null;
+  success?: boolean;
+  edit?: boolean;
+  uniqueLink?: string;
 };
 
 export default function FormBuilder({
-    edit,
-    initialId,
-    uniqueLink,
-    initialTitle = "",
-    initialDescription = "",
-    initialQuestions = [],
-    onSave,
-    loading: externalLoading,
-    error: externalError,
-    success: externalSuccess,
+  edit,
+  initialId,
+  uniqueLink,
+  initialTitle = "",
+  initialDescription = "",
+  initialQuestions = [],
+  onSave,
+  loading: externalLoading,
+  error: externalError,
+  success: externalSuccess,
 }: FormBuilderProps) {
-    const [title, setTitle] = useState(initialTitle);
-    const [description, setDescription] = useState(initialDescription);
-    const [active, setActive] = useState(false);
-    const [questions, setQuestions] = useState<Question[]>(initialQuestions);
-    const [nextId, setNextId] = useState(
-        initialQuestions.length > 0 ? Math.max(...initialQuestions.map(q => q.id)) + 1 : 1
+  const [title, setTitle] = useState(initialTitle);
+  const [description, setDescription] = useState(initialDescription);
+  const [active, setActive] = useState(false);
+  const [questions, setQuestions] = useState<Question[]>(initialQuestions);
+  const [nextId, setNextId] = useState(
+    initialQuestions.length > 0
+      ? Math.max(...initialQuestions.map((q) => q.id)) + 1
+      : 1
+  );
+  const router = useRouter();
+  const { setMessage, clearMessage } = useAlertStore((state) => state);
+
+  const addQuestion = () => {
+    setQuestions([
+      ...questions,
+      {
+        id: nextId,
+        type: "text",
+        label: "",
+        options: [""],
+      },
+    ]);
+    setNextId(nextId + 1);
+  };
+
+  const updateQuestion = (id: number, updated: Partial<Question>) => {
+    setQuestions(
+      questions.map((q) => (q.id === id ? { ...q, ...updated } : q))
     );
-    const router = useRouter();
-    const { setMessage, clearMessage } = useAlertStore(state => state);
+  };
 
-    const addQuestion = () => {
-        setQuestions([
-            ...questions,
-            {
-                id: nextId,
-                type: "text",
-                label: "",
-                options: [""],
-            },
-        ]);
-        setNextId(nextId + 1);
-    };
+  const removeQuestion = (id: number) => {
+    setQuestions(questions.filter((q) => q.id !== id));
+  };
 
-    const updateQuestion = (id: number, updated: Partial<Question>) => {
-        setQuestions(questions.map(q => (q.id === id ? { ...q, ...updated } : q)));
-    };
+  const reorderQuestions = (result: DropResult) => {
+    if (!result.destination) return;
+    const reordered = Array.from(questions);
+    const [removed] = reordered.splice(result.source.index, 1);
+    reordered.splice(result.destination.index, 0, removed);
+    setQuestions(reordered);
+  };
 
-    const removeQuestion = (id: number) => {
-        setQuestions(questions.filter(q => q.id !== id));
-    };
+  const prepareSurveyPayload = () => ({
+    title,
+    description,
+    questions: questions.map((q) => ({
+      questionText: q.label,
+      type: q.type === "multiple" ? "choice" : q.type,
+      ...(q.type === "multiple"
+        ? { options: q.options?.filter((opt) => opt.trim() !== "") }
+        : {}),
+    })),
+  });
 
-    const reorderQuestions = (result: DropResult) => {
-        if (!result.destination) return;
-        const reordered = Array.from(questions);
-        const [removed] = reordered.splice(result.source.index, 1);
-        reordered.splice(result.destination.index, 0, removed);
-        setQuestions(reordered);
-    };
+  // Only used for standalone create mode
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [sendSurvey, setSendSurvey] = useState(false);
 
-    const prepareSurveyPayload = () => ({
-        title,
-        description,
-        questions: questions.map(q => ({
-            questionText: q.label,
-            type: q.type === "multiple" ? "choice" : q.type,
-            ...(q.type === "multiple" ? { options: q.options?.filter(opt => opt.trim() !== "") } : {})
-        }))
-    });
+  const handleSubmit = async () => {
+    if (onSave) {
+      await onSave({ title, description, questions });
+      setMessage("Changes saved successfully!");
+      setTimeout(() => {
+        clearMessage();
+      }, 3000);
+    } else {
+      setLoading(true);
+      setError(null);
+      setSuccess(false);
+      try {
+        const payload = prepareSurveyPayload();
+        const response = await apiFetch("/api/surveys", {
+          method: "POST",
+          body: JSON.stringify(payload),
+        });
+        setSuccess(true);
+        setMessage("Survey created successfully!");
+        setTimeout(() => {
+          clearMessage();
+        }, 3000);
+      } catch (err: any) {
+        setError(err?.response?.data?.message || "Failed to create survey.");
+      } finally {
+        setLoading(false);
+        router.push("/feedback/surveys");
+      }
+    }
+  };
 
+  return (
+    <div className="h-full flex flex-col gap-8 p-6 bg-slate-50">
+      {edit && (
+        <SendSurvey
+          uniqueLink={uniqueLink}
+          open={sendSurvey}
+          close={setSendSurvey}
+          link={initialId}
+        />
+      )}
 
-    // Only used for standalone create mode
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [success, setSuccess] = useState(false);
-    const [sendSurvey, setSendSurvey] = useState(false);
+      {/* Header */}
+      <div className="bg-white rounded-2xl p-6 shadow-sm">
+        <div className="flex justify-between items-start">
+          <div className="flex items-center gap-4">
+            <Link
+              href="/feedback/surveys"
+              className="flex items-center gap-2 hover:gap-3 transition-all cursor-pointer duration-300"
+            >
+              <div className="bg-slate-900 hover:bg-slate-800 transition duration-300 text-white rounded-xl p-2">
+                <RxCaretLeft className="w-6 h-6" />
+              </div>
+              <span className="text-slate-600 font-medium">
+                Back to Surveys
+              </span>
+            </Link>
+          </div>
 
-    const handleSubmit = async () => {
-        if (onSave) {
-            await onSave({ title, description, questions });
-            setMessage("Changes saved successfully!");
-            setTimeout(() => {
-                clearMessage();
-            }, 3000);
-        } else {
-            setLoading(true);
-            setError(null);
-            setSuccess(false);
-            try {
-                const payload = prepareSurveyPayload();
-                const response = await apiFetch("/api/surveys", {
-                    method: "POST",
-                    body: JSON.stringify(payload),
-                });
-                setSuccess(true);
-                setMessage("Survey created successfully!");
-                setTimeout(() => {
-                    clearMessage();
-                }, 3000);
-            } catch (err: any) {
-                setError(err?.response?.data?.message || "Failed to create survey.");
-            } finally {
-                setLoading(false);
-                router.push('/feedback/surveys');
-            }
-        }
-    };
-
-    return (
-        <div className="h-full flex flex-col gap-6">
-            {edit &&
-                <SendSurvey uniqueLink={uniqueLink} open={sendSurvey} close={setSendSurvey} link={initialId} />
-            }
-            <div className="flex w-full h-12 justify-between items-start">
-                <Link href="/feedback/surveys" className='flex items-center gap-2 hover:gap-3 transition-all cursor-pointer duration-300'>
-                    <div className='bg-primary/80 hover:bg-primary transition duration-300 text-white rounded-lg w-max p-1'>
-                        <RxCaretLeft className='w-6 h-auto max-lg:w-5 max-md:w-4' />
-                    </div>
-                    <span className='text-black/70 font-medium base'>Back to Surveys</span>
+          <div className="flex gap-3 items-center">
+            {edit && (
+              <div className="flex gap-2 items-center">
+                <Link
+                  href={`/feedback/surveys/${initialId}/responses`}
+                  prefetch
+                >
+                  <button className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-3 rounded-xl transition-all duration-300 font-medium">
+                    <VscFeedback className="text-lg" />
+                    <span className="max-md:hidden">View Responses</span>
+                  </button>
                 </Link>
-                <div className="flex gap-3 max-md:gap-1 items-center">
-                    {edit &&
-                        <div className="flex gap-2 items-center">
-                            <Link href={`/feedback/surveys/${initialId}/responses`} prefetch>
-                                <SecondaryButton
-                                    text="View responses"
-                                    styles="p-3 base bg-transparent rounded-xl hover:bg-black/10 md:px-4 bg-green-600 transition"
-                                    icon={<VscFeedback />}
-                                    textStyles="max-md:hidden"
-                                    isLoading={externalLoading ?? loading}
-                                />
-                            </Link>
-                            <SecondaryButton
-                                text="Send"
-                                styles="p-3 base rounded-xl bg-green-600 hover:bg-orange-300 transition"
-                                onClick={() => setSendSurvey(true)}
-                                icon={<FiSend />}
-                                textStyles="max-md:hidden"
-                                isLoading={externalLoading ?? loading}
-                            />
-                        </div>
-                    }
-                    <PrimaryButton
-                        text={(externalLoading ?? loading) ? "Saving..." : "Save"}
-                        styles="text-white p-3 base rounded-xl bg-green-600 effect transition"
-                        onClick={handleSubmit}
-                        icon={<FaRegSave />}
-                        textStyles="max-md:hidden"
-                        isLoading={externalLoading ?? loading}
-                    />
-                </div>
-            </div>
-            <div className="grid grid-cols-5 flex-1 h-full min-h-0 max-lg:grid-cols-1 gap-4">
-                {/* Builder Section */}
-                <div className="flex-1 h-full min-h-0 lg:col-span-2 p-6 bg-white border border-stroke overflow-y-auto scrolly flex flex-col">
-                    <h2 className="xl font-medium mb-4 text-primary">Survey Editor</h2>
-                    <div className="flex flex-col gap-2">
-                        <div className="mb-2">
-                            <h3 className="font-semibold">Survey Details</h3>
-                            <p className="sm text-gray-500">Provide the basic information for your survey.</p>
-                        </div>
-                        <input
-                            className="w-full p-2 border outline-0 bg-white border-stroke focus:border-primary rounded"
-                            placeholder="Survey Title"
-                            value={title}
-                            onChange={e => setTitle(e.target.value)}
-                        />
-                        <textarea
-                            className="w-full p-2 mb-4 min-h-max outline-0 bg-white focus:border-primary border border-gray-300 rounded"
-                            placeholder="Survey Description"
-                            rows={5}
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
-                        />
-                    </div>
-                    {/* Survey activity if needed */}
-                    <label className="hidden items-center gap-2 mb-4">
-                        <input
-                            type="checkbox"
-                            checked={active}
-                            onChange={e => setActive(e.target.checked)}
-                        />
-                        <span>Survey Activation</span>
-                    </label>
-                    <div className="mb-4">
-                        <span className="base font-semibold mb-4">
-                            Questions
-                            <span className="bg-black/10 ml-2 p-1 rounded-lg font-normal px-1.5">{questions.length.toString().padStart(2, '0')}</span>
-                        </span>
-                        <p className="sm text-gray-500">Manage the questions for your survey.</p>
-                    </div>
-                    <DragDropContext onDragEnd={reorderQuestions}>
-                        <Droppable droppableId="questions">
-                            {(provided) => (
-                                <div ref={provided.innerRef} {...provided.droppableProps}>
-                                    {questions.map((q, idx) => (
-                                        <Draggable key={q.id} draggableId={q.id.toString()} index={idx}>
-                                            {(provided) => (
-                                                <div
-                                                    ref={provided.innerRef}
-                                                    {...provided.draggableProps}
-                                                    className="mb-4"
-                                                >
-                                                    <QuestionCard
-                                                        question={q}
-                                                        onUpdate={updateQuestion}
-                                                        onRemove={removeQuestion}
-                                                        dragHandleProps={provided.dragHandleProps}
-                                                        index={idx}
-                                                    />
-                                                </div>
-                                            )}
-                                        </Draggable>
-                                    ))}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                    </DragDropContext>
-                    <PrimaryButton
-                        text="Add Question"
-                        styles="text-white p-3 px-5 base rounded-xl hover:bg-primary-dark transition"
-                        onClick={addQuestion}
-                    />
-                    {(externalError ?? error) && <div className="text-red-500 mb-2">{externalError ?? error}</div>}
-                </div>
-                <div className="lg:col-span-3 text-end h-full min-h-0 flex flex-col">
-                    <PreviewPane
-                        title={title}
-                        description={description}
-                        active={active}
-                        questions={questions}
-                    />
-                </div>
-            </div>
+                <button
+                  onClick={() => setSendSurvey(true)}
+                  className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-3 rounded-xl transition-all duration-300 font-medium"
+                >
+                  <FiSend className="text-lg" />
+                  <span className="max-md:hidden">Send Survey</span>
+                </button>
+              </div>
+            )}
+            <button
+              onClick={handleSubmit}
+              disabled={externalLoading || loading}
+              className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white px-4 py-3 rounded-xl transition-all duration-300 font-medium"
+            >
+              <FaRegSave className="text-lg" />
+              <span className="max-md:hidden">
+                {externalLoading || loading ? "Saving..." : "Save Survey"}
+              </span>
+            </button>
+          </div>
         </div>
-    );
+      </div>
+
+      <div className="grid grid-cols-5 flex-1 h-full min-h-0 max-lg:grid-cols-1 gap-6">
+        {/* Builder Section */}
+        <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm overflow-y-auto">
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-slate-100 rounded-xl">
+                <FiEdit className="text-xl text-slate-700" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-slate-900">
+                  Survey Editor
+                </h2>
+                <p className="text-slate-600 text-sm">
+                  Build and customize your survey
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Survey Details */}
+          <div className="space-y-6">
+            <div className="bg-slate-50 rounded-xl p-4">
+              <h3 className="font-semibold text-slate-900 mb-2">
+                Survey Details
+              </h3>
+              <p className="text-sm text-slate-600 mb-4">
+                Basic information about your survey
+              </p>
+
+              <div className="space-y-4">
+                <input
+                  className="w-full p-3 bg-white rounded-xl focus:ring-2 focus:ring-slate-200 outline-none transition-all"
+                  placeholder="Enter survey title..."
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <textarea
+                  className="w-full p-3 bg-white rounded-xl focus:ring-2 focus:ring-slate-200 outline-none transition-all resize-none"
+                  placeholder="Describe your survey..."
+                  rows={4}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Questions Section */}
+            <div className="bg-slate-50 rounded-xl p-4">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="font-semibold text-slate-900">Questions</h3>
+                  <p className="text-sm text-slate-600">
+                    Add and organize your questions
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 bg-slate-200 px-3 py-1.5 rounded-lg">
+                  <span className="text-sm font-medium text-slate-700">
+                    {questions.length}
+                  </span>
+                  <span className="text-xs text-slate-500">questions</span>
+                </div>
+              </div>
+
+              <DragDropContext onDragEnd={reorderQuestions}>
+                <Droppable droppableId="questions">
+                  {(provided) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                      className="space-y-4 mb-4"
+                    >
+                      {questions.map((q, idx) => (
+                        <Draggable
+                          key={q.id}
+                          draggableId={q.id.toString()}
+                          index={idx}
+                        >
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              className="bg-white rounded-xl"
+                            >
+                              <QuestionCard
+                                question={q}
+                                onUpdate={updateQuestion}
+                                onRemove={removeQuestion}
+                                dragHandleProps={provided.dragHandleProps}
+                                index={idx}
+                              />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+
+              <button
+                onClick={addQuestion}
+                className="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl transition-all duration-300 font-medium"
+              >
+                <FiPlus className="text-lg" />
+                Add Question
+              </button>
+            </div>
+
+            {/* Error Display */}
+            {(externalError || error) && (
+              <div className="bg-red-50 rounded-xl p-4 border-l-4 border-red-400">
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 bg-red-500 rounded-full flex-shrink-0"></div>
+                  <p className="text-red-700 font-medium">
+                    {externalError || error}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Preview Section */}
+        <div className="lg:col-span-3 bg-white rounded-2xl p-6 shadow-sm">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-slate-100 rounded-xl">
+              <FiEye className="text-xl text-slate-700" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-slate-900">Live Preview</h2>
+              <p className="text-slate-600 text-sm">
+                See how your survey will look
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-2xl p-6 h-full overflow-y-auto">
+            <PreviewPane
+              title={title}
+              description={description}
+              active={active}
+              questions={questions}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

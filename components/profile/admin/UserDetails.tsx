@@ -31,7 +31,7 @@ const UserDetails = () => {
     }, []);
 
     return (
-        <div className='bg-white lg:col-span-3 flex flex-col gap-4 p4 rounded-lg border border-stroke'>
+        <div className='bg-white lg:col-span-3 flex flex-col gap-4 p4 rounded-lg'>
             <div className='flex justify-between items-start'>
                 <div>
                     <h3 className='font-semibold lg'>Users</h3>
@@ -43,7 +43,7 @@ const UserDetails = () => {
                 </Link>
             </div>
             <div>
-                <table className='w-full'>
+                <table className='w-full bg-white'>
                     <thead className='bg-black/10'>
                         <tr>
                             <th className='font-medium px-3 py-2 sm text-start'>Full name</th>

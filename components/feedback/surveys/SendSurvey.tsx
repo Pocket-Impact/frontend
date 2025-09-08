@@ -1,152 +1,282 @@
-"use client"
-import PrimaryButton from '@/components/ui/PrimaryButton'
-import { useAlertStore } from '@/stores/alertStore'
-import { apiFetch } from '@/utils/apiFetch'
-import React, { useState } from 'react'
-import Papa from 'papaparse';
-import { FiUpload } from 'react-icons/fi';
-import { IoClose } from 'react-icons/io5'
-import { BiCopy } from 'react-icons/bi'
+"use client";
+import PrimaryButton from "@/components/ui/PrimaryButton";
+import { useAlertStore } from "@/stores/alertStore";
+import { apiFetch } from "@/utils/apiFetch";
+import React, { useState } from "react";
+import Papa from "papaparse";
+import { FiUpload } from "react-icons/fi";
+import { IoClose } from "react-icons/io5";
+import { BiCopy } from "react-icons/bi";
 
-const SendSurvey: React.FC<{ open: boolean, close: Function, link?: string, uniqueLink?: string }> = ({ open, close, link, uniqueLink }) => {
-    const [email, setEmail] = useState('')
-    const [emails, setEmails] = useState<string[]>([])
-    const [error, setError] = useState<string | null>(null)
-    const { setMessage, clearMessage } = useAlertStore((state) => state);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [csvFile, setCsvFile] = useState<File | null>(null);
-    const [copied, setCopied] = useState(false);
+const SendSurvey: React.FC<{
+  open: boolean;
+  close: Function;
+  link?: string;
+  uniqueLink?: string;
+}> = ({ open, close, link, uniqueLink }) => {
+  const [email, setEmail] = useState("");
+  const [emails, setEmails] = useState<string[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const { setMessage, clearMessage } = useAlertStore((state) => state);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [csvFile, setCsvFile] = useState<File | null>(null);
+  const [copied, setCopied] = useState(false);
 
-    const addEmail = () => {
-        let newError = ""
+  const addEmail = () => {
+    let newError = "";
 
-        if (email.length == 0) {
-            newError = 'Required'
-        } else if (!email.trim().includes('@') || !email.trim().includes('.')) {
-            newError = 'Email should include "@" and "."'
+    if (email.length == 0) {
+      newError = "Required";
+    } else if (!email.trim().includes("@") || !email.trim().includes(".")) {
+      newError = 'Email should include "@" and "."';
+    } else {
+      setEmails([...emails, email]);
+      setEmail("");
+    }
+
+    setError(newError);
+  };
+
+  const sendSurvey = async () => {
+    setError(null);
+
+    if (!error) {
+      setLoading(true);
+      try {
+        const response = await apiFetch("/api/surveys/send-survey-link", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ surveyId: link, emails }),
+        });
+
+        if (response.ok) {
+          setEmails([]);
+          setEmail("");
+          setError(null);
+          close(false);
+          setMessage("Successfully sent the surveys");
+          setTimeout(() => {
+            clearMessage();
+          }, 3000);
         } else {
-            setEmails([...emails, email])
-            setEmail('')
+          const data = await response.json();
+          setError(data.message || "Failed to send survey");
+          console.log(data);
         }
-
-        setError(newError)
+      } catch (err) {
+        setError("Network error");
+      }
+      setLoading(false);
     }
+  };
 
-    const sendSurvey = async () => {
-        setError(null);
-
-        if (!error) {
-            setLoading(true)
-            try {
-                const response = await apiFetch('/api/surveys/send-survey-link', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ surveyId: link, emails }),
-                });
-
-                if (response.ok) {
-                    setEmails([]);
-                    setEmail('');
-                    setError(null);
-                    close(false);
-                    setMessage("Successfully sent the surveys");
-                    setTimeout(() => {
-                        clearMessage();
-                    }, 3000);
-                } else {
-                    const data = await response.json();
-                    setError(data.message || 'Failed to send survey');
-                    console.log(data)
-                }
-            } catch (err) {
-                setError('Network error');
-            }
-            setLoading(false);
-        }
+  const handleCopy = () => {
+    if (link) {
+      navigator.clipboard.writeText(
+        `${window.location.origin}/surveys/unique/${uniqueLink}`
+      );
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
     }
+  };
 
-    const handleCopy = () => {
-        if (link) {
+  const handleClose = () => {
+    setEmails([]);
+    close(false);
+    setEmail("");
+    setError(null);
+  };
 
-            navigator.clipboard.writeText(`${window.location.origin}/surveys/unique/${uniqueLink}`);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 3000);
-        }
-    };
-
-    return (
-        <div className={` ${open ? 'absolute' : 'hidden'} bg-black/30 op-2 h-full top-0 p-3 flex flex-col items-center justify-center left-0 w-full backdrop-blur-sm z-10`}>
-            <div className='w-full max-w-3xl flex flex-col gap-4'>
-                <div className='bg-white mr-3 w-max rounded-lg self-end hover:bg-orange-300 transition duration-300 border p-2 right-3 cursor-pointer' onClick={() => { setEmails([]); close(false); setEmail(''); setError(null) }}>
-                    <IoClose className='w-6 h-auto max-lg:w-5 max-md:w-4' />
-                </div>
-                <div className='flex flex-col gap-2 border border-stroke bg-white rounded-lg p4 text-black w-full max-w-3xl'>
-                    <div className='flex items-center justify-between'>
-                        <h1 className='xl mb-2 font-bold'>Enter emails to send the survey</h1>
-                        <button
-                            className='flex bg-primary/10 items-center gap-2 hover:bg-primary/20 p-2 rounded-sm hover:text-black transition duration-300 cursor-pointer base'
-                            onClick={handleCopy}
-                            type="button"
-                        >
-                            <BiCopy className='' />
-                            <span className='sm'>{copied ? 'Copied' : 'Link'}</span>
-                        </button>
-                    </div>
-                    <span className='text-orange-600 mb-1 mr-2 self-end sm'>{error}</span>
-                    <form action="" onSubmit={(e) => { e.preventDefault(); addEmail(); }} className={`w-full border ${error ? 'border-orange-400' : 'border-primary'} p-1 flex items-center bg-white rounded-sm`}>
-                        <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} className='p2 w-full base outline-0 pl-1' placeholder='e.g. john@example.com' />
-                        <button type="button" onClick={addEmail} className='p-3 bg-primary effect text-white min-w-max base h-full cursor-pointer'><span className='text'>Add email</span></button>
-                    </form>
-                    <div className='mt-2'>
-                        <label htmlFor='csv-upload' className='block mb-1 base font-medium'>Or upload CSV file:</label>
-                        <div className='relative w-full'>
-                            <input
-                                id='csv-upload'
-                                type='file'
-                                accept='.csv'
-                                style={{ display: 'none' }}
-                                onChange={e => {
-                                    const file = e.target.files?.[0];
-                                    setCsvFile(file || null);
-                                    if (!file) return;
-                                    Papa.parse(file, {
-                                        header: false,
-                                        skipEmptyLines: true,
-                                        complete: (results: any) => {
-                                            const allEmails = results.data.flat().filter((val: string) => val.includes('@') && val.includes('.'));
-                                            setEmails(prev => Array.from(new Set([...prev, ...allEmails])));
-                                        },
-                                    });
-                                }}
-                            />
-                            <label htmlFor='csv-upload' className='flex items-center gap-2 cursor-pointer border rounded-sm p-2 border-primary w-full bg-white hover:bg-primary/2 transition'>
-                                <FiUpload className='w-5 h-5 text-primary' />
-                                <span className='base text-black/70'>
-                                    {csvFile ? csvFile.name : 'Upload file'}
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                    <div className='flex flex-wrap gap-2 mt-2'>
-                        {emails.map((email, index) => (
-                            <span key={index} className='bg-green-100 cursor-default flex items-center gap-2 border-2 text-green-600 p-1 base rounded-full pl-2 border-green-300'>
-                                {email}
-                                <IoClose className='cursor-pointer text-white bg-green-600 hover:bg-green-700 transition duration-300 h-full w-auto rounded-full px-1' onClick={() => setEmails(emails.filter((_, i) => i !== index))} />
-                            </span>
-                        ))}
-                    </div>
-                    {emails.length != 0 &&
-                        <PrimaryButton
-                            isLoading={loading}
-                            onClick={sendSurvey}
-                            text='Send Survey'
-                            styles={`mt-4 w-max p-3 ${loading ? "pl-4" : "px-4"} rounded-xl base`}
-                        />
-                    }
-                </div>
-            </div>
+  return (
+    <div
+      className={`${
+        open ? "fixed" : "hidden"
+      } inset-0 bg-slate-900/20 backdrop-blur-sm flex items-center justify-center p-4 z-50`}
+    >
+      <div className="w-full max-w-2xl">
+        {/* Close Button */}
+        <div className="flex justify-end mb-3">
+          <button
+            className="bg-white/90 hover:bg-white shadow-sm rounded-full p-2 transition-all duration-200 hover:shadow-md"
+            onClick={handleClose}
+          >
+            <IoClose className="w-5 h-5 text-slate-600" />
+          </button>
         </div>
-    )
-}
 
-export default SendSurvey
+        {/* Main Modal */}
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          {/* Header */}
+          <div className="bg-slate-50 px-6 py-5">
+            <div className="flex items-center justify-between">
+              <h1 className="text-xl font-semibold text-slate-800">
+                Send Survey
+              </h1>
+              <button
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-200 ${
+                  copied
+                    ? "bg-emerald-100 text-emerald-700"
+                    : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                }`}
+                onClick={handleCopy}
+                type="button"
+              >
+                <BiCopy className="w-4 h-4" />
+                <span className="text-sm font-medium">
+                  {copied ? "Copied!" : "Copy Link"}
+                </span>
+              </button>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="p-6 space-y-6">
+            {/* Email Input Section */}
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-slate-700">
+                Add email addresses
+              </label>
+
+              {error && (
+                <div className="text-red-600 text-sm bg-red-50 px-3 py-2 rounded-lg">
+                  {error}
+                </div>
+              )}
+
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  addEmail();
+                }}
+                className="flex gap-2"
+              >
+                <input
+                  type="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  className={`flex-1 px-4 py-3 rounded-xl bg-slate-50 text-slate-800 placeholder-slate-400 focus:bg-white focus:ring-2 focus:outline-none transition-all duration-200 ${
+                    error
+                      ? "focus:ring-red-500/20 bg-red-50"
+                      : "focus:ring-blue-500/20"
+                  }`}
+                  placeholder="e.g. john@example.com"
+                />
+                <button
+                  type="button"
+                  onClick={addEmail}
+                  className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-xl transition-colors duration-200"
+                >
+                  Add
+                </button>
+              </form>
+            </div>
+
+            {/* CSV Upload Section */}
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-slate-700">
+                Or upload CSV file
+              </label>
+              <div className="relative">
+                <input
+                  id="csv-upload"
+                  type="file"
+                  accept=".csv"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    setCsvFile(file || null);
+                    if (!file) return;
+                    Papa.parse(file, {
+                      header: false,
+                      skipEmptyLines: true,
+                      complete: (results: any) => {
+                        const allEmails = results.data
+                          .flat()
+                          .filter(
+                            (val: string) =>
+                              val.includes("@") && val.includes(".")
+                          );
+                        setEmails((prev) =>
+                          Array.from(new Set([...prev, ...allEmails]))
+                        );
+                      },
+                    });
+                  }}
+                />
+                <label
+                  htmlFor="csv-upload"
+                  className="flex items-center gap-3 cursor-pointer p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors duration-200"
+                >
+                  <div className="bg-blue-500 p-2 rounded-lg">
+                    <FiUpload className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-slate-700">
+                    {csvFile ? csvFile.name : "Choose CSV file"}
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            {/* Email Tags */}
+            {emails.length > 0 && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="text-sm font-medium text-slate-700">
+                    Recipients ({emails.length})
+                  </label>
+                  <button
+                    onClick={() => setEmails([])}
+                    className="text-sm text-red-600 hover:text-red-700"
+                  >
+                    Clear all
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto p-3 bg-slate-50 rounded-xl">
+                  {emails.map((email, index) => (
+                    <span
+                      key={index}
+                      className="bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-full text-sm flex items-center gap-2 group"
+                    >
+                      {email}
+                      <button
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full p-0.5 opacity-70 group-hover:opacity-100 transition-opacity duration-200"
+                        onClick={() =>
+                          setEmails(emails.filter((_, i) => i !== index))
+                        }
+                      >
+                        <IoClose className="w-3 h-3" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Send Button */}
+            {emails.length > 0 && (
+              <div className="pt-2">
+                <button
+                  onClick={sendSurvey}
+                  disabled={loading}
+                  className={`w-full py-4 px-6 rounded-xl font-semibold transition-all duration-200 ${
+                    loading
+                      ? "bg-blue-400 text-white cursor-not-allowed"
+                      : "bg-blue-500 hover:bg-blue-600 text-white shadow-sm hover:shadow-md"
+                  }`}
+                >
+                  {loading
+                    ? "Sending..."
+                    : `Send Survey to ${emails.length} recipient${
+                        emails.length > 1 ? "s" : ""
+                      }`}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SendSurvey;

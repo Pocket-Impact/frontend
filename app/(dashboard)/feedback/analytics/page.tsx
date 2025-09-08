@@ -110,16 +110,14 @@ const page = () => {
                 <div className='lg:col-span-2'>
                   <SentimentOverview analytics={true} sentimentAnalysis={dashboardData?.sentimentAnalysis} />
                 </div>
-                <div className='lg:col-span-5 grid lg:grid-cols-3 lg:gap-6'>
-                  <div className='lg:col-span-3'>
-                    <FeedbackOverview analytics={true} dailyFeedbacks={dashboardData?.dailyFeedbacks} />
-                  </div>
-                  <div className='lg:col-span-2'>
-                    <TopicOverview topTopics={dashboardData?.topTopics} />
-                  </div>
-                  <div className='lg:col-span-5'>
-                    <RecentFeedback analytics={true} recentFeedbacks={dashboardData?.recentFeedbacks} />
-                  </div>
+                <div className='lg:col-span-2'>
+                  <TopicOverview topTopics={dashboardData?.topTopics} />
+                </div>
+                <div className='lg:col-span-3'>
+                  <FeedbackOverview analytics={true} dailyFeedbacks={dashboardData?.dailyFeedbacks} />
+                </div>
+                <div className='lg:col-span-5'>
+                  <RecentFeedback analytics={true} recentFeedbacks={dashboardData?.recentFeedbacks} />
                 </div>
               </div>
             </>

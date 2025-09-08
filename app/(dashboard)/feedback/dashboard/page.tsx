@@ -1,17 +1,13 @@
 "use client"
 import FeedbackOverview from '@/components/feedback/FeedbackOverview'
-import InfoGrid from '@/components/feedback/InfoGrid'
-import OverviewGrid from '@/components/feedback/OverviewGrid'
 import RecentFeedback from '@/components/feedback/RecentFeedback'
 import SentimentOverview from '@/components/feedback/SentimentOverview'
 import OverviewCard from '@/components/feedback/surveys/OverviewCard'
 import TopicGraph from '@/components/feedback/TopicGraph'
 import { apiFetch } from '@/utils/apiFetch'
 import React, { useEffect, useState } from 'react'
-import { HiOutlineEye } from 'react-icons/hi'
 import { MdFeedback } from 'react-icons/md'
 import { RiSurveyFill, RiSurveyLine } from 'react-icons/ri'
-import { VscFeedback } from 'react-icons/vsc'
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState<any>(null);

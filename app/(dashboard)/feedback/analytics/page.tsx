@@ -1,7 +1,5 @@
 "use client"
 import FeedbackOverview from '@/components/feedback/FeedbackOverview'
-import InfoGrid from '@/components/feedback/InfoGrid'
-import OverviewGrid from '@/components/feedback/OverviewGrid'
 import RecentFeedback from '@/components/feedback/RecentFeedback'
 import SentimentOverview from '@/components/feedback/SentimentOverview'
 import OverviewCard from '@/components/feedback/surveys/OverviewCard'
@@ -9,11 +7,8 @@ import TopicAnalysis from '@/components/feedback/TopicAnalysis'
 import TopicOverview from '@/components/feedback/TopicOverview'
 import { apiFetch } from '@/utils/apiFetch'
 import React, { useEffect, useState } from 'react'
-import { HiOutlineEye } from 'react-icons/hi2'
-import { IoAdd } from 'react-icons/io5'
 import { MdFeedback } from 'react-icons/md'
 import { RiSurveyFill, RiSurveyLine } from 'react-icons/ri'
-import { VscFeedback } from 'react-icons/vsc'
 
 const page = () => {
   const [dashboardData, setDashboardData] = useState<any>(null);

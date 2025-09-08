@@ -19,10 +19,29 @@ const page = () => {
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  // Calculate percent changes for each metric
+  function getPercentChange(arr: any[], key: string): number {
+    if (!Array.isArray(arr) || arr.length < 2) return 0;
+    const nonZeroDays = arr.filter(d => typeof d[key] === 'number' && d[key] > 0);
+    const lastIdx = nonZeroDays.length - 1;
+    const last = nonZeroDays[lastIdx]?.[key] ?? 0;
+    const prev = nonZeroDays[lastIdx - 1]?.[key] ?? 0;
+    if (prev !== 0) {
+      return ((last - prev) / prev) * 100;
+    } else {
+      return last === 0 ? 0 : 100;
+    }
+  }
+
+  const feedbackIncrease = getPercentChange(dashboardData?.dailyFeedbacks, 'Feedbacks');
+  // If you have dailySurveys/dailyResponses, use them here. Otherwise, set to 0 or remove.
+  const surveyIncrease = 0;
+  const responseIncrease = 0;
+
   const overviewCards = [
     {
       value: dashboardData?.totals?.surveys?.toString().padStart(2, '0'),
-      increase: 80,
+      increase: surveyIncrease,
       title: "Total Surveys",
       subtitle: "All surveys",
       desc: "Create a new survey",
@@ -30,7 +49,7 @@ const page = () => {
     },
     {
       value: dashboardData?.totals?.feedbacks?.toString().padStart(2, '0'),
-      increase: 60.5,
+      increase: feedbackIncrease,
       title: "Total Feedback",
       subtitle: "All feedbacks",
       desc: "View feedbacks",
@@ -38,7 +57,7 @@ const page = () => {
     },
     {
       value: dashboardData?.totals?.responses?.toString().padStart(2, '0'),
-      increase: -20,
+      increase: responseIncrease,
       title: "Survey Responses",
       subtitle: "All responses",
       desc: "View surveys",
@@ -53,7 +72,7 @@ const page = () => {
           ) * 100
         ).toFixed(2)
         : '0.00',
-      increase: 30,
+      increase: 0,
       percent: true,
       title: "Positive sentiment",
       subtitle: "All responses",

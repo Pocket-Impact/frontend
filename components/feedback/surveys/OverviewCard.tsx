@@ -47,7 +47,7 @@ const handleClick = () => {
             >
               {card.increase >= 0 ? "+" : ""}
               {card.increase}%{" "}
-              <span className="text-[#bbbec1]">from last month</span>
+              <span className="text-[#bbbec1]">from yesterday</span>
             </span>
           ) : (
             <span className="text-sm text-black/60 font-medium">No change</span>

@@ -145,7 +145,7 @@ export default function FormBuilder({
   };
 
   return (
-    <div className="h-full flex flex-col gap-8 p-6 bg-slate-50">
+    <div className="h-full flex flex-col gap-8">
       {edit && (
         <SendSurvey
           uniqueLink={uniqueLink}

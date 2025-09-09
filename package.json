@@ -1,26 +1,26 @@
 {
-  "name": "frontend",
-  "type": "module",
+  "name": "test",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "next build --turbopack",
     "start": "next start"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
-    "@lottiefiles/dotlottie-react": "^0.15.2",
+    "@lottiefiles/dotlottie-react": "^0.16.0",
     "date-fns": "^4.1.0",
     "echarts": "^5.6.0",
     "echarts-for-react": "^3.0.2",
-    "lucide-react": "^0.542.0",
-    "next": "15.4.5",
+    "lucide-react": "^0.543.0",
+    "next": "15.5.2",
     "papaparse": "^5.5.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-icons": "^5.5.0",
-    "recharts": "^3.1.2",
+    "recharts": "^3.2.0",
     "zustand": "^5.0.8"
   },
   "devDependencies": {

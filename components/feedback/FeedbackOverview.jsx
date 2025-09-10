@@ -1,3 +1,4 @@
+import { percentChange } from '../../utils/mathUtils';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MdOutlineArrowOutward } from 'react-icons/md';
@@ -77,7 +78,7 @@ const FeedbackOverview = ({ dailyFeedbacks, analytics }) => {
             }
         ]
     };
-    let percentChange = 0;
+    let percentChangeValue = 0;
     let todayCount = 0;
     let diff = 0;
     if (dailyFeedbacks && dailyFeedbacks.length > 1) {
@@ -87,11 +88,7 @@ const FeedbackOverview = ({ dailyFeedbacks, analytics }) => {
         const prev = nonZeroDays[lastIdx - 1]?.Feedbacks ?? 0;
         todayCount = last;
         diff = last - prev;
-        if (prev !== 0) {
-            percentChange = ((last - prev) / prev) * 100;
-        } else {
-            percentChange = last === 0 ? 0 : 100;
-        }
+        percentChangeValue = percentChange(last, prev);
     }
     const isDecline = diff < 0;
 
@@ -107,7 +104,7 @@ const FeedbackOverview = ({ dailyFeedbacks, analytics }) => {
                 <div>
                     <div className='flex flex-col items-end gap-1'>
                         <div className={`${isDecline ? 'bg-light-red' : 'bg-light-green'} ${isDecline ? 'text-[#d25871]' : 'text-green'} xs w-max px-1.5 p-1 rounded-lg flex items-center gap-1`}>
-                            <span>{percentChange > 0 ? `+ ${percentChange.toFixed(1)}%` : `${percentChange.toFixed(1)}%`}</span>
+                            <span>{percentChangeValue > 0 ? `+ ${percentChangeValue.toFixed(1)}%` : `${percentChangeValue.toFixed(1)}%`}</span>
                             <MdOutlineArrowOutward className={`text-${isDecline ? 'red' : 'lime'}-600 ${isDecline ? 'rotate-90' : '-rotate-90'}`} />
                         </div>
                         <span className='xs'> {diff > 0 ? `+ ${diff}` : diff} today</span>                    </div>

@@ -2,6 +2,7 @@
 import PrimaryButton from '../ui/PrimaryButton'
 import Link from 'next/link'
 import { MdOutlineKeyboardBackspace } from 'react-icons/md'
+import PropTypes from 'prop-types';
 import FormSidebar from './SignupSide'
 import SectionOne from './sections/SectionOne'
 import SectionTwo from './sections/SectionTwo'
@@ -33,3 +34,12 @@ const SignupForm = ({ countries }) => {
 }
 
 export default SignupForm
+
+SignupForm.propTypes = {
+  countries: PropTypes.arrayOf(
+    PropTypes.shape({
+      code: PropTypes.string,
+      name: PropTypes.string,
+    })
+  ),
+};

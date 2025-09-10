@@ -68,4 +68,18 @@ const TopicOverview = ({ topTopics }) => {
   // );
 };
 
+
+import PropTypes from 'prop-types';
+
+TopicOverview.propTypes = {
+  topTopics: PropTypes.arrayOf(
+    PropTypes.shape({
+      color: PropTypes.string,
+      category: PropTypes.string,
+      percentage: PropTypes.number,
+      count: PropTypes.number,
+    })
+  ).isRequired,
+};
+
 export default TopicOverview;

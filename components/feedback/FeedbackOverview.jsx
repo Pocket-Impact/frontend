@@ -16,9 +16,16 @@ import {
 } from 'recharts';
 
 const FeedbackOverview = ({ dailyFeedbacks, analytics }) => {
-    // Prepare chart data from dailyFeedbacks
-    const xLabels = dailyFeedbacks.map(d => d.day);
-    const yValues = dailyFeedbacks.map(d => typeof d.Feedbacks === 'number' ? d.Feedbacks : 0);
+    let xLabels = [];
+    let yValues = [];
+    try {
+        xLabels = dailyFeedbacks.map(d => d.day);
+        yValues = dailyFeedbacks.map(d => typeof d.Feedbacks === 'number' ? d.Feedbacks : 0);
+    } catch (err) {
+        console.error('FeedbackOverview: Error preparing chart data', err, dailyFeedbacks);
+        xLabels = [];
+        yValues = [];
+    }
 
     const option = {
         grid: { left: 30, right: 2, top: 20, bottom: 20 },

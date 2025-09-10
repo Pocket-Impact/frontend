@@ -3,6 +3,7 @@ import logo from '@/public/img/white.svg'
 import Image from 'next/image'
 
 const SigninSide = () => {
+    // No props used, so no PropTypes needed
     return (
         <div className='bg-primary lg:col-span-3 p-5 max-lg:p-3 max-lg:flex justify-between items-center lg:h-full'>
             <div className='flex items-center gap-4 max-md:gap-2'>

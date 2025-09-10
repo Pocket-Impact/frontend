@@ -21,67 +21,71 @@ const FeedbackCard = ({ feedback }) => {
     }
   };
 
-  return (
-    <>
-      <FeedbackDetails
-        feedback={feedback}
-        open={open}
-        close={() => setOpen(false)}
-      />
-      <div
-        onClick={() => setOpen(!open)}
-        className="shadow-md inter cursor-pointer hover:shadow-md transition-all duration-300 hover:-translate-y-1 rounded-2xl p-6 group"
-      >
-        {/* Header */}
-        <div className="flex justify-between items-start mb-4">
-          <div className="flex gap-3 items-center">
-            <div className="bg-slate-900 p-3 rounded-xl text-white group-hover:bg-slate-800 transition-colors">
-              <VscFeedback className="w-5 h-5" />
+  try {
+    return (
+      <>
+        <FeedbackDetails
+          feedback={feedback}
+          open={open}
+          close={() => setOpen(false)}
+        />
+        <div
+          onClick={() => setOpen(!open)}
+          className="shadow-md inter cursor-pointer hover:shadow-md transition-all duration-300 hover:-translate-y-1 rounded-2xl p-6 group"
+        >
+          {/* Header */}
+          <div className="flex justify-between items-start mb-4">
+            <div className="flex gap-3 items-center">
+              <div className="bg-slate-900 p-3 rounded-xl text-white group-hover:bg-slate-800 transition-colors">
+                <VscFeedback className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="font-bold text-slate-900 uppercase tracking-wide text-sm">
+                  {feedback.category}
+                </div>
+                <div className="text-slate-500 text-sm">
+                  {feedback.createdAt
+                    ? formatDistanceToNow(new Date(feedback.createdAt), {
+                      addSuffix: true,
+                    })
+                    : "Recent"}
+                </div>
+              </div>
             </div>
-            <div>
-              <div className="font-bold text-slate-900 uppercase tracking-wide text-sm">
-                {feedback.category}
-              </div>
-              <div className="text-slate-500 text-sm">
-                {feedback.createdAt
-                  ? formatDistanceToNow(new Date(feedback.createdAt), {
-                    addSuffix: true,
-                  })
-                  : "Recent"}
-              </div>
+
+            <div
+              className={`px-3 py-1.5 rounded-full text-sm font-semibold ${getSentimentStyles(
+                feedback.sentiment
+              )}`}
+            >
+              {feedback.sentiment || "Analyzing..."}
             </div>
           </div>
 
-          <div
-            className={`px-3 py-1.5 rounded-full text-sm font-semibold ${getSentimentStyles(
-              feedback.sentiment
-            )}`}
-          >
-            {feedback.sentiment || "Analyzing..."}
+          {/* Content */}
+          <div className="space-y-4">
+            <p className="text-slate-700 leading-relaxed line-clamp-3">
+              {feedback.message}
+            </p>
+
+            {/* Metadata */}
+            <div className="flex justify-between items-center pt-2">
+              <div className="text-sm text-slate-500">
+                {feedback.user?.name || "Anonymous"}
+              </div>
+              <div className="text-sm text-slate-400 group-hover:text-slate-600 transition-colors flex items-center gap-2">
+                <div className="w-2 h-2 bg-slate-300 rounded-full group-hover:bg-slate-400 transition-colors"></div>
+                Click to expand
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Content */}
-        <div className="space-y-4">
-          <p className="text-slate-700 leading-relaxed line-clamp-3">
-            {feedback.message}
-          </p>
-
-          {/* Metadata */}
-          <div className="flex justify-between items-center pt-2">
-            <div className="text-sm text-slate-500">
-              {feedback.user?.name || "Anonymous"}
-            </div>
-            <div className="text-sm text-slate-400 group-hover:text-slate-600 transition-colors flex items-center gap-2">
-              <div className="w-2 h-2 bg-slate-300 rounded-full group-hover:bg-slate-400 transition-colors"></div>
-              Click to expand
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-
-  );
+      </>
+    );
+  } catch (err) {
+    console.error('FeedbackCard: Error rendering feedback', err, feedback);
+    return <div className="text-red-500">Error displaying feedback card.</div>;
+  }
 };
 
 FeedbackCard.propTypes = {

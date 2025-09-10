@@ -75,9 +75,11 @@ const TopicAnalysis = () => {
                     setData(result.data);
                 } else {
                     setError(result.message || 'Failed to fetch data');
+                    console.error('TopicAnalysis fetch error:', result.message || 'Failed to fetch data', result);
                 }
             } catch (err) {
                 setError('Error fetching data');
+                console.error('TopicAnalysis fetch exception:', err);
             } finally {
                 setLoading(false);
             }

@@ -2,6 +2,7 @@ import { Bricolage_Grotesque } from "next/font/google";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import Navbar from "@/components/root/Navbar";
+import SentryErrorBoundary from "@/components/root/SentryErrorBoundary";
 
 const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -27,7 +28,9 @@ export default function RootLayout({ children }) {
         className={`${bricolageGrotesque.variable} scrolly ${inter.variable} bg-background antialiased`}
       >
         <Navbar />
-        {children}
+        <SentryErrorBoundary>
+          {children}
+        </SentryErrorBoundary>
       </body>
     </html>
   );

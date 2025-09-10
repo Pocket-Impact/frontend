@@ -39,3 +39,7 @@ const FormSidebar = ({ step }) => {
 }
 
 export default FormSidebar
+
+FormSidebar.propTypes = {
+    step: PropTypes.number.isRequired,
+};

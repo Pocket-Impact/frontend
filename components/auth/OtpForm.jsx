@@ -8,6 +8,7 @@ import { useAuthStore } from '@/stores/authStores'
 import { useRouter } from 'next/navigation'
 
 const OtpForm = () => {
+  // No props used, so no PropTypes needed
   const { handleChange, otp, handleKeyDown, isLoading, handlePaste, resendOTP, inputsRef, error, onSubmit } = useOTP();
   const { email, hasHydrated } = useAuthStore((state) => (state));
   const router = useRouter()

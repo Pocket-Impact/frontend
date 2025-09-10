@@ -6,6 +6,7 @@ import SigninSide from './SigninSide'
 import useSignin from '@/hooks/auth/useSignin'
 
 const SigninForm = () => {
+    // No props used, so no PropTypes needed
     const { errors, formData, setErrors, isLoading, setFormData, onSubmit } = useSignin();
 
     return (

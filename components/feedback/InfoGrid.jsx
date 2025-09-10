@@ -6,16 +6,21 @@ import SentimentOverview from './SentimentOverview';
 import TopicGraph from './TopicGraph';
 
 const InfoGrid = ({ dashboard }) => {
-  return (
-    <div className='grid lg:grid-cols-5 max-lg:grid-cols-1 gap-6 max-lg:gap-5 max-md:gap-4 max-md:grid-cols-1 min-h-0 flex-1'>
-      <TopicGraph topicData={dashboard?.topTopics || []} />
-      <FeedbackOverview dailyFeedbacks={dashboard?.dailyFeedbacks} />
-      <div className='lg:col-span-5 grid lg:grid-cols-3 gap-6 max-lg:gap-5 max-md:gap-4'>
-        <SentimentOverview sentimentAnalysis={dashboard?.sentimentAnalysis} />
-        <RecentFeedback recentFeedbacks={dashboard?.recentFeedbacks} />
+  try {
+    return (
+      <div className='grid lg:grid-cols-5 max-lg:grid-cols-1 gap-6 max-lg:gap-5 max-md:gap-4 max-md:grid-cols-1 min-h-0 flex-1'>
+        <TopicGraph topicData={dashboard?.topTopics || []} />
+        <FeedbackOverview dailyFeedbacks={dashboard?.dailyFeedbacks} />
+        <div className='lg:col-span-5 grid lg:grid-cols-3 gap-6 max-lg:gap-5 max-md:gap-4'>
+          <SentimentOverview sentimentAnalysis={dashboard?.sentimentAnalysis} />
+          <RecentFeedback recentFeedbacks={dashboard?.recentFeedbacks} />
+        </div>
       </div>
-    </div>
-  );
+    );
+  } catch (err) {
+    console.error('InfoGrid: Error rendering dashboard info', err, dashboard);
+    return <div className='text-red-500'>Error displaying dashboard info.</div>;
+  }
 }
 
 InfoGrid.propTypes = {

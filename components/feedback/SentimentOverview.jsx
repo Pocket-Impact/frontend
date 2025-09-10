@@ -3,34 +3,40 @@ import PropTypes from 'prop-types';
 import ReactECharts from 'echarts-for-react';
 
 const SentimentOverview = ({ sentimentAnalysis, analytics }) => {
-    const option = {
-        grid: { left: 0, right: 0, top: 0, bottom: 0 },
-        series: [
-            {
-                name: 'Sentiment',
-                type: 'pie',
-                radius: ['30%', '70%'],
-                avoidLabelOverlap: false,
-                itemStyle: {
-                    borderRadius: 5,
-                    borderColor: '#fff',
-                    borderWidth: 2
-                },
-                label: {
-                    show: false,
-                    position: 'center'
-                },
-                labelLine: {
-                    show: false
-                },
-                data: sentimentAnalysis.map(entry => ({
-                    value: entry.value,
-                    name: entry.name,
-                    itemStyle: entry.color ? { color: entry.color } : undefined
-                }))
-            }
-        ]
-    };
+    let option = {};
+    try {
+        option = {
+            grid: { left: 0, right: 0, top: 0, bottom: 0 },
+            series: [
+                {
+                    name: 'Sentiment',
+                    type: 'pie',
+                    radius: ['30%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 5,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    },
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: sentimentAnalysis.map(entry => ({
+                        value: entry.value,
+                        name: entry.name,
+                        itemStyle: entry.color ? { color: entry.color } : undefined
+                    }))
+                }
+            ]
+        };
+    } catch (err) {
+        console.error('SentimentOverview: Error preparing chart data', err, sentimentAnalysis);
+        option = {};
+    }
 
     return (
         <div className={`bg-white w-full lg:col-span-2 p5 rounded-xl h-full flex flex-col min-h-0 ${analytics ? 'lg:col-span-2' : ''}`}>

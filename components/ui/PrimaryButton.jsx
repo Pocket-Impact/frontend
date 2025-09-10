@@ -31,6 +31,7 @@ const PrimaryButton = ({ text, styles, type, textStyles, icon, onClick, isLoadin
 export default PrimaryButton
 
 import PropTypes from 'prop-types';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 PrimaryButton.propTypes = {
     text: PropTypes.string,

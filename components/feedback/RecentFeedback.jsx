@@ -21,86 +21,86 @@ const RecentFeedback = ({ recentFeedbacks }) => {
         <div className="flex flex-col flex-1">
           {/* Feedback List */}
           <div className="space-y-1 mb-4 flex-1">
-            {recentFeedbacks?.slice(0, 5).map((feedback, index) => (
-              <div
-                key={index}
-                className="p-4 rounded-xl bg-slate-800/5 hover:bg-slate-100 transition-colors duration-200 group"
-              >
-                <div className="flex justify-between items-start gap-3">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-slate-700 line-clamp-2 mb-2 leading-relaxed">
-                      {feedback.message}
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-slate-300 rounded-full"></div>
-                      <span className="text-xs text-slate-500">
-                        {feedback.date
-                          ? formatDistanceToNow(new Date(feedback.date), {
-                            addSuffix: true,
-                          })
-                            .charAt(0)
-                            .toUpperCase() +
-                          formatDistanceToNow(new Date(feedback.date), {
-                            addSuffix: true,
-                          }).slice(1)
-                          : "No date"}
-                      </span>
+            {(() => {
+              try {
+                return recentFeedbacks?.slice(0, 5).map((feedback, index) => (
+                  <div
+                    key={index}
+                    className="p-4 rounded-xl bg-slate-800/5 hover:bg-slate-100 transition-colors duration-200 group"
+                  >
+                    <div className="flex justify-between items-start gap-3">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-slate-700 line-clamp-2 mb-2 leading-relaxed">
+                          {feedback.message}
+                        </p>
+                        <div className="flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 bg-slate-300 rounded-full"></div>
+                          <span className="text-xs text-slate-500">
+                            {feedback.date
+                              ? formatDistanceToNow(new Date(feedback.date), {
+                                addSuffix: true,
+                              })
+                                .charAt(0)
+                                .toUpperCase() +
+                              formatDistanceToNow(new Date(feedback.date), {
+                                addSuffix: true,
+                              }).slice(1)
+                              : "No date"}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Sentiment Badge */}
+                      <div className="flex-shrink-0">
+                        <span
+                          className={`
+                          inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium
+                          ${!feedback.sentiment ? "bg-slate-100 text-slate-600" : ""}
+                          ${feedback.sentiment &&
+                              feedback.sentiment.toLowerCase() === "positive"
+                              ? "bg-emerald-100 text-emerald-700"
+                              : ""}
+                          ${feedback.sentiment &&
+                              feedback.sentiment.toLowerCase() === "negative"
+                              ? "bg-red-100 text-red-700"
+                              : ""}
+                          ${feedback.sentiment &&
+                              feedback.sentiment.toLowerCase() === "neutral"
+                              ? "bg-amber-100 text-amber-700"
+                              : ""}
+                        `}
+                        >
+                          <div
+                            className={`
+                            w-1.5 h-1.5 rounded-full mr-1.5
+                            ${!feedback.sentiment ? "bg-slate-400" : ""}
+                            ${feedback.sentiment &&
+                                feedback.sentiment.toLowerCase() === "positive"
+                                ? "bg-emerald-500"
+                                : ""}
+                            ${feedback.sentiment &&
+                                feedback.sentiment.toLowerCase() === "negative"
+                                ? "bg-red-500"
+                                : ""}
+                            ${feedback.sentiment &&
+                                feedback.sentiment.toLowerCase() === "neutral"
+                                ? "bg-amber-500"
+                                : ""}
+                          `}
+                          ></div>
+                          <span className="capitalize">
+                            {feedback.sentiment || "Not analyzed"}
+                          </span>
+                        </span>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Sentiment Badge */}
-                  <div className="flex-shrink-0">
-                    <span
-                      className={`
-                      inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium
-                      ${!feedback.sentiment ? "bg-slate-100 text-slate-600" : ""
-                        }
-                      ${feedback.sentiment &&
-                          feedback.sentiment.toLowerCase() === "positive"
-                          ? "bg-emerald-100 text-emerald-700"
-                          : ""
-                        }
-                      ${feedback.sentiment &&
-                          feedback.sentiment.toLowerCase() === "negative"
-                          ? "bg-red-100 text-red-700"
-                          : ""
-                        }
-                      ${feedback.sentiment &&
-                          feedback.sentiment.toLowerCase() === "neutral"
-                          ? "bg-amber-100 text-amber-700"
-                          : ""
-                        }
-                    `}
-                    >
-                      <div
-                        className={`
-                        w-1.5 h-1.5 rounded-full mr-1.5
-                        ${!feedback.sentiment ? "bg-slate-400" : ""}
-                        ${feedback.sentiment &&
-                            feedback.sentiment.toLowerCase() === "positive"
-                            ? "bg-emerald-500"
-                            : ""
-                          }
-                        ${feedback.sentiment &&
-                            feedback.sentiment.toLowerCase() === "negative"
-                            ? "bg-red-500"
-                            : ""
-                          }
-                        ${feedback.sentiment &&
-                            feedback.sentiment.toLowerCase() === "neutral"
-                            ? "bg-amber-500"
-                            : ""
-                          }
-                      `}
-                      ></div>
-                      <span className="capitalize">
-                        {feedback.sentiment || "Not analyzed"}
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
+                ));
+              } catch (err) {
+                console.error('RecentFeedback: Error rendering feedbacks', err, recentFeedbacks);
+                return <div className="text-red-500">Error displaying feedbacks.</div>;
+              }
+            })()}
           </div>
 
           {/* View All Button */}

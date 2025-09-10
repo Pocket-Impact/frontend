@@ -1,6 +1,8 @@
+
 import React, { useEffect, useState } from 'react'
 import ReactECharts from 'echarts-for-react';
 import { apiFetch } from '@/utils/apiFetch';
+import PropTypes from 'prop-types';
 
 
 const topicColors = {
@@ -108,5 +110,7 @@ const TopicAnalysis = () => {
         </div>
     );
 }
+
+TopicAnalysis.propTypes = {};
 
 export default TopicAnalysis

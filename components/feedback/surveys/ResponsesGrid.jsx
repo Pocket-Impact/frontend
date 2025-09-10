@@ -6,6 +6,8 @@ import { apiFetch } from '@/utils/apiFetch'
 import { useParams } from 'next/navigation'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 
+import PropTypes from 'prop-types';
+
 const ResponsesGrid = () => {
     const { id } = useParams();
     const [open, setOpen] = useState({});
@@ -100,5 +102,7 @@ const ResponsesGrid = () => {
         </div>
     )
 }
+
+ResponsesGrid.propTypes = {};
 
 export default ResponsesGrid

@@ -1,4 +1,3 @@
-import React from 'react'
 import { plans } from '@/lib/plans'
 import Pricing from '@/components/root/Pricing'
 
@@ -21,3 +20,6 @@ const PricingSection = () => {
 }
 
 export default PricingSection
+
+import PropTypes from 'prop-types';
+PricingSection.propTypes = {};

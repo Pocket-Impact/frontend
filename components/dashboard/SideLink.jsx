@@ -1,6 +1,7 @@
 "use client"
 import Link from 'next/link'
 
+import PropTypes from 'prop-types';
 const SideLink = ({ link, active }) => {
     return (
         <Link href={link.href} prefetch>
@@ -12,4 +13,12 @@ const SideLink = ({ link, active }) => {
     )
 }
 
+SideLink.propTypes = {
+    link: PropTypes.shape({
+        href: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        icon: PropTypes.elementType.isRequired,
+    }).isRequired,
+    active: PropTypes.bool,
+};
 export default SideLink

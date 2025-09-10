@@ -1,4 +1,3 @@
-import React from 'react'
 import SecondaryButton from '@/components/ui/SecondaryButton'
 
 const HeroSection = () => {
@@ -30,3 +29,6 @@ const HeroSection = () => {
 }
 
 export default HeroSection
+
+import PropTypes from 'prop-types';
+HeroSection.propTypes = {};

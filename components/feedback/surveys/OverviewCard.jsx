@@ -2,16 +2,18 @@
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 
+import PropTypes from 'prop-types';
+
 const OverviewCard = ({ card, index, user, analysis, onClick }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const pathname = usePathname();
 
-const handleClick = () => {
-  if (onClick && card.key) {
+  const handleClick = () => {
+    if (onClick && card.key) {
       onClick(card.key);
       console.log(card.key)
-  }
-};
+    }
+  };
 
   return (
     <div
@@ -35,9 +37,8 @@ const handleClick = () => {
         <span>
           {card.increase ? (
             <span
-              className={`xs ${
-                card.increase >= 0 ? "text-green-600" : "text-red-600"
-              } font-medium flex items-center gap-1`}
+              className={`xs ${card.increase >= 0 ? "text-green-600" : "text-red-600"
+                } font-medium flex items-center gap-1`}
             >
               {card.increase >= 0 ? "+" : ""}
               {card.increase}%{" "}
@@ -50,6 +51,14 @@ const handleClick = () => {
       </div>
     </div>
   );
+};
+
+OverviewCard.propTypes = {
+  card: PropTypes.object.isRequired,
+  index: PropTypes.number,
+  user: PropTypes.object,
+  analysis: PropTypes.object,
+  onClick: PropTypes.func,
 };
 
 export default OverviewCard;

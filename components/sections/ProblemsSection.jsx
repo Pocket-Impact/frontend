@@ -1,4 +1,3 @@
-import React from 'react'
 import { problems } from '@/lib/problems'
 
 const ProblemsSection = () => {
@@ -11,9 +10,9 @@ const ProblemsSection = () => {
             </div>
             <div className='grid w-full grid-cols-2 gap-6 lg:col-span-4 max-sm:grid-cols-1 max-lg:mt-5'>
                 {problems.map((problem, index) => (
-                    <div key={index} className={`${index == 2? 'md:col-span-2' : ''} bg-primary/7 rounded-x3l p-8 max-lg:p-6 max-md:p-4 flex flex-col gap-8`}>
+                    <div key={index} className={`${index == 2 ? 'md:col-span-2' : ''} bg-primary/7 rounded-x3l p-8 max-lg:p-6 max-md:p-4 flex flex-col gap-8`}>
                         <div className='flex items-center gap-4'>
-                            <problem.icon  className="w-8 h-auto max-lg:w-7 max-md:w-6 max-sm:w-5" />
+                            <problem.icon className="w-8 h-auto max-lg:w-7 max-md:w-6 max-sm:w-5" />
                         </div>
                         <div>
                             <h3 className='font-semibold lg'>{problem.title}</h3>
@@ -27,3 +26,6 @@ const ProblemsSection = () => {
 }
 
 export default ProblemsSection
+
+import PropTypes from 'prop-types';
+ProblemsSection.propTypes = {};

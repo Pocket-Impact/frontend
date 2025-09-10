@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { formatDistanceToNow } from "date-fns";
 
+import PropTypes from 'prop-types';
 const RecentFeedback = ({ recentFeedbacks }) => {
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm flex flex-col min-h-0 flex-1">
@@ -154,4 +155,13 @@ const RecentFeedback = ({ recentFeedbacks }) => {
   );
 };
 
+RecentFeedback.propTypes = {
+  recentFeedbacks: PropTypes.arrayOf(
+    PropTypes.shape({
+      message: PropTypes.string,
+      date: PropTypes.string,
+      sentiment: PropTypes.string,
+    })
+  ).isRequired,
+};
 export default RecentFeedback;

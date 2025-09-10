@@ -1,4 +1,5 @@
 "use client"
+import PropTypes from 'prop-types';
 import { RiSurveyLine } from 'react-icons/ri'
 import { VscFeedback } from 'react-icons/vsc';
 import OverviewCard from './surveys/OverviewCard';
@@ -47,4 +48,10 @@ const OverviewGrid = ({ dashboard }) => {
     );
 }
 
-export default OverviewGrid
+OverviewGrid.propTypes = {
+    dashboard: PropTypes.shape({
+        totals: PropTypes.object,
+    }),
+};
+
+export default OverviewGrid;

@@ -2,6 +2,8 @@ import React from "react";
 import { IoClose } from "react-icons/io5";
 import { VscFeedback } from "react-icons/vsc";
 
+import PropTypes from 'prop-types';
+
 const FeedbackDetails = ({ feedback, open, close }) => {
   if (!open) return null; // Only render when open
 
@@ -67,6 +69,12 @@ const FeedbackDetails = ({ feedback, open, close }) => {
       </div>
     </div>
   );
+};
+
+FeedbackDetails.propTypes = {
+  feedback: PropTypes.object.isRequired,
+  open: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired,
 };
 
 export default FeedbackDetails;

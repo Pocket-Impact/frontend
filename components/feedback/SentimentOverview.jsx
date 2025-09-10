@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactECharts from 'echarts-for-react';
 
 const SentimentOverview = ({ sentimentAnalysis, analytics }) => {
@@ -70,4 +71,14 @@ const SentimentOverview = ({ sentimentAnalysis, analytics }) => {
     );
 };
 
+SentimentOverview.propTypes = {
+    sentimentAnalysis: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string,
+            value: PropTypes.number,
+            color: PropTypes.string,
+        })
+    ).isRequired,
+    analytics: PropTypes.bool,
+};
 export default SentimentOverview;

@@ -1,4 +1,3 @@
-import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import React from 'react'
 
 const SecondaryButton = ({ text, styles, type, textStyles, icon, onClick, isLoading }) => {
@@ -30,3 +29,15 @@ const SecondaryButton = ({ text, styles, type, textStyles, icon, onClick, isLoad
 }
 
 export default SecondaryButton
+
+import PropTypes from 'prop-types';
+
+SecondaryButton.propTypes = {
+    text: PropTypes.string,
+    styles: PropTypes.string,
+    type: PropTypes.string,
+    textStyles: PropTypes.string,
+    icon: PropTypes.node,
+    onClick: PropTypes.func,
+    isLoading: PropTypes.bool,
+};

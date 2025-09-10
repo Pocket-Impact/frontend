@@ -2,6 +2,7 @@ import React from "react";
 import { VscFeedback } from "react-icons/vsc";
 import { formatDistanceToNow } from "date-fns";
 import FeedbackDetails from "./FeedbackDetails";
+import PropTypes from 'prop-types';
 
 const FeedbackCard = ({ feedback }) => {
   const [open, setOpen] = React.useState(false);
@@ -44,8 +45,8 @@ const FeedbackCard = ({ feedback }) => {
               <div className="text-slate-500 text-sm">
                 {feedback.createdAt
                   ? formatDistanceToNow(new Date(feedback.createdAt), {
-                      addSuffix: true,
-                    })
+                    addSuffix: true,
+                  })
                   : "Recent"}
               </div>
             </div>
@@ -79,7 +80,12 @@ const FeedbackCard = ({ feedback }) => {
         </div>
       </div>
     </>
+
   );
+};
+
+FeedbackCard.propTypes = {
+  feedback: PropTypes.object.isRequired,
 };
 
 export default FeedbackCard;

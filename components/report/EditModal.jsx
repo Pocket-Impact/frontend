@@ -2,6 +2,7 @@
 import { Save, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import PropTypes from 'prop-types';
 const EditModal = ({ isOpen, onClose, data, reportType, onSave }) => {
   const [editData, setEditData] = useState(data || {});
 
@@ -161,4 +162,11 @@ const EditModal = ({ isOpen, onClose, data, reportType, onSave }) => {
   );
 };
 
+EditModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  data: PropTypes.object,
+  reportType: PropTypes.string.isRequired,
+  onSave: PropTypes.func.isRequired,
+};
 export default EditModal;

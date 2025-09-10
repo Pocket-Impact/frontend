@@ -1,3 +1,5 @@
+
+import PropTypes from 'prop-types';
 import FeedbackOverview from './FeedbackOverview';
 import RecentFeedback from './RecentFeedback';
 import SentimentOverview from './SentimentOverview';
@@ -16,4 +18,14 @@ const InfoGrid = ({ dashboard }) => {
   );
 }
 
-export default InfoGrid
+InfoGrid.propTypes = {
+  dashboard: PropTypes.shape({
+    topTopics: PropTypes.array,
+    dailyFeedbacks: PropTypes.array,
+    sentimentAnalysis: PropTypes.any,
+    recentFeedbacks: PropTypes.any,
+    totals: PropTypes.object,
+  }),
+};
+
+export default InfoGrid;

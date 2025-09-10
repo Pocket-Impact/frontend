@@ -19,6 +19,7 @@ import {
   MessageSquare,
 } from "lucide-react";
 
+import PropTypes from 'prop-types';
 const ReportsTable = ({
   data,
   columns,
@@ -228,8 +229,8 @@ const ReportsTable = ({
             <button
               onClick={() => setShowFilters(!showFilters)}
               className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all ${showFilters
-                  ? "bg-green-50 border-green-200 text-green-700"
-                  : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
+                ? "bg-green-50 border-green-200 text-green-700"
+                : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
                 }`}
             >
               <Filter className="h-4 w-4" />
@@ -443,8 +444,8 @@ const ReportsTable = ({
                     key={i}
                     onClick={() => setCurrentPage(pageNum)}
                     className={`px-3 py-2 text-sm rounded-lg transition-colors ${pageNum === currentPage
-                        ? "bg-green-600 text-white shadow-sm"
-                        : "text-gray-600 hover:text-gray-800 hover:bg-white"
+                      ? "bg-green-600 text-white shadow-sm"
+                      : "text-gray-600 hover:text-gray-800 hover:bg-white"
                       }`}
                   >
                     {pageNum}
@@ -470,4 +471,17 @@ const ReportsTable = ({
   );
 };
 
+ReportsTable.propTypes = {
+  data: PropTypes.array.isRequired,
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      header: PropTypes.string.isRequired,
+      render: PropTypes.func,
+    })
+  ).isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+};
 export default ReportsTable;

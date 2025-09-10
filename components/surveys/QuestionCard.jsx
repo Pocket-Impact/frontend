@@ -9,6 +9,7 @@ const typeOptions = [
   { value: "rating", label: "Rating Scale (1-5)", icon: <FiStar /> },
 ];
 
+import PropTypes from 'prop-types';
 export default function QuestionCard({
   question,
   onUpdate,
@@ -76,9 +77,8 @@ export default function QuestionCard({
             </span>
           </div>
           <svg
-            className={`w-5 h-5 text-slate-400 transition-transform ${
-              dropdownOpen ? "rotate-180" : ""
-            }`}
+            className={`w-5 h-5 text-slate-400 transition-transform ${dropdownOpen ? "rotate-180" : ""
+              }`}
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -97,11 +97,10 @@ export default function QuestionCard({
             {typeOptions.map((opt) => (
               <div
                 key={opt.value}
-                className={`p-3 cursor-pointer transition-colors flex items-center gap-3 ${
-                  question.type === opt.value
+                className={`p-3 cursor-pointer transition-colors flex items-center gap-3 ${question.type === opt.value
                     ? "bg-slate-900 text-white"
                     : "hover:bg-slate-50 text-slate-700"
-                }`}
+                  }`}
                 onClick={() => {
                   setDropdownOpen(false);
                   onUpdate(question.id, {
@@ -216,3 +215,16 @@ export default function QuestionCard({
     </div>
   );
 }
+
+QuestionCard.propTypes = {
+  question: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    label: PropTypes.string,
+    type: PropTypes.string,
+    options: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  dragHandleProps: PropTypes.object,
+  index: PropTypes.number.isRequired,
+};

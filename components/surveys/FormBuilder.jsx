@@ -23,6 +23,7 @@ import { FiSend, FiPlus, FiEye, FiEdit } from "react-icons/fi";
 import SendSurvey from "../feedback/surveys/SendSurvey";
 import { VscFeedback } from "react-icons/vsc";
 
+import PropTypes from 'prop-types';
 export default function FormBuilder({
   edit,
   initialId,
@@ -340,3 +341,16 @@ export default function FormBuilder({
     </div>
   );
 }
+
+FormBuilder.propTypes = {
+  edit: PropTypes.bool,
+  initialId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  uniqueLink: PropTypes.string,
+  initialTitle: PropTypes.string,
+  initialDescription: PropTypes.string,
+  initialQuestions: PropTypes.array,
+  onSave: PropTypes.func,
+  loading: PropTypes.bool,
+  error: PropTypes.string,
+  success: PropTypes.bool,
+};

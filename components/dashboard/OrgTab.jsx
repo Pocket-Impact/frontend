@@ -38,4 +38,5 @@ const OrgTab = () => {
     )
 }
 
+OrgTab.propTypes = {};
 export default OrgTab

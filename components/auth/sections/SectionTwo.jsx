@@ -1,4 +1,6 @@
 "use client"
+
+import PropTypes from 'prop-types';
 import { RxCaretDown } from 'react-icons/rx';
 import { sizes } from '@/lib/sizes'
 import { useState } from 'react';
@@ -61,5 +63,14 @@ const SectionTwo = ({ countries, step, formData, setFormData, errors, setErrors 
         </section>
     )
 }
+
+SectionTwo.propTypes = {
+    countries: PropTypes.array.isRequired,
+    step: PropTypes.number.isRequired,
+    formData: PropTypes.object.isRequired,
+    setFormData: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired,
+    setErrors: PropTypes.func.isRequired,
+};
 
 export default SectionTwo

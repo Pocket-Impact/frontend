@@ -1,5 +1,7 @@
 "use client"
 
+import PropTypes from 'prop-types';
+
 const SectionOne = ({ step, setStep, formData, setFormData, errors, setErrors }) => {
   return (
     <section className={`${step === 1 ? 'flex' : 'hidden'} flex-col gap-4`}>
@@ -40,5 +42,14 @@ const SectionOne = ({ step, setStep, formData, setFormData, errors, setErrors })
     </section>
   )
 }
+
+SectionOne.propTypes = {
+  step: PropTypes.number.isRequired,
+  setStep: PropTypes.func.isRequired,
+  formData: PropTypes.object.isRequired,
+  setFormData: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  setErrors: PropTypes.func.isRequired,
+};
 
 export default SectionOne

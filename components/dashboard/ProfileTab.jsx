@@ -19,4 +19,5 @@ const ProfileTab = () => {
     )
 }
 
+ProfileTab.propTypes = {};
 export default ProfileTab

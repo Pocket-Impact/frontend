@@ -1,6 +1,7 @@
 import React from 'react'
 import { IoMdCheckmark } from 'react-icons/io'
 
+import PropTypes from 'prop-types';
 const Tool = ({ tool, index }) => {
     return (
         <div key={tool.name} className='flex gap-20 max-lg:gap-10 max-w-6xl max-md:flex-col w-full items-center justify-center'>
@@ -28,4 +29,12 @@ const Tool = ({ tool, index }) => {
     )
 }
 
+Tool.propTypes = {
+    tool: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        description: PropTypes.string,
+        points: PropTypes.arrayOf(PropTypes.string),
+    }).isRequired,
+    index: PropTypes.number,
+};
 export default Tool

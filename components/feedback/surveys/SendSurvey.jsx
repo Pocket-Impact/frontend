@@ -8,6 +8,8 @@ import { FiUpload } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 import { BiCopy } from "react-icons/bi";
 
+import PropTypes from 'prop-types';
+
 const SendSurvey = ({ open, close, link, uniqueLink }) => {
   const [email, setEmail] = useState("");
   const [emails, setEmails] = useState([]);
@@ -267,6 +269,13 @@ const SendSurvey = ({ open, close, link, uniqueLink }) => {
       </div>
     </div>
   );
+};
+
+SendSurvey.propTypes = {
+  open: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired,
+  link: PropTypes.string,
+  uniqueLink: PropTypes.string,
 };
 
 export default SendSurvey;

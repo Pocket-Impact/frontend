@@ -2,6 +2,7 @@ import React from "react";
 import { Question } from "./QuestionCard";
 import PrimaryButton from "../ui/PrimaryButton";
 
+import PropTypes from 'prop-types';
 export default function PreviewPane({
   title,
   description,
@@ -132,3 +133,17 @@ export default function PreviewPane({
     </div>
   );
 }
+
+PreviewPane.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  active: PropTypes.bool,
+  questions: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      label: PropTypes.string,
+      type: PropTypes.string,
+      options: PropTypes.arrayOf(PropTypes.string),
+    })
+  ),
+};

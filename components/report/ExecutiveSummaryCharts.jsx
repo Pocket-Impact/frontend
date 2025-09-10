@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import ReactECharts from "echarts-for-react";
 
 // Use blue and green for sentiment colors
@@ -233,4 +234,18 @@ const ExecutiveSummaryCharts = ({
   );
 };
 
+ExecutiveSummaryCharts.propTypes = {
+  keyMetrics: PropTypes.shape({
+    totalSurveys: PropTypes.number,
+    totalResponses: PropTypes.number,
+    totalFeedbacks: PropTypes.number,
+    totalUsers: PropTypes.number,
+  }).isRequired,
+  sentimentOverview: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      count: PropTypes.number,
+    })
+  ).isRequired,
+};
 export default ExecutiveSummaryCharts;

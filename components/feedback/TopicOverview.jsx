@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const TopicOverview = ({ topTopics }) => {
     return (
@@ -36,4 +37,14 @@ const TopicOverview = ({ topTopics }) => {
     );
 }
 
-export default TopicOverview
+TopicOverview.propTypes = {
+    topTopics: PropTypes.arrayOf(
+        PropTypes.shape({
+            category: PropTypes.string,
+            percentage: PropTypes.number,
+            count: PropTypes.number,
+            color: PropTypes.string,
+        })
+    ).isRequired,
+};
+export default TopicOverview;

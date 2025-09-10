@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { RiDeleteBinLine, RiEditLine, RiSurveyLine } from "react-icons/ri";
 
+import PropTypes from 'prop-types';
+
 const SurveyCard = ({ survey }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const { setMessage, clearMessage } = useAlertStore((state) => state);
@@ -123,6 +125,10 @@ const SurveyCard = ({ survey }) => {
       </Link>
     </div>
   );
+};
+
+SurveyCard.propTypes = {
+  survey: PropTypes.object.isRequired,
 };
 
 export default SurveyCard;

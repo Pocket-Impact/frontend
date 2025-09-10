@@ -93,4 +93,5 @@ const Sidebar = () => {
     )
 }
 
+Sidebar.propTypes = {};
 export default Sidebar

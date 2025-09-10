@@ -1,4 +1,3 @@
-import React from 'react'
 import { IoMdCheckmark } from 'react-icons/io'
 import { tools } from '@/lib/tools'
 import Tool from '@/components/root/Tool'
@@ -14,3 +13,6 @@ const ToolsSection = () => {
 }
 
 export default ToolsSection
+
+import PropTypes from 'prop-types';
+ToolsSection.propTypes = {};

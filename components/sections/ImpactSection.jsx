@@ -1,4 +1,3 @@
-import React from 'react'
 import { impact } from '@/lib/impact'
 
 const ImpactSection = () => {
@@ -20,3 +19,6 @@ const ImpactSection = () => {
 }
 
 export default ImpactSection
+
+import PropTypes from 'prop-types';
+ImpactSection.propTypes = {};

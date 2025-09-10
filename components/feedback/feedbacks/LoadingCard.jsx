@@ -1,6 +1,8 @@
 import React from 'react'
 import { VscFeedback } from 'react-icons/vsc'
 
+import PropTypes from 'prop-types';
+
 const LoadingCard = () => {
     return (
         <div className='bg-white inter animate-pulse cursor-pointer border flex flex-col gap-4 border-stroke p4 rounded-lg'>
@@ -21,5 +23,7 @@ const LoadingCard = () => {
         </div>
     )
 }
+
+LoadingCard.propTypes = {};
 
 export default LoadingCard

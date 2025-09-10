@@ -1,4 +1,3 @@
-import React from 'react'
 import logo from '@/public/img/white.svg'
 import Image from 'next/image'
 import { links } from '@/lib/links'
@@ -45,3 +44,6 @@ const FooterSection = () => {
 }
 
 export default FooterSection
+
+import PropTypes from 'prop-types';
+FooterSection.propTypes = {};

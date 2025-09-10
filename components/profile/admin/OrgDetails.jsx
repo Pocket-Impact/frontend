@@ -1,5 +1,6 @@
 import React from 'react'
 
+import PropTypes from 'prop-types';
 const OrgDetails = ({ orgData, loading, error }) => {
     return (
         <div className='bg-white w-full lg:col-span-2 flex flex-col gap-4 rounded-lg p4'>
@@ -44,4 +45,13 @@ const OrgDetails = ({ orgData, loading, error }) => {
     )
 }
 
+OrgDetails.propTypes = {
+    orgData: PropTypes.shape({
+        organisationName: PropTypes.string,
+        organisationCountry: PropTypes.string,
+        organisationSize: PropTypes.string,
+    }),
+    loading: PropTypes.bool,
+    error: PropTypes.string,
+};
 export default OrgDetails

@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
@@ -120,4 +121,14 @@ const FeedbackOverview = ({ dailyFeedbacks, analytics }) => {
     );
 }
 
-export default FeedbackOverview
+FeedbackOverview.propTypes = {
+    dailyFeedbacks: PropTypes.arrayOf(
+        PropTypes.shape({
+            day: PropTypes.string.isRequired,
+            Feedbacks: PropTypes.number,
+        })
+    ).isRequired,
+    analytics: PropTypes.bool,
+};
+
+export default FeedbackOverview;

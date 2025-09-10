@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
 
@@ -64,4 +65,12 @@ const TopicGraph = ({ topicData }) => {
     );
 }
 
-export default TopicGraph
+TopicGraph.propTypes = {
+    topicData: PropTypes.arrayOf(
+        PropTypes.shape({
+            category: PropTypes.string,
+            percentage: PropTypes.number,
+        })
+    ).isRequired,
+};
+export default TopicGraph;

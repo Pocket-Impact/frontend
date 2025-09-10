@@ -1,7 +1,6 @@
-import React from 'react'
 import { MdOutlineStar, MdOutlineStarBorder } from 'react-icons/md'
 import Testimonial from '../root/Testimonial'
-import {testimonials} from '@/lib/testimonials'
+import { testimonials } from '@/lib/testimonials'
 
 const TestimonialsSection = () => {
   return (
@@ -12,7 +11,7 @@ const TestimonialsSection = () => {
       </div>
       <div className='grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-3 grid mt-5'>
         {testimonials.map((testimonial, index) => (
-         <Testimonial key={index} testimonial={testimonial} />
+          <Testimonial key={index} testimonial={testimonial} />
         ))}
       </div>
     </div>
@@ -20,3 +19,6 @@ const TestimonialsSection = () => {
 }
 
 export default TestimonialsSection
+
+import PropTypes from 'prop-types';
+TestimonialsSection.propTypes = {};

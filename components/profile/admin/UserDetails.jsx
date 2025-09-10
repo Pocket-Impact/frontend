@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React from 'react'
 import { MdOutlineManageAccounts } from 'react-icons/md'
 
+import PropTypes from 'prop-types';
 const UserDetails = () => {
     const [users, setUsers] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
@@ -78,4 +79,5 @@ const UserDetails = () => {
     )
 }
 
+UserDetails.propTypes = {};
 export default UserDetails

@@ -3,6 +3,8 @@ import { useAlertStore } from '@/stores/alertStore';
 import React from 'react'
 import { IoCheckmarkSharp } from 'react-icons/io5'
 
+import PropTypes from 'prop-types';
+
 const AlertComponent = () => {
     const { message } = useAlertStore((state) => state);
 
@@ -15,5 +17,7 @@ const AlertComponent = () => {
         </div>
     )
 }
+
+AlertComponent.propTypes = {};
 
 export default AlertComponent

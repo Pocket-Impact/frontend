@@ -1,4 +1,3 @@
-import React from 'react'
 import SecondaryButton from '@/components/ui/SecondaryButton'
 
 const CTASection = () => {
@@ -19,3 +18,6 @@ const CTASection = () => {
 }
 
 export default CTASection
+
+import PropTypes from 'prop-types';
+CTASection.propTypes = {};

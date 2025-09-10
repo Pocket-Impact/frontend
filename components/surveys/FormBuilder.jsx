@@ -13,7 +13,6 @@ import QuestionCard, {
 } from "@/components/surveys/QuestionCard";
 import PreviewPane from "@/components/surveys/PreviewPane";
 import PrimaryButton from "../ui/PrimaryButton";
-import { apiFetch } from "@/utils/apiFetch";
 import { FaRegSave } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { RxCaretLeft } from "react-icons/rx";
@@ -22,6 +21,7 @@ import SecondaryButton from "../ui/SecondaryButton";
 import { FiSend, FiPlus, FiEye, FiEdit } from "react-icons/fi";
 import SendSurvey from "../feedback/surveys/SendSurvey";
 import { VscFeedback } from "react-icons/vsc";
+import useFetch from '@/hooks/useFetch';
 
 import PropTypes from 'prop-types';
 export default function FormBuilder({
@@ -107,23 +107,27 @@ export default function FormBuilder({
     } else {
       setLoading(true);
       setError(null);
-      setSuccess(false);
       try {
         const payload = prepareSurveyPayload();
-        const response = await apiFetch("/api/surveys", {
+        const response = await fetch("/api/surveys", {
           method: "POST",
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to create survey.');
+        }
         setSuccess(true);
         setMessage("Survey created successfully!");
         setTimeout(() => {
           clearMessage();
         }, 3000);
+        router.push("/feedback/surveys");
       } catch (err) {
-        setError(err?.response?.data?.message || "Failed to create survey.");
+        setError(err.message || "Failed to create survey.");
       } finally {
         setLoading(false);
-        router.push("/feedback/surveys");
       }
     }
   };

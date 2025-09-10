@@ -1,6 +1,6 @@
 "use client";
 import { useAlertStore } from "@/stores/alertStore";
-import { apiFetch } from "@/utils/apiFetch";
+import useFetch from '@/hooks/useFetch';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -15,28 +15,30 @@ const SurveyCard = ({ survey }) => {
 
   const handleConfirm = () => {
     const deleteSurvey = async () => {
-      const response = await apiFetch(
-        `http://localhost:5000/api/surveys/${survey._id}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/surveys/${survey._id}`,
+          {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.ok) {
+          setMessage("Survey deleted successfully.");
+          router.refresh();
+          setTimeout(() => {
+            clearMessage();
+          }, 3000);
+        } else {
+          console.log("Failed to delete survey.");
         }
-      );
-
-      if (response.ok) {
-        setMessage("Survey deleted successfully.");
-        router.refresh();
-        setTimeout(() => {
-          clearMessage();
-        }, 3000);
-      } else {
-        console.log("Failed to delete survey.");
+      } catch (err) {
+        console.log("Failed to delete survey.", err);
       }
     };
-
     deleteSurvey();
   };
 

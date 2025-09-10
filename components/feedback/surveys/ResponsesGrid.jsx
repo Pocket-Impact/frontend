@@ -2,7 +2,7 @@
 import { formatDistanceToNow } from 'date-fns';
 import React, { useEffect, useState } from 'react'
 import { IoIosAdd, IoIosRemove } from 'react-icons/io'
-import { apiFetch } from '@/utils/apiFetch'
+import useFetch from '@/hooks/useFetch';
 import { useParams } from 'next/navigation'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 
@@ -11,25 +11,9 @@ import PropTypes from 'prop-types';
 const ResponsesGrid = () => {
     const { id } = useParams();
     const [open, setOpen] = useState({});
-    const [responses, setResponses] = useState([]);
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchResponses = async () => {
-            setLoading(true);
-            const res = await apiFetch(`http://localhost:5000/api/feedback/${id}`);
-            if (res.ok) {
-                const data = await res.json();
-                console.log(data);
-                setResponses(data.data);
-            } else {
-                const data = await res.json();
-                console.log(data.message);
-            }
-            setLoading(false);
-        };
-        fetchResponses();
-    }, [id]);
+    const { data, error, loading } = useFetch(id ? `/api/feedback/${id}` : null);
+    const responses = data && data.data ? data.data : [];
 
     if (loading) return <div className="mt-36 mx-auto bg-primary/70 py-5 rounded-x2l w-max">
         <DotLottieReact
@@ -40,6 +24,7 @@ const ResponsesGrid = () => {
             style={{ height: "auto" }}
         />
     </div>;
+    if (error) return <div className="border rounded-xl h-[74px] flex items-center justify-center border-stroke p3 text-red-500">{error.message || 'Failed to load responses.'}</div>;
 
     return (
         <div className='mt-5'>

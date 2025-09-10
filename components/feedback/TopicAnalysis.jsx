@@ -1,7 +1,8 @@
 
-import React, { useEffect, useState } from 'react'
+
+import React from 'react';
 import ReactECharts from 'echarts-for-react';
-import { apiFetch } from '@/utils/apiFetch';
+import useFetch from '@/hooks/useFetch';
 import PropTypes from 'prop-types';
 
 
@@ -16,11 +17,10 @@ const topicColors = {
 };
 
 
+
 const TopicAnalysis = () => {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    // Prepare dynamic chart option from fetched data
+    const { data: result, error, loading } = useFetch('/api/dashboard/daily-categories');
+    const data = result && result.status === 'success' ? result.data : [];
     const days = data.map(d => d.day);
     const categories = Object.keys(topicColors).filter(cat =>
         data.some(d => Object.keys(d).includes(cat))
@@ -64,29 +64,6 @@ const TopicAnalysis = () => {
         },
         series: series
     };
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                const response = await apiFetch('/api/dashboard/daily-categories');
-                const result = await response.json();
-                if (result.status === 'success') {
-                    setData(result.data);
-                } else {
-                    setError(result.message || 'Failed to fetch data');
-                    console.error('TopicAnalysis fetch error:', result.message || 'Failed to fetch data', result);
-                }
-            } catch (err) {
-                setError('Error fetching data');
-                console.error('TopicAnalysis fetch exception:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
-
 
     return (
         <div className='bg-white h-full lg:col-span-3 flex flex-col gap-4 min-h-0 flex-1 p-4 rounded-lg'>
@@ -101,7 +78,7 @@ const TopicAnalysis = () => {
                     {loading ? (
                         <div className="flex items-center justify-center h-full text-gray-500">Loading...</div>
                     ) : error ? (
-                        <div className="flex items-center justify-center h-full text-red-500">{error}</div>
+                        <div className="flex items-center justify-center h-full text-red-500">{error.message || error}</div>
                     ) : (
                         <ReactECharts option={option} style={{ width: '100%', height: '100%' }} />
                     )}

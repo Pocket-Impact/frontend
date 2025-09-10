@@ -1,35 +1,13 @@
-import { apiFetch } from '@/utils/apiFetch';
+
 import Link from 'next/link';
-import React from 'react'
-import { MdOutlineManageAccounts } from 'react-icons/md'
-
+import React from 'react';
+import { MdOutlineManageAccounts } from 'react-icons/md';
+import useFetch from '@/hooks/useFetch';
 import PropTypes from 'prop-types';
-const UserDetails = () => {
-    const [users, setUsers] = React.useState([]);
-    const [loading, setLoading] = React.useState(true);
-    const [error, setError] = React.useState(null);
 
-    React.useEffect(() => {
-        const fetchUsers = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                const res = await apiFetch('/api/users/all-users')
-                const data = await res.json();
-                console.log(data);
-                if (!res.ok || data.status !== 'success') {
-                    setError(data.message || 'Could not fetch users.');
-                } else {
-                    setUsers(data.data.users.slice(0, 7));
-                }
-            } catch (err) {
-                setError('Server error. Please try again later.');
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchUsers();
-    }, []);
+const UserDetails = () => {
+    const { data: result, error, loading } = useFetch('/api/users/all-users');
+    const users = (result && result.status === 'success' && result.data && result.data.users) ? result.data.users.slice(0, 7) : [];
 
     return (
         <div className='bg-white lg:col-span-3 flex flex-col gap-4 p4 rounded-lg'>
@@ -60,7 +38,7 @@ const UserDetails = () => {
                                 <td className='font-light base text-start sm px-3 py-2 border-b border-stroke'><div className='bg-black/20 rounded-sm'><span className='opacity-0'>test</span></div></td>
                             </tr>
                         ) : error ? (
-                            <tr><td colSpan={3} className='base text-red-500 px-3 py-2'>{error}</td></tr>
+                            <tr><td colSpan={3} className='base text-red-500 px-3 py-2'>{error.message || error}</td></tr>
                         ) : users.length === 0 ? (
                             <tr><td colSpan={3} className='base text-black/60 px-3 py-2'>No users yet.</td></tr>
                         ) : (

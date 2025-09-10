@@ -3,7 +3,7 @@ import { MdOutlineStar, MdOutlineStarBorder } from 'react-icons/md'
 
 const Testimonial = ({ testimonial }) => {
     return (
-        <div className='bg-white border flex flex-col justify-between border-stroke p-6'>
+        <div className='bg-white border h-full flex flex-col justify-between border-stroke p-6'>
             <div>
                 <div className='flex items-center gap-2'>
                     {Array.from({ length: testimonial.rating }, (_, index) => (

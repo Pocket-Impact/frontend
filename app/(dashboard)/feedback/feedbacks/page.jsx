@@ -10,7 +10,7 @@ import { PiFlask, PiChartBar, PiUsers, PiTrendUp } from "react-icons/pi";
 import { useAlertStore } from "@/stores/alertStore";
 import { redirect, useRouter } from "next/navigation";
 
-const page = () => {
+const FeedBackPage = () => {
   const [copied, setCopied] = useState(false);
   const { organisationId, hasHydrated } = useAuthStore((state) => state);
   const [feedbacks, setFeedbacks] = useState([]);
@@ -293,4 +293,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default FeedBackPage;

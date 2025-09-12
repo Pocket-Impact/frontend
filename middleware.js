@@ -6,11 +6,13 @@ export async function middleware(request) {
 
     // Protect feedback routes
     if (!accessToken && !refreshToken) {
+        // eslint-disable-next-line no-undef
         return NextResponse.redirect(new URL('/auth/signin', request.url));
     }
     // If accessToken is missing but refreshToken exists, try to refresh
     if (!accessToken && refreshToken) {
         try {
+            // eslint-disable-next-line no-undef
             const refreshRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/refresh-token`, {
                 method: 'POST',
                 headers: {
@@ -26,8 +28,10 @@ export async function middleware(request) {
                     return response;
                 }
             }
+            // eslint-disable-next-line no-undef
             return NextResponse.redirect(new URL('/auth/signin', request.url));
         } catch {
+            // eslint-disable-next-line no-undef
             return NextResponse.redirect(new URL('/auth/signin', request.url));
         }
     }

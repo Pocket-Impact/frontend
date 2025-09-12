@@ -3,6 +3,7 @@ import { FiUser } from 'react-icons/fi'
 import { GoOrganization } from 'react-icons/go'
 import logo from '@/public/img/white.svg'
 import Image from 'next/image'
+import PropTypes from 'prop-types'
 
 const FormSidebar = ({ step }) => {
     return (

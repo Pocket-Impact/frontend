@@ -16,7 +16,7 @@ const TopicGraph = ({ topicData }) => {
     let option = {};
     try {
         xLabels = topicData.map(item => item.category ?? '');
-        yValues = topicData.map(item => item.percentage);
+        yValues = topicData.map(item => item.count);
         option = {
             tooltip: {
                 trigger: 'axis'
@@ -60,15 +60,23 @@ const TopicGraph = ({ topicData }) => {
     }
 
     return (
-        <div className='bg-white lg:col-span-3 flex flex-col gap-4 min-h-0 flex-1 p-4 rounded-lg'>
+        <div
+            className='bg-white lg:col-span-3 flex flex-col gap-4 min-h-0 flex-1 p-4 rounded-lg'
+            role="region"
+            aria-label="Feedback topic trends chart"
+        >
             <div className='flex flex-col'>
-                <h2 className='lg font-semibold'>
+                <h2 className='lg font-semibold' id="topic-graph-heading">
                     Category
                 </h2>
                 <p className='sm -mt-1 text-black/60'>Mentioned topics in feedback</p>
             </div>
             <div className="w-full h-full">
-                <ReactECharts option={option} className='w-full h-full' />
+                <ReactECharts
+                    option={option}
+                    className='w-full h-full'
+                    aria-labelledby="topic-graph-heading"
+                />
             </div>
         </div>
     );

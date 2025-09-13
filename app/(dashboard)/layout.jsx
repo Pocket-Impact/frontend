@@ -32,9 +32,9 @@ export default async function RootLayout({ children }) {
                     <Sidebar />
                     <div className="flex-1 flex flex-col h-screen">
                         <DashboardNavbar />
-                        <div className="inter relative p-6 max-lg:p-5 max-md:p-4 w-full flex-1 overflow-y-scroll overflow-x-hidden scrolly">
+                        <main className="inter relative p-6 max-lg:p-5 max-md:p-4 w-full flex-1 overflow-y-scroll overflow-x-hidden scrolly" aria-label="Main content">
                             {children}
-                        </div>
+                        </main>
                     </div>
                 </div>
             </body>

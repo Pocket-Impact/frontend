@@ -4,11 +4,11 @@ import Tool from '@/components/root/Tool'
 
 const ToolsSection = () => {
     return (
-        <div className='py-16 max-w-6xl m-auto flex flex-col gap-10 inter'>
+        <section className='py-16 max-w-6xl m-auto flex flex-col gap-10 inter' aria-label="Tools section">
             {tools.map((tool, index) => (
                 <Tool tool={tool} index={index} key={tool.name} />
             ))}
-        </div>
+        </section>
     )
 }
 

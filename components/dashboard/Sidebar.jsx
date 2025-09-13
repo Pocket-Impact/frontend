@@ -56,7 +56,7 @@ const Sidebar = () => {
     const currentLink = usePathname()
 
     return (
-        <div className='h-full flex flex-col bg-white w-[300px] md:min-w-[300px] max-md:w-max justify-between border-r border-stroke inter'>
+        <aside className='h-full flex flex-col bg-white w-[300px] md:min-w-[300px] max-md:w-max justify-between border-r border-stroke inter' aria-label="Main sidebar">
             <div className='flex flex-col'>
                 <div className='flex items-center gap-2 p4 h-16 border-b border-stroke'>
                     <Image src={logo}
@@ -66,22 +66,22 @@ const Sidebar = () => {
                     />
                     <span className='inter lg font-semibold max-md:hidden'>Pocket Impact</span>
                 </div>
-                <div className='p4 flex flex-col border-b border-stroke gap-2 max-md:gap-1.5'>
+                <nav className='p4 flex flex-col border-b border-stroke gap-2 max-md:gap-1.5' aria-label="General navigation">
                     <span className='font-medium text-black/60 xs max-md:hidden uppercase'>GENERAL</span>
                     <div className='flex flex-col gap-2'>
                         {links.map((link) => (
                             <SideLink key={link.name} active={currentLink.includes(link.name.toLowerCase())} link={link} />
                         ))}
                     </div>
-                </div>
-                <div className='p4 flex flex-col gap-2 max-md:gap-1.5'>
+                </nav>
+                <nav className='p4 flex flex-col gap-2 max-md:gap-1.5' aria-label="Other tools navigation">
                     <span className='font-medium text-black/60 xs max-md:hidden uppercase'>Other tools</span>
                     <div className='flex flex-col gap-2'>
                         {tools.map((link) => (
                             <SideLink key={link.name} active={currentLink.includes(link.name.toLowerCase())} link={link} />
                         ))}
                     </div>
-                </div>
+                </nav>
             </div>
             <div>
                 <OrgTab />
@@ -89,7 +89,7 @@ const Sidebar = () => {
                     &copy; {new Date().getFullYear()} Pocket Impact Inc
                 </div>
             </div>
-        </div>
+        </aside>
     )
 }
 

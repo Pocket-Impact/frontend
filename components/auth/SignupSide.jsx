@@ -3,10 +3,15 @@ import { FiUser } from 'react-icons/fi'
 import { GoOrganization } from 'react-icons/go'
 import logo from '@/public/img/white.svg'
 import Image from 'next/image'
+import PropTypes from 'prop-types'
 
 const FormSidebar = ({ step }) => {
     return (
-        <div className='bg-primary lg:col-span-3 p-5 max-lg:p-3 max-lg:flex justify-between items-center lg:h-full'>
+        <div
+            className='bg-primary lg:col-span-3 p-5 max-lg:p-3 max-lg:flex justify-between items-center lg:h-full'
+            role="complementary"
+            aria-label="Signup progress sidebar"
+        >
             <div className='flex items-center gap-4'>
                 <Image src={logo.src} alt="Pocket Impact Logo" width={logo.width} height={logo.height} className='w-8 h-8' />
                 <span className='bricolage lg max-sm:hidden text-white'>

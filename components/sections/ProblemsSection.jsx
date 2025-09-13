@@ -2,10 +2,10 @@ import { problems } from '@/lib/problems'
 
 const ProblemsSection = () => {
     return (
-        <div className='py-32 max-lg:py-28 max-md:py-24 max-sm:py-20 max-w-6xl m-auto max-lg:px-20 max-md:px-12 max-sm:px-4 flex flex-col items-center max-lg:items-center inter'>
+        <section className='py-32 max-lg:py-28 max-md:py-24 max-sm:py-20 max-w-6xl m-auto max-lg:px-20 max-md:px-12 max-sm:px-4 flex flex-col items-center max-lg:items-center inter' aria-labelledby="problems-heading">
             <div className='flex flex-col items-center max-lg:text-center max-lg:items-center gap-3 mb-10'>
                 <h4 className='p-2 px-4 rounded-2xl bg-white border-stroke text-black/70 sm border w-max uppercase'>Problems</h4>
-                <h2 className='bricolage x3l font-bold'>Why Pocket Impact ?</h2>
+                <h2 id="problems-heading" className='bricolage x3l font-bold'>Why Pocket Impact ?</h2>
                 <p className='text-black/80 w-full max-w-xl text-center'>Running a mission-driven organization is tough — too much admin, not enough time for impact.</p>
             </div>
             <div className='grid w-full grid-cols-2 gap-6 lg:col-span-4 max-sm:grid-cols-1 max-lg:mt-5'>
@@ -21,7 +21,7 @@ const ProblemsSection = () => {
                     </div>
                 ))}
             </div>
-        </div>
+        </section>
     )
 }
 

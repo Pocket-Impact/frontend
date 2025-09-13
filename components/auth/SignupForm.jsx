@@ -15,7 +15,7 @@ const SignupForm = ({ countries }) => {
     <div className='flex items-center justify-center h-full'>
       <div className='w-full lg:rounded-3xl max-lg:h-full inter overflow-hidden max-w-5xl lg:grid lg:grid-cols-7 max-lg:grid-cols-1 lg:border border-black/20 bg-white justify-center items-center'>
         <FormSidebar step={step} />
-        <form onSubmit={(e) => onSubmit(e)} className="inter flex-col w-full lg:col-span-4 p-10 max-lg:p-8 max-md:p-6">
+        <form onSubmit={(e) => onSubmit(e)} className="inter flex-col w-full lg:col-span-4 p-10 max-lg:p-8 max-md:p-6" aria-label="Sign up form">
           <h6 className='text-black/50'>Step {step}/2</h6>
           <SectionOne step={step} setStep={setStep} errors={errors} setErrors={setErrors} formData={formData} setFormData={setFormData} />
           <SectionTwo countries={countries} step={step} errors={errors} setErrors={setErrors} formData={formData} setFormData={setFormData} />

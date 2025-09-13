@@ -133,7 +133,7 @@ export default function FormBuilder({
   };
 
   return (
-    <div className="h-full flex flex-col gap-8">
+    <main className="h-full flex flex-col gap-8" aria-label="Survey form builder">
       {edit && (
         <SendSurvey
           uniqueLink={uniqueLink}
@@ -144,7 +144,7 @@ export default function FormBuilder({
       )}
 
       {/* Header */}
-      <div className="bg-white rounded-2xl p-6 shadow-sm">
+      <header className="bg-white rounded-2xl p-6 shadow-sm" aria-label="Survey builder header">
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-4">
             <Link
@@ -167,7 +167,7 @@ export default function FormBuilder({
                   href={`/feedback/surveys/${initialId}/responses`}
                   prefetch
                 >
-                  <button className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-3 rounded-xl transition-all duration-300 font-medium">
+                  <button className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-3 rounded-xl transition-all duration-300 font-medium" aria-label="View responses">
                     <VscFeedback className="text-lg" />
                     <span className="max-md:hidden">View Responses</span>
                   </button>
@@ -175,6 +175,7 @@ export default function FormBuilder({
                 <button
                   onClick={() => setSendSurvey(true)}
                   className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-3 rounded-xl transition-all duration-300 font-medium"
+                  aria-label="Send survey"
                 >
                   <FiSend className="text-lg" />
                   <span className="max-md:hidden">Send Survey</span>
@@ -185,6 +186,7 @@ export default function FormBuilder({
               onClick={handleSubmit}
               disabled={externalLoading || loading}
               className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white px-4 py-3 rounded-xl transition-all duration-300 font-medium"
+              aria-label="Save survey"
             >
               <FaRegSave className="text-lg" />
               <span className="max-md:hidden">
@@ -193,11 +195,11 @@ export default function FormBuilder({
             </button>
           </div>
         </div>
-      </div>
+      </header>
 
       <div className="grid grid-cols-5 flex-1 h-full min-h-0 max-lg:grid-cols-1 gap-6">
         {/* Builder Section */}
-        <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm overflow-y-auto">
+        <section className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm overflow-y-auto" aria-label="Survey editor">
           <div className="mb-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 bg-slate-100 rounded-xl">
@@ -230,6 +232,7 @@ export default function FormBuilder({
                   placeholder="Enter survey title..."
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
+                  aria-label="Survey title"
                 />
                 <textarea
                   className="w-full p-3 bg-white rounded-xl focus:ring-2 focus:ring-slate-200 outline-none transition-all resize-none"
@@ -237,6 +240,7 @@ export default function FormBuilder({
                   rows={4}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
+                  aria-label="Survey description"
                 />
               </div>
             </div>
@@ -298,6 +302,7 @@ export default function FormBuilder({
               <button
                 onClick={addQuestion}
                 className="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl transition-all duration-300 font-medium"
+                aria-label="Add question"
               >
                 <FiPlus className="text-lg" />
                 Add Question
@@ -316,10 +321,10 @@ export default function FormBuilder({
               </div>
             )}
           </div>
-        </div>
+        </section>
 
         {/* Preview Section */}
-        <div className="lg:col-span-3 bg-white rounded-2xl p-6 shadow-sm">
+        <section className="lg:col-span-3 bg-white rounded-2xl p-6 shadow-sm" aria-label="Live preview">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 bg-slate-100 rounded-xl">
               <FiEye className="text-xl text-slate-700" />
@@ -340,9 +345,9 @@ export default function FormBuilder({
               questions={questions}
             />
           </div>
-        </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }
 

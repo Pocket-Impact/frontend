@@ -2,7 +2,7 @@ import SecondaryButton from '@/components/ui/SecondaryButton'
 
 const HeroSection = () => {
     return (
-        <div className='h-screen max-lg:h-max max-md:pt-16 max-lg:pt-32 mt-[65px] relative bg-cblack overflow-hidden rounded-2xl'>
+        <section className='h-screen max-lg:h-max max-md:pt-16 max-lg:pt-32 mt-[65px] relative bg-cblack overflow-hidden rounded-2xl' aria-label="Hero section">
             <div className="absolute inset-0">
                 <div className="absolute inset-0 z-10 h-full w-full [background:radial-gradient(125%_125%_at_50%_10%,transparent_40%,#386641_100%)]"></div>
             </div>
@@ -17,14 +17,14 @@ const HeroSection = () => {
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
                         <SecondaryButton text="Start Free Trial" styles="rounded-xl effect font-semibold py-4 max-md:py-2 px-8 max-md:px-4" />
-                        <button className="rounded-xl bg-white/10 text-white cursor-pointer hover:bg-white/15 shadow-2xl transition duration-300 inter font-semibold py-4 max-md:py-2 px-8 max-md:px-4">See How It Works</button>
+                        <button className="rounded-xl bg-white/10 text-white cursor-pointer hover:bg-white/15 shadow-2xl transition duration-300 inter font-semibold py-4 max-md:py-2 px-8 max-md:px-4" aria-label="See how it works">See How It Works</button>
                     </div>
                 </div>
                 <div className='w-full max-w-7xl fade-up mt-8 px-3 pt-3 border-x border-t bg-white/20 backdrop-blur-2xl border-white h-64 rounded-t-3xl'>
                     <div className='w-full h-full bg-white/30 rounded-t-2xl'></div>
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
 

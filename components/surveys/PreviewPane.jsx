@@ -30,7 +30,7 @@ export default function PreviewPane({
 
       {/* Form Section */}
       <div className="bg-white rounded-2xl p-6 shadow-sm">
-        <form className="space-y-8">
+        <form className="space-y-8" aria-label="Survey preview form">
           {questions.map((q, index) => (
             <div key={q.id} className="space-y-4">
               <label className="block text-lg font-semibold text-slate-800">
@@ -45,6 +45,8 @@ export default function PreviewPane({
                   placeholder={`Answer ${(index + 1)
                     .toString()
                     .padStart(2, "0")}`}
+                  aria-label={`Answer for question: ${q.label}`}
+                  aria-required="true"
                 />
               )}
 
@@ -123,7 +125,7 @@ export default function PreviewPane({
           {/* Submit Button */}
           {questions.length > 0 && (
             <div className="pt-4">
-              <button className="w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 shadow-sm hover:shadow-md">
+              <button className="w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 shadow-sm hover:shadow-md" aria-label="Submit survey answers">
                 Submit Answer
               </button>
             </div>

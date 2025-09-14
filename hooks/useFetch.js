@@ -9,10 +9,11 @@ export default function useFetch(url, options = {}, deps = []) {
         setLoading(true);
         setError(null);
         try {
-            const res = await fetch(url, options);
-            if (!res.ok) throw new Error(`Error: ${res.status}`);
-            const json = await res.json();
-            setData(json);
+          // eslint-disable-next-line no-undef
+          const res = await fetch(url, options);
+          if (!res.ok) throw new Error(`Error: ${res.status}`);
+          const json = await res.json();
+          setData(json);
         } catch (err) {
             setError(err);
             setData(null);

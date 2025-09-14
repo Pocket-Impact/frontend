@@ -1,24 +1,29 @@
-"use client"
-import Link from 'next/link'
+import React from "react";
+import PropTypes from "prop-types";
 
-import PropTypes from 'prop-types';
-const SideLink = ({ link, active }) => {
-    return (
-        <Link href={link.href} prefetch>
-            <div className={`${active ? "bg-gray-200" : "hover:bg-gray-100"} flex max-md:w-max items-center transition duration-300 text-black gap-3.5 inter font-semibold p-3.5 max-lg:p-3 max-md:p-2 rounded-gl`}>
-                <link.icon className='w-5 max-lg:w-3 h-auto' />
-                <span className='base max-md:hidden'>{link.name}</span>
-            </div>
-        </Link>
-    )
-}
+const SideLink = ({ active, link }) => {
+  const { name, href, icon: Icon } = link;
+  return (
+    <a href={href}>
+      <div
+        className={`hover:bg-gray-100 flex max-md:w-max items-center transition duration-300 text-black gap-3.5 inter font-semibold p-3.5 max-lg:p-3 max-md:p-2 rounded-gl ${
+          active ? "bg-primary/5" : ""
+        }`}
+      >
+        <Icon className="w-5 max-lg:w-3 h-auto" />
+        <span className="base max-md:hidden">{name}</span>
+      </div>
+    </a>
+  );
+};
 
 SideLink.propTypes = {
-    link: PropTypes.shape({
-        href: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        icon: PropTypes.elementType.isRequired,
-    }).isRequired,
-    active: PropTypes.bool,
+  active: PropTypes.bool,
+  link: PropTypes.shape({
+    name: PropTypes.string,
+    href: PropTypes.string,
+    icon: PropTypes.elementType,
+  }),
 };
-export default SideLink
+
+export default SideLink;

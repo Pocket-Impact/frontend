@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react'
 import { MdFeedback } from 'react-icons/md'
 import { RiSurveyFill, RiSurveyLine } from 'react-icons/ri'
 
-const page = () => {
+const AnalyticsPage = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -142,4 +142,4 @@ const page = () => {
   );
 }
 
-export default page
+export default AnalyticsPage;

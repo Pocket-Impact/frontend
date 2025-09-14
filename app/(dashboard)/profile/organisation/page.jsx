@@ -34,7 +34,7 @@ const defaultOverviewCards = [
 ];
 
 
-const page = () => {
+const OrganisationPage = () => {
     const [orgData, setOrgData] = React.useState(null);
     const [overviewCards, setOverviewCards] = React.useState(defaultOverviewCards);
     const [loading, setLoading] = React.useState(true);
@@ -113,4 +113,4 @@ const page = () => {
     )
 }
 
-export default page
+export default OrganisationPage;

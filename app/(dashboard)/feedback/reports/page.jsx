@@ -15,7 +15,7 @@ import { apiFetch } from "@/utils/apiFetch";
 import { usePathname } from "next/navigation";
 import OverviewCard from "@/components/feedback/surveys/OverviewCard";
 
-const page = () => {
+const ReportsPage = () => {
   const [selectedReport, setSelectedReport] = useState("surveys");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({});
@@ -620,4 +620,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ReportsPage;

@@ -6,7 +6,7 @@ import { RxCaretDown } from 'react-icons/rx'
 import { apiFetch } from '@/utils/apiFetch'
 import { useAlertStore } from '@/stores/alertStore'
 
-const page = () => {
+const UsersPage = () => {
     const [showForm, setShowForm] = React.useState(false);
     const [form, setForm] = React.useState({ fullname: '', email: '', phonenumber: '', role: '' });
     const [loading, setLoading] = React.useState(false);
@@ -167,4 +167,4 @@ const page = () => {
     )
 }
 
-export default page
+export default UsersPage;   

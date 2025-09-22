@@ -23,6 +23,7 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const { setMessage: setAlertMessage } = useAlertStore();
+  let organisationId;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,10 +37,11 @@ export default function Page() {
     }
     setLoading(true);
     setError("");
+    organisationId = id;
     try {
-      const response = await apiFetch(`/api/feedbacks/${id}`, {
+      const response = await apiFetch(`/api/feedbacks`, {
         method: "POST",
-        body: JSON.stringify({ category, message }),
+        body: JSON.stringify({ organisationId ,category, message }),
       });
       const json = await response.json();
       if (!response.ok) {

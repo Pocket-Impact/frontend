@@ -31,7 +31,7 @@ const FeedbackCard = ({ feedback }) => {
         />
         <div
           onClick={() => setOpen(!open)}
-          className="shadow-md inter cursor-pointer hover:shadow-md transition-all duration-300 hover:-translate-y-1 rounded-2xl p-6 group"
+          className="shadow-md border border-green-900/10 inter cursor-pointer hover:shadow-md transition-all duration-300 hover:-translate-y-1 rounded-2xl p-6 group"
         >
           {/* Header */}
           <div className="flex justify-between items-start mb-4">
@@ -64,17 +64,17 @@ const FeedbackCard = ({ feedback }) => {
 
           {/* Content */}
           <div className="space-y-4">
-            <p className="text-slate-700 leading-relaxed line-clamp-3">
+            <p className="text-slate-700 leading-relaxed line-clamp-1">
               {feedback.message}
             </p>
 
             {/* Metadata */}
             <div className="flex justify-between items-center pt-2">
-              <div className="text-sm text-slate-500">
+              <div className="text-sm text-slate-600">
                 {feedback.user?.name || "Anonymous"}
               </div>
-              <div className="text-sm text-slate-400 group-hover:text-slate-600 transition-colors flex items-center gap-2">
-                <div className="w-2 h-2 bg-slate-300 rounded-full group-hover:bg-slate-400 transition-colors"></div>
+              <div className="text-sm text-slate-500 group-hover:text-slate-600 transition-colors flex items-center gap-2">
+                <div className="w-2 h-2 bg-slate-500 rounded-full group-hover:bg-slate-400 transition-colors"></div>
                 Click to expand
               </div>
             </div>

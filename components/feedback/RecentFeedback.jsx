@@ -2,8 +2,8 @@
 import Link from "next/link";
 import React from "react";
 import { formatDistanceToNow } from "date-fns";
-
 import PropTypes from 'prop-types';
+
 const RecentFeedback = ({ recentFeedbacks }) => {
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm flex flex-col min-h-0 flex-1">
@@ -26,16 +26,16 @@ const RecentFeedback = ({ recentFeedbacks }) => {
                 return recentFeedbacks?.slice(0, 5).map((feedback, index) => (
                   <div
                     key={index}
-                    className="p-4 rounded-xl bg-slate-800/5 hover:bg-slate-100 transition-colors duration-200 group"
+                    className="cursor-pointer p-4 rounded-xl bg-gray-800/10 transition-colors duration-200 group"
                   >
                     <div className="flex justify-between items-start gap-3">
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-slate-700 line-clamp-2 mb-2 leading-relaxed">
+                        <p className="text-md text-slate-700 line-clamp-2 mb-2 leading-relaxed">
                           {feedback.message}
                         </p>
                         <div className="flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 bg-slate-300 rounded-full"></div>
-                          <span className="text-xs text-slate-500">
+                          <div className="w-1.5 h-1.5 bg-slate-900 rounded-full"></div>
+                          <span className="text-xs text-slate-900 font-semibold">
                             {feedback.date
                               ? formatDistanceToNow(new Date(feedback.date), {
                                 addSuffix: true,

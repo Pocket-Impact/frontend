@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { apiFetch } from "@/utils/apiFetch";
 import { useAlertStore } from "@/stores/alertStore";
+import logo from "@/public/img/white.svg";
 
 const FeedbackForm = () => {
   const { id } = useParams();
@@ -82,7 +83,7 @@ const FeedbackForm = () => {
   if (pageLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <DotLottieReact src="/loading.lottie" loop autoplay />
+        <DotLottieReact src="./loading.lottie" loop autoplay />
       </div>
     );
   }
@@ -97,11 +98,11 @@ const FeedbackForm = () => {
 
   return (
     <div className="lg:max-w-6xl 2xl:max-w-[1300px] w-full lg:h-[600px] max-md:h-full border-stroke md:border inter flex flex-col items-start">
-      <div className="grid lg:grid-cols-5 h-full min-h-0 items-stretch">
-        <div className="lg:col-span-2 bg-primary w-full h-full min-h-0 flex flex-col gap-6 flex-1 max-h-full overflow-y-auto p-6">
+      <div className="grid lg:grid-cols-5 w-full h-full min-h-0 items-stretch">
+        <div className="lg:col-span-2 bg-primary w-full min-w-full h-full min-h-0 flex flex-col gap-6 max-h-full overflow-y-auto p-6">
           <div className="flex items-center gap-4 max-md:gap-2">
             <Image
-              src="/img.jpg"
+              src={logo}
               alt="Pocket Impact Logo"
               width={40}
               height={40}
@@ -194,7 +195,7 @@ const FeedbackForm = () => {
           ))}
           <button
             type="submit"
-            className="bg-primary cursor-pointer transition duration-300 h-max text-white rounded-full inter p-3 px-4 base rounded-xl bg-primary text-white hover:bg-primary-dark transition"
+            className="bg-primary cursor-pointer transition duration-300 h-max text-white rounded-lg inter p-3 px-4 base hover:bg-primary-dark"
             disabled={loading}
           >
             <div className="flex items-center gap-2 max-md:gap-1.5">

@@ -77,9 +77,9 @@ const Page = () => {
   const averageResponseTime = "2.5 min"; // This would come from your data
 
   return (
-    <div className="flex flex-col gap-8 p-6 bg-slate-50 min-h-screen">
+    <div className="flex flex-col gap-5 min-h-screen">
       {/* Header */}
-      <div className="bg-white rounded-2xl p-6 shadow-sm">
+      <div className="rounded-2xl px-1">
         <div className="flex items-start justify-between mb-4">
           <Link
             href="/feedback/surveys"
@@ -120,7 +120,7 @@ const Page = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div className="bg-white rounded-2xl p-3 shadow-sm">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-emerald-100 rounded-xl">
                 <IoCheckmarkCircle className="text-2xl text-emerald-600" />
@@ -280,10 +280,10 @@ const Page = () => {
 
                 {/* Expanded Content */}
                 {expandedResponses[response._id || idx.toString()] && (
-                  <div className="px-6 pb-6 space-y-4 border-t border-slate-200 pt-6">
+                  <div className="px-6 pb-3 space-y-4 border-t border-slate-200 pt-3">
                     {response.responses &&
                       response.responses.map((answer, qidx) => (
-                        <div key={qidx} className="bg-white rounded-xl p-4">
+                        <div key={qidx} className="bg-white rounded-xl p-3">
                           <div className="mb-3">
                             <h4 className="font-semibold text-slate-900 mb-2">
                               {answer.questionText

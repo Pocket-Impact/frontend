@@ -5,15 +5,14 @@ import SentimentOverview from '@/components/feedback/SentimentOverview'
 import OverviewCard from '@/components/feedback/surveys/OverviewCard'
 import TopicAnalysis from '@/components/feedback/TopicAnalysis'
 import TopicOverview from '@/components/feedback/TopicOverview'
-import { apiFetch } from '@/utils/apiFetch'
-import React, { useEffect, useState } from 'react'
+import useFetch from '@/hooks/useFetch'
+import React from 'react'
 import { MdFeedback } from 'react-icons/md'
 import { RiSurveyFill, RiSurveyLine } from 'react-icons/ri'
 
 const AnalyticsPage = () => {
-  const [dashboardData, setDashboardData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { data: dashboardResponse, loading, error } = useFetch('/api/dashboard');
+  const dashboardData = dashboardResponse?.status === 'success' ? dashboardResponse.data : null;
   // Calculate percent changes for each metric
   function getPercentChange(arr, key) {
     if (!Array.isArray(arr) || arr.length < 2) return 0;
@@ -76,28 +75,7 @@ const AnalyticsPage = () => {
     },
   ];
 
-  useEffect(() => {
-    const fetchDashboard = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await apiFetch('/api/dashboard');
-        const data = await res.json();
-        if (res.ok && data.status === 'success') {
-          console.log(data);
-          setDashboardData(data.data);
-        } else {
-          console.log(data.data.dailyFeedbacks);
-          setError(data.message || 'Failed to fetch dashboard data');
-        }
-      } catch (err) {
-        setError('Server error. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDashboard();
-  }, []);
+  // Data fetching handled by useFetch hook
 
   return (
     <div className='min-h-screen'>
@@ -109,7 +87,7 @@ const AnalyticsPage = () => {
           {loading ? (
             <div className='text-black/60 base'>Loading analytics...</div>
           ) : error ? (
-            <div className='text-red-500 mb-4 bg-red-100 w-full p-2 border-2 border-red-400'>{error}</div>
+            <div className='text-red-500 mb-4 bg-red-100 w-full p-2 border-2 border-red-400'>{error.message || 'Failed to fetch dashboard data'}</div>
           ) : dashboardData ? (
             <>
               <div className='grid gap-6 max-lg:gap-2.5 max-md:gap-2 grid-cols-4 max-[1241px]:grid-cols-2 max-md:grid-cols-1'>

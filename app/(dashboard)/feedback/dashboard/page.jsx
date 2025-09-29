@@ -4,37 +4,15 @@ import RecentFeedback from '@/components/feedback/RecentFeedback'
 import SentimentOverview from '@/components/feedback/SentimentOverview'
 import OverviewCard from '@/components/feedback/surveys/OverviewCard'
 import TopicGraph from '@/components/feedback/TopicGraph'
-import { apiFetch } from '@/utils/apiFetch'
-import React, { useEffect, useState } from 'react'
+import useFetch from '@/hooks/useFetch'
+import React from 'react'
 import { MdFeedback } from 'react-icons/md'
 import { RiSurveyFill, RiSurveyLine } from 'react-icons/ri'
 
 const Dashboard = () => {
-  const [dashboardData, setDashboardData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { data: dashboardResponse, loading, error } = useFetch('/api/dashboard');
 
-  useEffect(() => {
-    const fetchDashboard = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await apiFetch('/api/dashboard');
-        const data = await res.json();
-        if (res.ok && data.status === 'success') {
-          setDashboardData(data.data);
-        } else {
-          console.log(data);
-          setError(data.message || 'Failed to fetch dashboard data');
-        }
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDashboard();
-  }, []);
+  const dashboardData = dashboardResponse?.status === 'success' ? dashboardResponse.data : null;
   // Calculate percent changes for each metric
   function getPercentChange(arr, key) {
     if (!Array.isArray(arr) || arr.length < 2) return 0;

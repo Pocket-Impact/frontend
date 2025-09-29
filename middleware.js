@@ -1,0 +1,43 @@
+import { NextResponse } from 'next/server';
+
+export async function middleware(request) {
+    const accessToken = request.cookies.get('accessToken');
+    const refreshToken = request.cookies.get('refreshToken');
+
+    // Protect feedback routes
+    if (!accessToken && !refreshToken) {
+        // eslint-disable-next-line no-undef
+        return NextResponse.redirect(new URL('/auth/signin', request.url));
+    }
+    // If accessToken is missing but refreshToken exists, try to refresh
+    if (!accessToken && refreshToken) {
+        try {
+            // eslint-disable-next-line no-undef
+            const refreshRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/refresh-token`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cookie': `refreshToken=${refreshToken.value}`,
+                },
+            });
+            if (refreshRes.ok) {
+                const setCookie = refreshRes.headers.get('set-cookie');
+                if (setCookie) {
+                    const response = NextResponse.next();
+                    response.headers.set('set-cookie', setCookie);
+                    return response;
+                }
+            }
+            // eslint-disable-next-line no-undef
+            return NextResponse.redirect(new URL('/auth/signin', request.url));
+        } catch {
+            // eslint-disable-next-line no-undef
+            return NextResponse.redirect(new URL('/auth/signin', request.url));
+        }
+    }
+    return NextResponse.next();
+}
+
+export const config = {
+    matcher: ['/feedback/:path*'],
+};

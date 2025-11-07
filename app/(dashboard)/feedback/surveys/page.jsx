@@ -2,9 +2,9 @@
 import LoadingCard from "@/components/feedback/feedbacks/LoadingCard";
 import SurveyCard from "@/components/feedback/surveys/SurveyCard";
 import PrimaryButton from "@/components/ui/PrimaryButton";
-import { apiFetch } from "@/utils/apiFetch";
+import useFetch from "@/hooks/useFetch";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   IoAddOutline,
   IoDocumentText,
@@ -13,39 +13,14 @@ import {
 } from "react-icons/io5";
 
 const Page = () => {
-  const [surveys, setSurveys] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState(null);
+  const { data: surveysResponse, loading, error } = useFetch("/api/surveys", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await apiFetch("/api/surveys", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        });
-        const json = await response.json();
-        if (!response.ok) {
-          setError(json.message || "Could not fetch surveys.");
-          setSurveys([]);
-        } else if (json && json.data && Array.isArray(json.data.surveys)) {
-          setSurveys(json.data.surveys);
-        } else {
-          setSurveys([]);
-        }
-      } catch (err) {
-        setError("Server error. Please try again later.");
-        setSurveys([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  const surveys = surveysResponse?.data?.surveys || [];
 
   const totalSurveys = surveys.length;
   console.log(surveys)

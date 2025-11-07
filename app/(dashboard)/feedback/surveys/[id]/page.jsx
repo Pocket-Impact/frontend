@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { apiFetch } from "@/utils/apiFetch";
+import useFetch from "@/hooks/useFetch";
 import FormBuilder from "@/components/surveys/FormBuilder";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
@@ -10,46 +11,25 @@ export default function Page() {
     const router = useRouter();
     const surveyId = params?.id;
 
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [initialSurvey, setInitialSurvey] = useState(null);
     const [saving, setSaving] = useState(false);
     const [success, setSuccess] = useState(false);
 
-    useEffect(() => {
-        async function fetchSurvey() {
-            setLoading(true);
-            setError(null);
-            try {
-                // Fetch survey by unique link ID (for preview/edit)
-                const res = await apiFetch(`/api/surveys/unique/${surveyId}`);
-                const json = await res.json();
-                const survey = json?.data?.survey;
-                if (!survey) throw new Error("Survey not found");
-                setInitialSurvey({
-                    id: survey._id,
-                    uniqueLinkId: survey.uniqueLinkId,
-                    title: survey.title || "",
-                    description: survey.description || "",
-                    questions: (survey.questions || []).map((q, idx) => ({
-                        id: idx + 1,
-                        type: q.type === "choice" ? "multiple" : q.type,
-                        label: q.questionText,
-                        options: q.options || undefined,
-                    })),
-                });
-            } catch (err) {
-                if (err instanceof Error) {
-                    setError(err.message || "Failed to load survey.");
-                } else {
-                    setError("Failed to load survey.");
-                }
-            } finally {
-                setLoading(false);
-            }
-        }
-        if (surveyId) fetchSurvey();
-    }, [surveyId]);
+    const { data: surveyResponse, loading, error } = useFetch(
+        surveyId ? `/api/surveys/unique/${surveyId}` : null
+    );
+
+    const initialSurvey = surveyResponse?.data?.survey ? {
+        id: surveyResponse.data.survey._id,
+        uniqueLinkId: surveyResponse.data.survey.uniqueLinkId,
+        title: surveyResponse.data.survey.title || "",
+        description: surveyResponse.data.survey.description || "",
+        questions: (surveyResponse.data.survey.questions || []).map((q, idx) => ({
+            id: idx + 1,
+            type: q.type === "choice" ? "multiple" : q.type,
+            label: q.questionText,
+            options: q.options || undefined,
+        })),
+    } : null;
 
     // Handler for saving survey edits
     async function handleSave({ title, description, questions }) {

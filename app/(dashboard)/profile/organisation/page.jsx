@@ -3,7 +3,7 @@ import OverviewCard from '@/components/feedback/surveys/OverviewCard'
 import OrgDetails from '@/components/profile/admin/OrgDetails';
 import UserDetails from '@/components/profile/admin/UserDetails';
 import PrimaryButton from '@/components/ui/PrimaryButton';
-import { apiFetch } from '@/utils/apiFetch';
+import useFetch from '@/hooks/useFetch';
 import { redirect } from 'next/navigation';
 import React from 'react'
 import { BiSearch, BiUser } from 'react-icons/bi';
@@ -35,51 +35,30 @@ const defaultOverviewCards = [
 
 
 const OrganisationPage = () => {
-    const [orgData, setOrgData] = React.useState(null);
-    const [overviewCards, setOverviewCards] = React.useState(defaultOverviewCards);
-    const [loading, setLoading] = React.useState(true);
-    const [error, setError] = React.useState(null);
+    const { data: orgResponse, loading, error } = useFetch('/api/dashboard/organisation');
 
-    React.useEffect(() => {
-        const fetchOrgData = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                const res = await apiFetch('/api/dashboard/organisation');
-                const data = await res.json();
-                if (!res.ok || data.status !== 'success') {
-                    setError(data.message || 'Could not fetch organisation data.');
-                } else {
-                    setOrgData(data.data);
-                    setOverviewCards([
-                        {
-                            value: data.data.researchers,
-                            title: 'Researchers',
-                            subtitle: 'All researchers',
-                            icon: BiUser,
-                        },
-                        {
-                            value: data.data.adminUsers,
-                            title: 'Admins',
-                            subtitle: 'All admins',
-                            icon: BiUser,
-                        },
-                        {
-                            value: data.data.analysts,
-                            title: 'Analysts',
-                            subtitle: 'All analysts',
-                            icon: BiSearch,
-                        },
-                    ]);
-                }
-            } catch (err) {
-                setError('Server error. Please try again later.');
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchOrgData();
-    }, []);
+    const orgData = orgResponse?.status === 'success' ? orgResponse.data : null;
+
+    const overviewCards = orgData ? [
+        {
+            value: orgData.researchers,
+            title: 'Researchers',
+            subtitle: 'All researchers',
+            icon: BiUser,
+        },
+        {
+            value: orgData.adminUsers,
+            title: 'Admins',
+            subtitle: 'All admins',
+            icon: BiUser,
+        },
+        {
+            value: orgData.analysts,
+            title: 'Analysts',
+            subtitle: 'All analysts',
+            icon: BiSearch,
+        },
+    ] : defaultOverviewCards;
 
     const handleClick = () => {
         const logout = async () => {

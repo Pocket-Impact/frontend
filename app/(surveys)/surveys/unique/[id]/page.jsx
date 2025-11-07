@@ -4,39 +4,23 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { apiFetch } from "@/utils/apiFetch";
+import useFetch from "@/hooks/useFetch";
 import { useAlertStore } from "@/stores/alertStore";
-import logo from "@/public/img/white.svg";
+import logo from '@/public/img/white.svg'
 
 const FeedbackForm = () => {
   const { id } = useParams();
-  const [survey, setSurvey] = useState(null);
   const [answers, setAnswers] = useState({});
-  const [pageLoading, setPageLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { setMessage, clearMessage } = useAlertStore();
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchSurvey = async () => {
-      try {
-        const res = await apiFetch(`/api/surveys/unique/${id}`);
-        if (res.ok) {
-          const data = await res.json();
-          setSurvey(data.data.survey);
-          setPageLoading(false);
-        } else {
-          const json = await res.json();
-          setError(json.message || "Failed to load survey");
-          setPageLoading(false);
-        }
-      } catch (err) {
-        setError("Network error. Please try again.");
-        setPageLoading(false);
-      }
-    };
-    fetchSurvey();
-  }, [id]);
+  const { data: surveyResponse, loading: pageLoading, error: surveyError } = useFetch(
+    id ? `/api/surveys/unique/${id}` : null
+  );
+
+  const survey = surveyResponse?.data?.survey;
 
   const preparePayload = () => {
     const responses = Object.entries(answers).map(([questionId, answer]) => ({

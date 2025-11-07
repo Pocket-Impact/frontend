@@ -58,7 +58,7 @@ const FeedbackCard = ({ feedback }) => {
                 feedback.sentiment
               )}`}
             >
-              {feedback.sentiment || "Analyzing..."}
+              {feedback.sentiment || "Not analyzed"}
             </div>
           </div>
 

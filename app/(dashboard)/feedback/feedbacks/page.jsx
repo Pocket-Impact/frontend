@@ -209,21 +209,6 @@ const FeedBackPage = () => {
         </div>
       )}
 
-      {/* Error Display */}
-      {error && (
-        <div className="bg-red-50 rounded-2xl p-6 shadow-sm border-l-4 border-red-400">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-red-100 rounded-lg">
-              <div className="w-5 h-5 bg-red-500 rounded-full"></div>
-            </div>
-            <div>
-              <h3 className="font-semibold text-red-800">Error</h3>
-              <p className="text-red-700">{error}</p>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Feedback Cards Section */}
       <div className="bg-white rounded-2xl p-6 shadow-sm">
         <div className="mb-6">

@@ -4,6 +4,7 @@ import React from 'react'
 import { IoAdd } from 'react-icons/io5'
 import { RxCaretDown } from 'react-icons/rx'
 import { apiFetch } from '@/utils/apiFetch'
+import useFetch from '@/hooks/useFetch'
 import { useAlertStore } from '@/stores/alertStore'
 
 const UsersPage = () => {
@@ -42,6 +43,7 @@ const UsersPage = () => {
                 setTimeout(() => clearMessage(), 3000);
                 setForm({ fullname: '', email: '', phonenumber: '', role: '' });
                 setShowForm(false);
+                refetch(); // Refresh users list
             }
         } catch (err) {
             setError('Server error. Please try again later.');
@@ -50,31 +52,9 @@ const UsersPage = () => {
         }
     };
 
-    const [users, setUsers] = React.useState([]);
-    const [isLoading, setIsLoading] = React.useState(true);
-    const [userError, setUsersError] = React.useState(null);
+    const { data: usersResponse, loading: isLoading, error: userError, refetch } = useFetch('/api/users/all-users');
 
-    React.useEffect(() => {
-        const fetchUsers = async () => {
-            setIsLoading(true);
-            setError(null);
-            try {
-                const res = await apiFetch('/api/users/all-users')
-                const data = await res.json();
-                console.log(data);
-                if (!res.ok || data.status !== 'success') {
-                    setError(data.message || 'Could not fetch users.');
-                } else {
-                    setUsers(data.data.users);
-                }
-            } catch (err) {
-                setError('Server error. Please try again later.');
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchUsers();
-    }, []);
+    const users = usersResponse?.status === 'success' ? usersResponse.data.users : [];
 
     return (
         <div className='inter flex flex-col gap-6'>

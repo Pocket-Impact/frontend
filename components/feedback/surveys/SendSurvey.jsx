@@ -1,7 +1,6 @@
 "use client";
 import PrimaryButton from "@/components/ui/PrimaryButton";
 import { useAlertStore } from "@/stores/alertStore";
-// import { apiFetch } from "@/utils/apiFetch";
 import React, { useState } from "react";
 import Papa from "papaparse";
 import { FiUpload } from "react-icons/fi";
@@ -9,6 +8,7 @@ import { IoClose } from "react-icons/io5";
 import { BiCopy } from "react-icons/bi";
 
 import PropTypes from 'prop-types';
+import useFetch from "@/hooks/useFetch";
 
 const SendSurvey = ({ open, close, link, uniqueLink }) => {
   const [email, setEmail] = useState("");
@@ -40,7 +40,7 @@ const SendSurvey = ({ open, close, link, uniqueLink }) => {
     if (!error) {
       setLoading(true);
       try {
-        const response = await fetch("/api/surveys/send-survey-link", {
+        const response = useFetch("/api/surveys/send-survey-link", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ surveyId: link, emails }),

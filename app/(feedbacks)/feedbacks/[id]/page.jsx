@@ -23,7 +23,6 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const { setMessage: setAlertMessage } = useAlertStore();
-  let organisationId;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,36 +36,36 @@ export default function Page() {
     }
     setLoading(true);
     setError("");
-    organisationId = id;
     try {
-      const response = await apiFetch(`/api/feedbacks`, {
+      const response = await apiFetch(`/api/feedbacks/`, {
         method: "POST",
-        body: JSON.stringify({ organisationId ,category, message }),
+        body: JSON.stringify({ organisationId: id, category, message }),
       });
       const json = await response.json();
       if (!response.ok) {
         setError(json.message || "Server error");
+        console.log(json);
       } else {
         setCategory("");
         setMessage("");
         setAlertMessage("Feedback submitted successfully!");
       }
     } catch (err) {
-      setError("Server error. Please try again later.");
+      console.log(err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-xl w-full bg-white max-md:h-full flex-1 min-h-0 h-max border-stroke border p-6 inter flex flex-col items-start">
+    <div className="max-w-xl w-full max-md:h-full flex-1 min-h-0 h-max p-6 inter flex flex-col items-start">
       <div className="flex justify-between">
         <h3 className="x2l font-bold mb-4 text-primary">Feedback Form</h3>
       </div>
       <form className="w-full flex flex-col gap-3" onSubmit={handleSubmit}>
         <label className="block base font-semibold mb-2 base">Category</label>
         <div className="relative bg-white p-3 border rounded-sm border-stroke flex items-center justify-between">
-          <span>{category || "Select category"}</span>
+          <span className="capitalize">{category || "Select category"}</span>
           <div
             className="rounded-sm hover:bg-gray-200 cursor-pointer"
             onClick={() => setShowCategories(!showCategories)}
@@ -91,9 +90,8 @@ export default function Page() {
             </svg>
           </div>
           <div
-            className={`absolute bg-white top-full mt-2 rounded-lg z-50 border border-gray-300 overflow-y-scroll clean max-h-52 w-full left-0 ${
-              showCategories ? "block" : "hidden"
-            }`}
+            className={`absolute bg-white top-full mt-2 rounded-lg z-50 border border-gray-300 overflow-y-scroll clean max-h-52 w-full left-0 ${showCategories ? "block" : "hidden"
+              }`}
           >
             {categories.map((cat) => (
               <div
@@ -121,7 +119,7 @@ export default function Page() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-primary cursor-pointer transition duration-300 h-max text-white rounded-full inter p-3 px-4 base rounded-sm mt-2 bg-primary text-white hover:bg-primary-dark transition"
+            className="bg-primary cursor-pointer duration-300 h-max inter p-3 px-4 base rounded-sm mt-2 text-white hover:bg-primary-dark transition"
           >
             <div className="flex items-center gap-2 max-md:gap-1.5">
               <span className="text undefined">

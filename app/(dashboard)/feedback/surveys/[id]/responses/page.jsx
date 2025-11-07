@@ -1,10 +1,10 @@
 "use client";
-import { apiFetch } from "@/utils/apiFetch";
+import useFetch from "@/hooks/useFetch";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   IoChevronDownOutline,
   IoChevronUpOutline,
@@ -18,36 +18,18 @@ import { RxCaretLeft } from "react-icons/rx";
 const Page = () => {
   const { id } = useParams();
   const [expandedResponses, setExpandedResponses] = useState({});
-  const [responses, setResponses] = useState([]);
-  const [surveyData, setSurveyData] = useState({});
-  const [loading, setLoading] = useState(true);
+  const { data: responseData, loading, error } = useFetch(id ? `/api/responses/survey/${id}` : null);
+  const responses = responseData?.data || [];
 
-  useEffect(() => {
-    const fetchResponses = async () => {
-      setLoading(true);
-      try {
-        const res = await apiFetch(`/api/responses/survey/${id}`);
-        if (res.ok) {
-          const data = await res.json();
-          setResponses(data.data);
-          // You might want to fetch survey details too
-          setSurveyData({
-            title: "Customer Feedback Survey", // This should come from your API
-            description: "Responses collected from participants",
-            totalQuestions:
-              data.data && data.data[0] && data.data[0].responses
-                ? data.data[0].responses.length
-                : 0,
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching responses:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchResponses();
-  }, [id]);
+  // Survey data derived from responses
+  const surveyData = {
+    title: "Customer Feedback Survey", // This should come from your API
+    description: "Responses collected from participants",
+    totalQuestions:
+      responses && responses[0] && responses[0].responses
+        ? responses[0].responses.length
+        : 0,
+  };
 
   const toggleResponse = (responseId) => {
     setExpandedResponses((prev) => ({

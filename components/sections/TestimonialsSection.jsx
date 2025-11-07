@@ -21,10 +21,10 @@ const TestimonialsSection = () => {
   }, []);
 
   return (
-    <div className="inter pt-24 pb-16 px-12 max-lg:px-8 max-md:px-4 max-sm:px-2 bg-gray-100 min-h-[300px]">
+    <section className="inter pt-24 pb-16 px-12 max-lg:px-8 max-md:px-4 max-sm:px-2" aria-labelledby="testimonials-heading">
       <div className="max-w-7xl mx-auto">
         <div className="mb-16 text-center max-w-3xl mx-auto">
-          <h6 className="text-3xl bricolage text-slate-900 leading-tight font-bold">
+          <h6 id="testimonials-heading" className="x5l bricolage text-slate-900 leading-tight">
             From our{" "}
             <span className="font-bold bg-gradient-to-r from-green-500 to-green-700 bg-clip-text text-transparent">
               community
@@ -128,7 +128,7 @@ const TestimonialsSection = () => {
           -moz-osx-font-smoothing: grayscale;
         }
       `}</style>
-    </div>
+    </section>
   );
 };
 

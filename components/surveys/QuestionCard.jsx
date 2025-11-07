@@ -22,7 +22,7 @@ export default function QuestionCard({
   const currentType = typeOptions.find((opt) => opt.value === question.type);
 
   return (
-    <div className=" rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 relative group">
+    <div className="rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 relative group" role="group" aria-label={`Survey question ${index + 1}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
@@ -45,6 +45,7 @@ export default function QuestionCard({
           type="button"
           className="p-2 bg-red-100 hover:bg-red-200 text-red-600 hover:text-red-700 rounded-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
           onClick={() => onRemove(question.id)}
+          aria-label="Remove question"
         >
           <IoMdRemove className="text-lg" />
         </button>
@@ -58,6 +59,8 @@ export default function QuestionCard({
           placeholder="Enter your question here..."
           value={question.label}
           onChange={(e) => onUpdate(question.id, { label: e.target.value })}
+          aria-label="Question text"
+          aria-required="true"
         />
       </div>
 
@@ -69,6 +72,10 @@ export default function QuestionCard({
         <div
           className="p-3 bg-slate-50 rounded-xl cursor-pointer hover:bg-slate-100 transition-colors flex items-center justify-between"
           onClick={() => setDropdownOpen(!dropdownOpen)}
+          role="button"
+          tabIndex={0}
+          aria-label="Select question type"
+          aria-expanded={dropdownOpen}
         >
           <div className="flex items-center gap-3">
             <div className="text-slate-600">{currentType?.icon}</div>
@@ -98,8 +105,8 @@ export default function QuestionCard({
               <div
                 key={opt.value}
                 className={`p-3 cursor-pointer transition-colors flex items-center gap-3 ${question.type === opt.value
-                    ? "bg-slate-900 text-white"
-                    : "hover:bg-slate-50 text-slate-700"
+                  ? "bg-slate-900 text-white"
+                  : "hover:bg-slate-50 text-slate-700"
                   }`}
                 onClick={() => {
                   setDropdownOpen(false);
@@ -166,6 +173,7 @@ export default function QuestionCard({
                       );
                       onUpdate(question.id, { options: newOptions });
                     }}
+                    aria-label={`Remove option ${idx + 1}`}
                   >
                     <IoMdRemove />
                   </button>
@@ -182,6 +190,7 @@ export default function QuestionCard({
                 options: [...(question.options ?? []), ""],
               })
             }
+            aria-label="Add answer option"
           >
             <IoMdAddCircleOutline className="text-lg" />
             Add Option

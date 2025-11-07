@@ -27,9 +27,9 @@ const OtpForm = () => {
           <h1 className='bricolage x4l font-semibold'>Verify Email</h1>
           <p className='text-black/70 xl mt-2'>Please enter the 6 digit code sent to <span className='font-medium'>{email}</span></p>
         </div>
-        <form className='mt-5'>
+        <form className='mt-5' aria-label="OTP verification form">
           {error &&
-            <div className='mb-4 bg-orange-100 border-orange-400 border p-3 op-2 base rounded-lg text-red-500 font-medium'>
+            <div className='mb-4 bg-orange-100 border-orange-400 border p-3 op-2 base rounded-lg text-red-500 font-medium' id="otp-error" aria-live="polite">
               {error}
             </div>
           }
@@ -47,11 +47,14 @@ const OtpForm = () => {
                 onKeyDown={e => handleKeyDown(e, index)}
                 onPaste={e => handlePaste(e, index)}
                 autoFocus={index === 0}
+                aria-label={`OTP digit ${index + 1}`}
+                aria-required="true"
+                aria-describedby={error ? "otp-error" : undefined}
               />
             ))}
           </div>
           <PrimaryButton isLoading={isLoading} type="submit" text='Verify' styles='w-full p-3 rounded-lg mt-4' />
-          <button type='button' onClick={resendOTP} className='font-semibold text-primary/80 mt-3 cursor-pointer'>Resend OTP</button>
+          <button type='button' onClick={resendOTP} className='font-semibold text-primary/80 mt-3 cursor-pointer' aria-label="Resend OTP">Resend OTP</button>
         </form>
       </div>
     </div>

@@ -34,8 +34,8 @@ const HeroSection = () => {
           </div>
           <div className="w-full max-w-7xl fade-up mt-8 px-3 pt-3 border-x border-t bg-white/20 backdrop-blur-2xl border-white h-64 rounded-t-3xl">
             <div
-              className="w-full h-full rounded-t-2xl bg-white bg-center bg-no-repeat"
-              style={{ backgroundImage: `url(${img.bg7.src})` }}
+              className="w-full h-full rounded-t-2xl bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url(${img.bg2.src})` }}
             ></div>
           </div>
         </div>

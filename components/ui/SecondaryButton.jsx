@@ -2,7 +2,14 @@ import React from 'react'
 
 const SecondaryButton = ({ text, styles, type, textStyles, icon, onClick, isLoading }) => {
     return (
-        <button type={type} disabled={isLoading} className={`bg-secondary ${isLoading ? `${icon ? "" : ""} opacity-80 text-center cursor-not-allowed` : `${icon ? "" : ""} cursor-pointer`} transition duration-300 h-max text-black rounded-full inter ${styles}`} onClick={onClick}>
+        <button
+            type={type}
+            disabled={isLoading}
+            className={`bg-secondary ${isLoading ? `${icon ? "" : ""} opacity-80 text-center cursor-not-allowed` : `${icon ? "" : ""} cursor-pointer`} transition duration-300 h-max text-black rounded-full inter ${styles}`}
+            onClick={onClick}
+            aria-label={text}
+            aria-busy={isLoading}
+        >
             {!isLoading ?
                 (
                     <div className='flex items-center gap-2 max-md:gap-1.5'>

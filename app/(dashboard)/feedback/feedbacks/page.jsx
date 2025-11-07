@@ -102,21 +102,23 @@ const FeedBackPage = () => {
       : 0;
 
   return (
-    <div className="inter flex flex-col gap-8 px-6 py-1 min-h-screen">
+    <div className="inter flex flex-col gap-5 px-1 py-1 min-h-screen">
       {/* Header Section */}
-      <div className="rounded-2xl p-6 shadow-sm bg-white">
+      <div className="rounded-2xl">
         <div className="flex max-md:flex-col gap-4 justify-between items-start">
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">
-              Feedback
-            </h1>
+            <h1 className="text-3xl font-bold text-slate-900 mb-2">Feedback</h1>
             <p className="text-slate-600 text-lg">
               Manage and analyze customer feedback for your organisation
             </p>
           </div>
           <div className="flex items-center gap-3">
             <button
-              className="flex bg-slate-100 hover:bg-slate-200 items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 cursor-pointer text-slate-700 hover:text-slate-900"
+              className={`${
+                copied
+                  ? "text-green-600 border border-green-600 hover:border-green-600"
+                  : "bg-black text-white hover:bg-black/90"
+              } flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 cursor-pointer`}
               onClick={handleCopy}
               type="button"
             >
@@ -140,7 +142,7 @@ const FeedBackPage = () => {
 
       {/* Statistics Overview */}
       {!loading && totalFeedbacks > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-blue-100 rounded-xl">

@@ -218,7 +218,7 @@ export default function FormBuilder({
 
           {/* Survey Details */}
           <div className="space-y-6">
-            <div className="bg-slate-50 rounded-xl p-4">
+            <div className="bg-slate-100 rounded-xl p-4">
               <h3 className="font-semibold text-slate-900 mb-2">
                 Survey Details
               </h3>
@@ -337,7 +337,7 @@ export default function FormBuilder({
             </div>
           </div>
 
-          <div className="rounded-2xl p-6 h-full overflow-y-auto">
+          <div className="rounded-xl overflow-y-auto bg-slate-100">
             <PreviewPane
               title={title}
               description={description}

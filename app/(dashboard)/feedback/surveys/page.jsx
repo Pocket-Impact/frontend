@@ -23,6 +23,7 @@ const Page = () => {
   const surveys = surveysResponse?.data?.surveys || [];
 
   const totalSurveys = surveys.length;
+  console.log(surveys)
   const activeSurveys = surveys.filter((s) => s.status === "active").length;
   const totalResponses = surveys.reduce(
     (sum, survey) => sum + (survey.responses || 0),
@@ -30,9 +31,9 @@ const Page = () => {
   );
 
   return (
-    <div className="flex flex-col gap-8 min-h-screen">
+    <div className="flex flex-col gap-5 min-h-screen">
       {/* Header Section */}
-      <div className="bg-white rounded-2xl p-6 shadow-sm">
+      <div className="rounded-2xl px-1">
         <div className="flex justify-between items-start">
           <div className="flex-1">
             <h1 className="text-3xl font-bold text-slate-900 mb-2">
@@ -43,8 +44,8 @@ const Page = () => {
             </p>
           </div>
           <Link href="/feedback/surveys/new" prefetch>
-            <button className="flex items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl transition-all duration-300 font-medium">
-              <IoAddOutline className="text-xl" />
+            <button className="cursor-pointer flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl transition-all duration-300 font-medium">
+              <IoAddOutline className="text-2xl" />
               <span className="max-md:hidden">Create Survey</span>
             </button>
           </Link>
@@ -55,7 +56,7 @@ const Page = () => {
       {!loading && totalSurveys > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white rounded-2xl p-6 shadow-sm">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
               <div className="p-3 bg-blue-100 rounded-xl">
                 <IoDocumentText className="text-2xl text-blue-600" />
               </div>
@@ -186,7 +187,7 @@ const Page = () => {
             </Link>
           </div>
         ) : (
-          <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-x-3 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
             {surveys.map((survey) => (
               <SurveyCard key={survey._id} survey={survey} />
             ))}

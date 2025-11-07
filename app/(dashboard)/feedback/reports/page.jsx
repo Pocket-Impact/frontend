@@ -504,10 +504,10 @@ const ReportsPage = () => {
   };
 
   return (
-    <div className="min-h-screens md:p-6">
+    <div className="min-h-screens">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-5">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Reports Dashboard
           </h1>
